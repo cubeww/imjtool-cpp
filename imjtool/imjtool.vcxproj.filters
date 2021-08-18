@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="In Game">
+      <UniqueIdentifier>{9a207afb-9c59-4ada-8db1-fd57a2f89d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{c4119f0e-85c1-4e46-9f07-0b8a96d6f0ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{140e340f-de98-4df8-a80c-bdb5d80124cc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Block.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="WalljumpR.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="WalljumpL.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpikeUp.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpikeRight.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpikeLeft.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpikeDown.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-SFML.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Block.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpikeDown.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpikeLeft.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpikeRight.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpikeUp.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="WalljumpL.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="WalljumpR.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Water.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
