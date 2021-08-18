@@ -1,46 +1,42 @@
 #include "ObjectManager.h"
 
-#include "Block.h"
-#include "Object.h"
-#include "Platform.h"
-#include "Player.h"
-#include "SpikeDown.h"
-#include "SpikeLeft.h"
-#include "SpikeRight.h"
-#include "SpikeUp.h"
-#include "WalljumpL.h"
-#include "WalljumpR.h"
-#include "Water.h"
-#include "World.h"
+#include "InGame.h"
 
 #define floateq(x, y) (fabs(x - y) < 0.0001)
 
 ObjectManager::ObjectManager()
 {
 	BEGIN_REGISTER
-	REGISTER(World)
+	REGISTER(Apple)
 	REGISTER(Block)
+	REGISTER(MiniBlock)
+	REGISTER(JumpRefresher)
+	REGISTER(KillerBlock)
+	REGISTER(World)
 	REGISTER(Platform)
 	REGISTER(Player)
+	REGISTER(PlayerStart)
+	REGISTER(Save)
+	REGISTER(Warp)
 	REGISTER(SpikeDown)
 	REGISTER(SpikeLeft)
 	REGISTER(SpikeRight)
 	REGISTER(SpikeUp)
+	REGISTER(MiniSpikeDown)
+	REGISTER(MiniSpikeLeft)
+	REGISTER(MiniSpikeRight)
+	REGISTER(MiniSpikeUp)
 	REGISTER(WalljumpL)
 	REGISTER(WalljumpR)
 	REGISTER(Water)
 }
 
-shared_ptr<Object> ObjectManager::create(shared_ptr<Object> obj, float x, float y)
-{
-	objects.push_back(obj);
-	obj->x = x;
-	obj->y = y;
-	return obj;
-}
-
 void ObjectManager::update()
 {
+	// sort depth
+	sort(objects.begin(), objects.end(), [](const shared_ptr<Object>& obj1, const shared_ptr<Object>& obj2) { return (obj1->depth > obj2->depth); });
+
+	// update instances
 	for (auto i : objects)
 	{
 		i->update();
@@ -51,15 +47,15 @@ shared_ptr<Object> ObjectManager::collisionPoint(float x, float y, int index)
 {
 	for (auto i : Game::get().objectManager.objects)
 	{
-		if (i->index == index)
+		if (index == ALL || i->index == index)
 		{
 			// check collision
 			auto item = i->maskSprite->items[static_cast<int>(i->imageIndex) % i->maskSprite->items.size()];
 			auto spr = item->sprite;
-			int x1 = round(i->x);
-			int y1 = round(i->y);
+			int x1 = round(x);
+			int y1 = round(y);
 
-			spr->setPosition(x1, y1);
+			spr->setPosition(i->x, i->y);
 			spr->setRotation(i->rotation);
 			spr->setOrigin(i->maskXorigin, i->maskYorigin);
 			spr->setScale(i->xscale, i->yscale);
@@ -81,15 +77,15 @@ vector<shared_ptr<Object>> ObjectManager::collisionPointList(float x, float y, i
 	vector<shared_ptr<Object>> result;
 	for (auto i : Game::get().objectManager.objects)
 	{
-		if (index == -1 || i->index == index)
+		if (index == ALL || i->index == index)
 		{
 			// check collision
 			auto item = i->maskSprite->items[static_cast<int>(i->imageIndex) % i->maskSprite->items.size()];
 			auto spr = item->sprite;
-			int x1 = round(i->x);
-			int y1 = round(i->y);
+			int x1 = round(x);
+			int y1 = round(y);
 
-			spr->setPosition(x1, y1);
+			spr->setPosition(i->x, i->y);
 			spr->setRotation(i->rotation);
 			spr->setOrigin(i->maskXorigin, i->maskYorigin);
 			spr->setScale(i->xscale, i->yscale);
@@ -110,13 +106,13 @@ shared_ptr<Object> ObjectManager::collisionLine(float x1, float y1, float x2, fl
 {
 	for (auto i : Game::get().objectManager.objects)
 	{
-		if (i->index == index)
+		if (index == ALL || i->index == index)
 		{
 			auto d = sqrtf(powf(x1 - x2, 2) + powf(y1 - y2, 2));
 			auto dx = (x2 - x1) / d;
 			auto dy = (y2 - y1) / d;
 
-			for(auto j = 0; j < d; j++)
+			for (auto j = 0; j < d; j++)
 			{
 				auto col = collisionPoint(dx, dy, index);
 				if (col != nullptr)
@@ -134,7 +130,7 @@ vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, 
 	vector<shared_ptr<Object>> result;
 	for (auto i : Game::get().objectManager.objects)
 	{
-		if (i->index == index)
+		if (index == ALL || i->index == index)
 		{
 			auto d = sqrtf(powf(x1 - x2, 2) + powf(y1 - y2, 2));
 			auto dx = (x2 - x1) / d;
@@ -142,11 +138,13 @@ vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, 
 
 			for (auto j = 0; j < d; j++)
 			{
-				auto col = collisionPoint(dx, dy, index);
+				auto col = collisionPoint(x1, y1, index);
 				if (col != nullptr)
 				{
 					result.push_back(col);
 				}
+				x1 += dx;
+				y1 += dy;
 			}
 		}
 	}
@@ -158,7 +156,7 @@ vector<shared_ptr<Object>> ObjectManager::atPosition(float x, float y, int index
 	vector<shared_ptr<Object>> result;
 	for (auto i : Game::get().objectManager.objects)
 	{
-		if (i->index == index)
+		if (index == ALL || i->index == index)
 		{
 			if (floateq(x, i->x) && floateq(y, i->y))
 			{

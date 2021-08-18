@@ -29,6 +29,7 @@ public:
 	unique_ptr<sf::RenderTexture> gameTexture;
 
 	sf::Clock deltaClock;
+	float fps;
 
 	void run();
 	void handleEvent();

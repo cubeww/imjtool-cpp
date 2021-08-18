@@ -14,8 +14,15 @@ using namespace std;
 #define REGISTER(name) indexMap[#name] = temp; temp += 1; createMap[indexMap[#name]] = [&](float x, float y){ auto obj = make_shared<name>(); obj->x = x; obj->y = y; obj->index = indexMap[#name]; objects.push_back(obj); return obj; };
 #define GETID(name) Game::get().objectManager.indexMap[#name]
 
-#define CREATE(name, x, y) Game::get().objectManager.create(make_shared<name>(), x, y)->index = GETID(name)
+#define CREATE(name, _x, _y)  auto __tmpobj = make_shared<name>(); __tmpobj->x = _x; __tmpobj->y = _y; __tmpobj->index = GETID(#name); Game::get().objectManager.objects.push_back(__tmpobj);
 #define CREATEI(index, x, y) Game::get().objectManager.createMap[index](x, y)
+
+#define DESTROY(ptr) Game::get().objectManager.objects.erase(std::remove(Game::get().objectManager.objects.begin(), Game::get().objectManager.objects.end(), ptr), Game::get().objectManager.objects.end());
+#define DESTROYI(_index) Game::get().objectManager.objects.erase(std::remove_if(Game::get().objectManager.objects.begin(),Game::get().objectManager.objects.end(),[](const shared_ptr<Object>& o){return o->index == _index;}),Game::get().objectManager.objects.end())
+#define DESTROYN(name) DESTROYI(GETID(name))
+#define DESTROYALL() Game::get().objectManager.objects.clear()
+
+#define ALL -1
 
 class ObjectManager
 {
@@ -25,8 +32,6 @@ public:
 	vector<shared_ptr<Object>> objects;
 	map<string, int> indexMap;
 	map<int, function<shared_ptr<Object>(float, float)>> createMap;
-
-	shared_ptr<Object> create(shared_ptr<Object> obj, float x = 0, float y = 0);
 
 	void update();
 

@@ -2,9 +2,7 @@
 
 #include <imgui-SFML.h>
 
-#include "Block.h"
-#include "World.h"
-#include "Player.h"
+#include "InGame.h"
 
 void Game::run()
 {
@@ -51,6 +49,7 @@ void Game::update()
 	gui.update();
 	SFML::Render(*window);
 	window->display();
+	fps = 1.f / deltaClock.getElapsedTime().asSeconds();
 }
 
 void Game::createResources()
@@ -84,6 +83,8 @@ void Game::createResources()
 	resourceManager.createTexture("water", "textures/water.png");
 	resourceManager.createTexture("player_mask", "textures/player_mask.png");
 	resourceManager.createTexture("player_mask_flip", "textures/player_mask_flip.png");
+	resourceManager.createTexture("player_start", "textures/player_start.png");
+	resourceManager.createTexture("mini_block", "textures/mini_block.png");
 
 	resourceManager.createSprite("apple").addSheet("apple", 2);
 	resourceManager.createSprite("block").addSheet("block");
@@ -114,10 +115,10 @@ void Game::createResources()
 	resourceManager.createSprite("water").addSheet("water");
 	resourceManager.createSprite("player_mask").addSheet("player_mask");
 	resourceManager.createSprite("player_mask_flip").addSheet("player_mask_flip");
+	resourceManager.createSprite("player_start").addSheet("player_start");
+	resourceManager.createSprite("mini_block").addSheet("mini_block");
 }
 
 void Game::createObjects()
 {
-	//CREATE(Block, 256, 256);
-	CREATE(Player, 256, 0);
 }

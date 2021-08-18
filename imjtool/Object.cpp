@@ -83,7 +83,7 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, int index)
 				spr1->setOrigin(maskXorigin, maskYorigin);
 				spr1->setScale(xscale, yscale);
 				auto rect1 = spr1->getGlobalBounds();
-				
+
 				spr2->setPosition(x2, y2);
 				spr2->setRotation(i->rotation);
 				spr2->setOrigin(i->maskXorigin, i->maskYorigin);
@@ -167,3 +167,4 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, int index)
 	}
 	return nullptr;
 }
+

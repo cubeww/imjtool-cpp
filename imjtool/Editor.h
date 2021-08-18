@@ -18,7 +18,7 @@ struct SubEvent
 	shared_ptr<Object> object;
 	int objectIndex;
 
-	SubEvent(float _x, float _y, float _objectIndex)
+	SubEvent(float _x, float _y, int _objectIndex)
 	{
 		x = _x;
 		y = _y;
@@ -74,6 +74,8 @@ public:
 	shared_ptr<UndoEvent> curEvent;
 	int undoPos = 0;
 	bool leftHoldLast = false;
+	bool rightHoldLast = false;
+	bool mouseInTitle = false;
 
 	void update();
 
@@ -83,4 +85,8 @@ public:
 	void finishEvent();
 	void finishCreateObject(float x, float y);
 	void finishMoveObject();
+
+	void undo();
+	void redo();
+	void clearUndo();
 };

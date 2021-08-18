@@ -1,14 +1,9 @@
-﻿  Apple.cpp
-D:\Projects\CPP\imjtool\imjtool\Editor.h(25,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  JumpRefresher.cpp
-D:\Projects\CPP\imjtool\imjtool\Editor.h(25,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  KillerBlock.cpp
-D:\Projects\CPP\imjtool\imjtool\Editor.h(25,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  PlayerStart.cpp
-D:\Projects\CPP\imjtool\imjtool\Editor.h(25,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  Save.cpp
-D:\Projects\CPP\imjtool\imjtool\Editor.h(25,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  Warp.cpp
-D:\Projects\CPP\imjtool\imjtool\Editor.h(25,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+﻿  Editor.cpp
+D:\Projects\CPP\imjtool\imjtool\Editor.cpp(106,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Editor.cpp(107,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Editor.cpp(209,28): warning C4018: '<': signed/unsigned mismatch
+D:\Projects\CPP\imjtool\imjtool\Editor.cpp(270,14): warning C4018: '<': signed/unsigned mismatch
+  Gui.cpp
+D:\Projects\CPP\imjtool\imjtool\Gui.cpp(46,69): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   imjtool.vcxproj -> D:\Projects\CPP\imjtool\Debug\imjtool.exe
