@@ -37,9 +37,6 @@ void Editor::update()
 	{
 		auto snappedPos = ImVec2(floor(mouseInPos.x / snap.x) * snap.x, floor(mouseInPos.y / snap.y) * snap.y);
 
-		SetCursorPos(ImVec2(snappedPos.x + cursorStartPos.x, snappedPos.y + cursorStartPos.y));
-		Image(*selectSprite->items[0]->sprite, sf::Color(255, 255, 255, 100));
-
 		if (dragHold)
 		{
 			if (leftHold)
@@ -109,6 +106,11 @@ void Editor::update()
 		{
 			finishEvent();
 		}
+
+		// draw
+		SetCursorPos(ImVec2(snappedPos.x + cursorStartPos.x, snappedPos.y + cursorStartPos.y));
+		auto spr = selectSprite->items[0]->sprite;
+		Image(*spr, sf::Color(255, 255, 255, 100));
 	}
 	else
 	{

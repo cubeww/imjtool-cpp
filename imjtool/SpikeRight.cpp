@@ -7,5 +7,5 @@ SpikeRight::SpikeRight()
 
 void SpikeRight::update()
 {
-	
+	drawSelf();
 }

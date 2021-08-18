@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Apple.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -157,12 +158,20 @@
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="JumpRefresher.cpp" />
+    <ClCompile Include="KillerBlock.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MiniSpikeDown.cpp" />
+    <ClCompile Include="MiniSpikeLeft.cpp" />
+    <ClCompile Include="MiniSpikeRight.cpp" />
+    <ClCompile Include="MiniSpikeUp.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerStart.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Save.cpp" />
     <ClCompile Include="SpikeDown.cpp" />
     <ClCompile Include="SpikeLeft.cpp" />
     <ClCompile Include="SpikeRight.cpp" />
@@ -170,20 +179,30 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="WalljumpL.cpp" />
     <ClCompile Include="WalljumpR.cpp" />
+    <ClCompile Include="Warp.cpp" />
     <ClCompile Include="Water.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Apple.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gui.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="JumpRefresher.h" />
+    <ClInclude Include="KillerBlock.h" />
+    <ClInclude Include="MiniSpikeDown.h" />
+    <ClInclude Include="MiniSpikeLeft.h" />
+    <ClInclude Include="MiniSpikeRight.h" />
+    <ClInclude Include="MiniSpikeUp.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerStart.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="SpikeDown.h" />
     <ClInclude Include="SpikeLeft.h" />
     <ClInclude Include="SpikeRight.h" />
@@ -191,6 +210,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="WalljumpL.h" />
     <ClInclude Include="WalljumpR.h" />
+    <ClInclude Include="Warp.h" />
     <ClInclude Include="Water.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

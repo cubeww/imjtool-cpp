@@ -90,6 +90,36 @@
     <ClCompile Include="imgui-SFML.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="MiniSpikeDown.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniSpikeLeft.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniSpikeRight.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniSpikeUp.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Apple.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpRefresher.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="KillerBlock.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStart.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Save.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Warp.cpp">
+      <Filter>In Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h">
@@ -148,6 +178,36 @@
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniSpikeDown.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniSpikeLeft.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniSpikeRight.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniSpikeUp.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Warp.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Apple.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpRefresher.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="KillerBlock.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStart.h">
+      <Filter>In Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Save.h">
+      <Filter>In Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,5 +7,5 @@ SpikeDown::SpikeDown()
 
 void SpikeDown::update()
 {
-	
+	drawSelf();
 }

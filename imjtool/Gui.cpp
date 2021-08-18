@@ -59,29 +59,42 @@ void Gui::gameWindow()
 		{
 			if (CollapsingHeader("Killers"))
 			{
-				auto addObject = [&](string spriteName)
+				auto addObject = [&](int index, string spriteName)
 				{
-					if (ImageButton(*Game::get().resourceManager.textures[spriteName]))
+					if (paletteIcons[index] == nullptr)
 					{
+						auto spr = Game::get().resourceManager.sprites[spriteName]->items[0]->sprite;
+						spr->setPosition(16, 16);
+						spr->setOrigin(spr->getLocalBounds().width / 2, spr->getLocalBounds().height / 2);
+						auto tex = make_shared<sf::RenderTexture>();
+						tex->create(32, 32);
+						tex->clear(sf::Color::Transparent);
+						tex->draw(*spr);
+						paletteIcons[index] = tex;
+					}
+
+					if (ImageButton(*paletteIcons[index]))
+					{
+						Game::get().editor.selectIndex = index;
 						Game::get().editor.selectSprite = Game::get().resourceManager.sprites[spriteName];
 					}
 				};
 
-				addObject("spike_up");
+				addObject(GETID(SpikeUp),"spike_up");
 				SameLine();
-				addObject("spike_down");
+				addObject(GETID(SpikeDown), "spike_down");
 				SameLine();
-				addObject("spike_left");
+				addObject(GETID(SpikeLeft), "spike_left");
 				SameLine();
-				addObject("spike_right");
+				addObject(GETID(SpikeRight), "spike_right");
 
-				addObject("mini_spike_up");
+				addObject(GETID(SpikeUp), "player_idle");
 				SameLine();
-				addObject("mini_spike_down");
+				addObject(GETID(SpikeUp), "mini_spike_down");
 				SameLine();
-				addObject("mini_spike_left");
+				addObject(GETID(SpikeUp), "mini_spike_left");
 				SameLine();
-				addObject("mini_spike_right");
+				addObject(GETID(SpikeUp), "mini_spike_right");
 			}
 			End();
 		}

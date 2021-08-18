@@ -7,6 +7,6 @@ SpikeUp::SpikeUp()
 
 void SpikeUp::update()
 {
-	
+	drawSelf();
 }
 
