@@ -4,11 +4,11 @@
 #include <imgui-SFML.h>
 
 #include "Object.h"
-
-namespace Win
-{
-#include <windows.h>
-}
+//
+//namespace Win
+//{
+//#include <windows.h>
+//}
 
 
 void Gui::mainMenu()
@@ -56,11 +56,23 @@ void Gui::mainMenu()
 		}
 		if (BeginMenu("View"))
 		{
-			if (MenuItem("Grid", "F2"))
+			if (BeginMenu("Grid"))
 			{
-				showGameWindow = true;
+				if (MenuItem("Show Grid", nullptr, showGrid))
+				{
+					showGrid = !showGrid;
+					if (showGrid)
+					{
+						updateGrid();
+					}
+				}
+				Separator();
+				if (MenuItem("Set Size"))
+				{
+					showGridWindow = !showGridWindow;
+				}
+				EndMenu();
 			}
-			Separator();
 			EndMenu();
 		}
 		if (BeginMenu("Player"))
@@ -81,13 +93,17 @@ void Gui::mainMenu()
 			{
 				showDebug = !showDebug;
 			}
+			if (MenuItem("Shift", nullptr, showShift))
+			{
+				showShift = !showShift;
+			}
 			EndMenu();
 		}
 		if (BeginMenu("Help"))
 		{
 			if (MenuItem("Github"))
 			{
-				Win::ShellExecuteA(nullptr, "open", "https://github.com/cubeww/imjtool", nullptr, nullptr, 10);
+				//Win::ShellExecuteA(nullptr, "open", "https://github.com/cubeww/imjtool", nullptr, nullptr, 10);
 			}
 			Separator();
 			if (MenuItem("About"))
@@ -112,6 +128,14 @@ void Gui::gameWindow()
 		{
 			Image(*Game::get().gameTexture);
 			Game::get().editor.update();
+
+			if (showGrid)
+			{
+				SetCursorPos(GetCursorStartPos());
+				auto col = sf::Color::Black;
+				col.a = 66;
+				Image(*gridTexture, col);
+			}
 			End();
 		}
 	}
@@ -230,6 +254,7 @@ void Gui::update()
 	debugWindow();
 	aboutWindow();
 	shiftWindow();
+	gridWindow();
 }
 
 void Gui::aboutWindow()
@@ -238,12 +263,17 @@ void Gui::aboutWindow()
 	{
 		OpenPopup("About");
 	}
-
-	SetNextWindowSize(ImVec2(300, 200), ImGuiCond_Once);
+	
+	SetNextWindowSize(ImVec2(420, 420), ImGuiCond_Once);
 	if (BeginPopupModal("About", &showAbout))
 	{
-		Text("ImJtool");
+		Text("Immediate Mode Jump Tool");
 		Text("By Cube");
+		Text("Powered By:");
+		Image(*Game::get().resourceManager.textures["sfml"]);
+		Text("Simple and Fast Multimedia Library");
+		Image(*Game::get().resourceManager.textures["imgui"]);
+		Text("Dear ImGui");
 		if (Button("Close"))
 		{
 			showAbout = false;
@@ -314,5 +344,57 @@ void Gui::shiftWindow()
 
 			End();
 		}
+	}
+}
+
+void Gui::gridWindow()
+{
+	if (showGridWindow)
+	{
+		OpenPopup("Set Grid");
+	}
+
+	SetNextWindowSize(ImVec2(200, 100), ImGuiCond_Once);
+	if (BeginPopupModal("Set Grid", &showGridWindow))
+	{
+		InputInt("Grid W", &gridW);
+		InputInt("Grid H", &gridH);
+
+		gridW = clamp(gridW, 1, 800);
+		gridH = clamp(gridH, 1, 608);
+
+		if (Button("OK"))
+		{
+			updateGrid();
+			showGridWindow = false;
+			CloseCurrentPopup();
+		}
+		EndPopup();
+	}
+}
+
+void Gui::updateGrid()
+{
+	if (gridTexture == nullptr)
+	{
+		gridTexture = make_shared<sf::RenderTexture>();
+		gridTexture->create(800, 608);
+	}
+	gridTexture->clear(sf::Color::Transparent);
+	for (auto yy = 0; yy <= 608; yy += gridH)
+	{
+		sf::RectangleShape rect;
+		rect.setFillColor(sf::Color::Black);
+		rect.setPosition(0, yy);
+		rect.setSize(sf::Vector2f(800, 1));
+		gridTexture->draw(rect);
+	}
+	for (auto xx = 0; xx <= 800; xx += gridW)
+	{
+		sf::RectangleShape rect;
+		rect.setFillColor(sf::Color::Black);
+		rect.setPosition(xx, 0);
+		rect.setSize(sf::Vector2f(1, 608));
+		gridTexture->draw(rect);
 	}
 }

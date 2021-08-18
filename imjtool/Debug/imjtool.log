@@ -1,9 +1,2 @@
-﻿  Editor.cpp
-D:\Projects\CPP\imjtool\imjtool\Editor.cpp(106,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Editor.cpp(107,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Editor.cpp(209,28): warning C4018: '<': signed/unsigned mismatch
-D:\Projects\CPP\imjtool\imjtool\Editor.cpp(270,14): warning C4018: '<': signed/unsigned mismatch
-  Gui.cpp
-D:\Projects\CPP\imjtool\imjtool\Gui.cpp(46,69): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+﻿  Game.cpp
   imjtool.vcxproj -> D:\Projects\CPP\imjtool\Debug\imjtool.exe

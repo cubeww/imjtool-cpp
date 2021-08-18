@@ -85,6 +85,8 @@ void Game::createResources()
 	resourceManager.createTexture("player_mask_flip", "textures/player_mask_flip.png");
 	resourceManager.createTexture("player_start", "textures/player_start.png");
 	resourceManager.createTexture("mini_block", "textures/mini_block.png");
+	resourceManager.createTexture("sfml", "textures/sfml.png");
+	resourceManager.createTexture("imgui", "textures/imgui.png");
 
 	resourceManager.createSprite("apple").addSheet("apple", 2);
 	resourceManager.createSprite("block").addSheet("block");

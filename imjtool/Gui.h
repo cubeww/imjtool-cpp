@@ -25,6 +25,12 @@ private:
 	bool showAbout = false;
 	bool showShift = false;
 
+	bool showGrid = false;
+	int gridW = 32;
+	int gridH = 32;
+	bool showGridWindow = false;
+	shared_ptr<sf::RenderTexture> gridTexture;
+
 	int shiftX = 32;
 	int shiftY = 32;
 
@@ -35,4 +41,7 @@ private:
 	void debugWindow();
 	void aboutWindow();
 	void shiftWindow();
+	void gridWindow();
+
+	void updateGrid();
 };
