@@ -1,2 +1,138 @@
-﻿  Game.cpp
+﻿  Editor.cpp
+D:\Projects\CPP\imjtool\imjtool\Editor.cpp(106,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Editor.cpp(107,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Editor.cpp(209,28): warning C4018: '<': signed/unsigned mismatch
+D:\Projects\CPP\imjtool\imjtool\Editor.cpp(273,14): warning C4018: '<': signed/unsigned mismatch
+  Game.cpp
+  Gui.cpp
+D:\Projects\CPP\imjtool\imjtool\Gui.cpp(46,69): warning C4018: '<': signed/unsigned mismatch
+D:\Projects\CPP\imjtool\imjtool\Gui.cpp(388,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Gui.cpp(396,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  InGame.cpp
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(118,18): warning C4305: '=': truncation from 'double' to 'float'
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(119,16): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(147,19): warning C4305: '=': truncation from 'double' to 'float'
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(190,18): warning C4305: '*=': truncation from 'double' to 'float'
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(236,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(236,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(236,15): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  InputManager.cpp
+  Object.cpp
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(32,16): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(38,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(73,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(74,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(75,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(76,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(81,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(81,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(87,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(87,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(93,14): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(94,13): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(95,15): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(96,16): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(107,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(108,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(111,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(112,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(123,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(123,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(130,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(130,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(137,14): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(138,13): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(139,15): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(140,16): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(151,26): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(151,22): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(154,96): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(158,96): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  ObjectManager.cpp
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.cpp(55,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.cpp(56,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.cpp(64,52): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.cpp(64,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.cpp(65,86): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.cpp(85,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.cpp(86,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.cpp(94,52): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.cpp(94,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.cpp(95,86): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Sprite.cpp
+  main.cpp
+  Generating Code...
+  LINK : D:\Projects\CPP\imjtool\Debug\imjtool.exe not found or not built by the last incremental link; performing full link
   imjtool.vcxproj -> D:\Projects\CPP\imjtool\Debug\imjtool.exe

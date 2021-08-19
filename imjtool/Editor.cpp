@@ -197,7 +197,7 @@ void Editor::addMoveEvent(shared_ptr<Object> object, float oldX, float oldY, flo
 	{
 		curEvent = make_shared<UndoEvent>(Move);
 	}
-	curEvent->addSubEvent(SubEvent(object, oldX, oldY, newX, newY));
+	curEvent->addSubEvent(SubEvent(object->index, oldX, oldY, newX, newY));
 }
 
 void Editor::finishEvent()
@@ -256,8 +256,11 @@ void Editor::undo()
 				CREATEI(subEvent.objectIndex, subEvent.x, subEvent.y);
 				break;
 			case Move:
-				subEvent.object->x = subEvent.oldX;
-				subEvent.object->y = subEvent.oldY;
+				for (auto i : mgr.atPosition(subEvent.newX, subEvent.newY, subEvent.objectIndex))
+				{
+					i->x = subEvent.oldX;
+					i->y = subEvent.oldY;
+				}
 				break;
 			}
 		}
@@ -284,8 +287,11 @@ void Editor::redo()
 				}
 				break;
 			case Move:
-				subEvent.object->x = subEvent.newX;
-				subEvent.object->y = subEvent.newY;
+				for (auto i : mgr.atPosition(subEvent.oldX, subEvent.oldY, subEvent.objectIndex))
+				{
+					i->x = subEvent.newX;
+					i->y = subEvent.newY;
+				}
 				break;
 			}
 		}

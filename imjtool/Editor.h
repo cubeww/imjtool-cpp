@@ -15,7 +15,6 @@ using namespace ImGui;
 struct SubEvent
 {
 	float x, y, oldX, oldY, newX, newY;
-	shared_ptr<Object> object;
 	int objectIndex;
 
 	SubEvent(float _x, float _y, int _objectIndex)
@@ -25,9 +24,9 @@ struct SubEvent
 		objectIndex = _objectIndex;
 	}
 
-	SubEvent(shared_ptr<Object> _object, float _oldX, float _oldY, float _newX, float _newY)
+	SubEvent(int _objectIndex, float _oldX, float _oldY, float _newX, float _newY)
 	{
-		object = _object;
+		objectIndex = _objectIndex;
 		oldX = _oldX;
 		oldY = _oldY;
 		newX = _newX;
