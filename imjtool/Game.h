@@ -5,6 +5,7 @@
 #include "ObjectManager.h"
 #include "Gui.h"
 #include "InputManager.h"
+#include "PlayerManager.h"
 
 #define IS_PRESS(key) Game::get().inputManager.isKeyPress(key)
 #define IS_HOLD(key) Game::get().inputManager.isKeyHold(key)
@@ -22,6 +23,7 @@ public:
 	ResourceManager resourceManager;
 	ObjectManager objectManager;
 	InputManager inputManager;
+	PlayerManager playerManager;
 	Gui gui;
 	Editor editor;
 
@@ -34,6 +36,5 @@ public:
 	void run();
 	void handleEvent();
 	void update();
-	void createResources();
-	void createObjects();
+	void loadTextures();
 };

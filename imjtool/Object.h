@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <SFML/Graphics/Color.hpp>
+#include <set>
 
 #include "Game.h"
 
@@ -12,8 +13,6 @@ using namespace std;
 class Object
 {
 public:
-	Object();
-
 	int index = 0;
 
 	shared_ptr<Sprite> sprite;
@@ -48,15 +47,22 @@ public:
 
 	float gravity = 0;
 
+	set<string> collisionLayers;
+
 	void setSprite(string name, bool setMask = true);
 	void setMask(string name);
 	void setOrigin(float x, float y, bool setMask = true);
 	void setMaskOrigin(float x, float y);
+	void addCollision(string layer);
 	void updateSprite();
 	void drawSelf();
 	void drawMask();
 
-	shared_ptr<Object> placeMeeting(float x, float y, int index);
+	shared_ptr<Object> placeMeeting(float x, float y, string layer);
+
+	virtual void create()
+	{
+	}
 
 	virtual void update()
 	{

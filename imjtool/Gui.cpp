@@ -144,7 +144,7 @@ void Gui::gameWindow()
 		SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Once);
 		if (Begin("Palette", &showPalette))
 		{
-			auto addObject = [&](int index, string spriteName)
+			auto addObject = [&](int index, string spriteName, string hint = "")
 			{
 				if (paletteIcons[index] == nullptr)
 				{
@@ -162,6 +162,12 @@ void Gui::gameWindow()
 				{
 					Game::get().editor.selectIndex = index;
 					Game::get().editor.selectSprite = Game::get().resourceManager.sprites[spriteName];
+				}
+				if(hint!="" && IsItemHovered())
+				{
+					BeginTooltip();
+					Text(hint.data());
+					EndTooltip();
 				}
 			};
 			if (CollapsingHeader("Player"))
@@ -207,8 +213,18 @@ void Gui::gameWindow()
 				addObject(GETID(WalljumpR), "walljump_r");
 				SameLine();
 				addObject(GETID(WalljumpL), "walljump_l");
+				
+				addObject(GETID(Water), "water", "Water 1 (Refresh Jump, High)");
 				SameLine();
-				addObject(GETID(Water), "water");
+				addObject(GETID(Water2), "water2", "Water 2 (No Refresh Jump)");
+				SameLine();
+				addObject(GETID(Water3), "water3", "Water 3 (Refresh Jump)");
+			}
+			if (CollapsingHeader("Misc"))
+			{
+				addObject(GETID(GravityArrowUp), "gravity_up");
+				SameLine();
+				addObject(GETID(GravityArrowDown), "gravity_down");
 			}
 			End();
 		}
@@ -287,7 +303,6 @@ void Gui::shiftWindow()
 {
 	if (showShift)
 	{
-		//SetNextWindowSize(ImVec2(250, 250), ImGuiCond_Once);
 		if (Begin("Shift Objects", &showShift))
 		{
 			InputInt("Shift X", &shiftX);

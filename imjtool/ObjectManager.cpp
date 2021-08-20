@@ -12,7 +12,6 @@ ObjectManager::ObjectManager()
 	REGISTER(MiniBlock)
 	REGISTER(JumpRefresher)
 	REGISTER(KillerBlock)
-	REGISTER(World)
 	REGISTER(Platform)
 	REGISTER(Player)
 	REGISTER(PlayerStart)
@@ -29,12 +28,19 @@ ObjectManager::ObjectManager()
 	REGISTER(WalljumpL)
 	REGISTER(WalljumpR)
 	REGISTER(Water)
+	REGISTER(Water2)
+	REGISTER(Water3)
+	REGISTER(GravityArrowUp)
+	REGISTER(GravityArrowDown)
 }
 
 void ObjectManager::update()
 {
 	// sort depth
-	sort(objects.begin(), objects.end(), [](const shared_ptr<Object>& obj1, const shared_ptr<Object>& obj2) { return (obj1->depth > obj2->depth); });
+	sort(objects.begin(), objects.end(), [](const shared_ptr<Object>& obj1, const shared_ptr<Object>& obj2)
+	{
+		return (obj1->depth > obj2->depth);
+	});
 
 	// update instances
 	for (auto i : objects)
@@ -59,10 +65,10 @@ shared_ptr<Object> ObjectManager::collisionPoint(float x, float y, int index)
 			spr->setRotation(i->rotation);
 			spr->setOrigin(i->maskXorigin, i->maskYorigin);
 			spr->setScale(i->xscale, i->yscale);
-			auto trans = spr->getInverseTransform();
+			auto& trans = spr->getInverseTransform();
 
 			auto c1 = trans.transformPoint(sf::Vector2f(x1, y1));
-			if (c1.x >= 0 && c1.x < item->w && c1.y >= 0 && c1.y < item->h && item->data[c1.x +
+			if (c1.x >= 0 && c1.x < item->w - 1 && c1.y >= 0 && c1.y < item->h - 1 && item->data[c1.x +
 				c1.y * item->w])
 			{
 				return i;
@@ -89,10 +95,10 @@ vector<shared_ptr<Object>> ObjectManager::collisionPointList(float x, float y, i
 			spr->setRotation(i->rotation);
 			spr->setOrigin(i->maskXorigin, i->maskYorigin);
 			spr->setScale(i->xscale, i->yscale);
-			auto trans = spr->getInverseTransform();
+			auto& trans = spr->getInverseTransform();
 
 			auto c1 = trans.transformPoint(sf::Vector2f(x1, y1));
-			if (c1.x >= 0 && c1.x < item->w && c1.y >= 0 && c1.y < item->h && item->data[c1.x +
+			if (c1.x >= 0 && c1.x < item->w - 1 && c1.y >= 0 && c1.y < item->h - 1 && item->data[c1.x +
 				c1.y * item->w])
 			{
 				result.push_back(i);
@@ -128,23 +134,40 @@ shared_ptr<Object> ObjectManager::collisionLine(float x1, float y1, float x2, fl
 vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, float x2, float y2, int index)
 {
 	vector<shared_ptr<Object>> result;
+	auto d = sqrtf(powf(x1 - x2, 2) + powf(y1 - y2, 2));
+	auto dx = (x2 - x1) / d;
+	auto dy = (y2 - y1) / d;
+
+	auto xs = round(x1);
+	auto ys = round(y1);
+
 	for (auto i : Game::get().objectManager.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
-			auto d = sqrtf(powf(x1 - x2, 2) + powf(y1 - y2, 2));
-			auto dx = (x2 - x1) / d;
-			auto dy = (y2 - y1) / d;
+			// check collision
+			auto item = i->maskSprite->items[static_cast<int>(i->imageIndex) % i->maskSprite->items.size()];
+			auto spr = item->sprite;
 
-			for (auto j = 0; j < d; j++)
+			spr->setPosition(i->x, i->y);
+			spr->setRotation(i->rotation);
+			spr->setOrigin(i->maskXorigin, i->maskYorigin);
+			spr->setScale(i->xscale, i->yscale);
+			auto& trans = spr->getInverseTransform();
+
+			auto xx = xs;
+			auto yy = ys;
+			for (float j = 0; j < d; j += 1)
 			{
-				auto col = collisionPoint(x1, y1, index);
-				if (col != nullptr)
+				auto c1 = trans.transformPoint(sf::Vector2f(xx, yy));
+				if (c1.x >= 0 && c1.x < item->w - 1 && c1.y >= 0 && c1.y < item->h - 1 && item->data[c1.x +
+					c1.y * item->w])
 				{
-					result.push_back(col);
+					result.push_back(i);
 				}
-				x1 += dx;
-				y1 += dy;
+
+				xx += dx;
+				yy += dy;
 			}
 		}
 	}

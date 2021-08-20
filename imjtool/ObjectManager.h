@@ -11,10 +11,10 @@ class Object;
 using namespace std;
 
 #define BEGIN_REGISTER int temp = 0;
-#define REGISTER(name) indexMap[#name] = temp; temp += 1; createMap[indexMap[#name]] = [&](float x, float y){ auto obj = make_shared<name>(); obj->x = x; obj->y = y; obj->index = indexMap[#name]; objects.push_back(obj); return obj; };
+#define REGISTER(name) indexMap[#name] = temp; temp += 1; createMap[indexMap[#name]] = [&](float x, float y){ auto obj = make_shared<name>(); obj->index = indexMap[#name]; obj->x = x; obj->y = y; objects.push_back(obj); obj->create(); return obj; };
 #define GETID(name) Game::get().objectManager.indexMap[#name]
 
-#define CREATE(name, _x, _y)  auto __tmpobj = make_shared<name>(); __tmpobj->x = _x; __tmpobj->y = _y; __tmpobj->index = GETID(#name); Game::get().objectManager.objects.push_back(__tmpobj);
+#define CREATE(name, x, y) CREATEI(GETID(name), x, y)
 #define CREATEI(index, x, y) Game::get().objectManager.createMap[index](x, y)
 
 #define DESTROY(ptr) Game::get().objectManager.objects.erase(std::remove(Game::get().objectManager.objects.begin(), Game::get().objectManager.objects.end(), ptr), Game::get().objectManager.objects.end());

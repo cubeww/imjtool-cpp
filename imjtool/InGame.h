@@ -5,8 +5,7 @@ class Apple :
     public Object
 {
 public:
-    Apple();
-
+    void create() override;
     void update() override;
 };
 
@@ -14,8 +13,7 @@ class Block :
     public Object
 {
 public:
-    Block();
-
+    void create() override;
     void update() override;
 };
 
@@ -23,8 +21,7 @@ class MiniBlock :
     public Object
 {
 public:
-    MiniBlock();
-
+    void create() override;
     void update() override;
 };
 
@@ -32,8 +29,7 @@ class JumpRefresher :
     public Object
 {
 public:
-    JumpRefresher();
-
+    void create() override;
     void update() override;
 };
 
@@ -41,8 +37,7 @@ class KillerBlock :
     public Object
 {
 public:
-    KillerBlock();
-
+    void create() override;
     void update() override;
 };
 
@@ -50,8 +45,7 @@ class MiniSpikeDown :
     public Object
 {
 public:
-    MiniSpikeDown();
-
+    void create() override;
     void update() override;
 };
 
@@ -59,8 +53,7 @@ class MiniSpikeLeft :
     public Object
 {
 public:
-    MiniSpikeLeft();
-
+    void create() override;
     void update() override;
 };
 
@@ -68,8 +61,7 @@ class MiniSpikeRight :
     public Object
 {
 public:
-    MiniSpikeRight();
-
+    void create() override;
     void update() override;
 };
 
@@ -77,8 +69,7 @@ class MiniSpikeUp :
     public Object
 {
 public:
-    MiniSpikeUp();
-
+    void create() override;
     void update() override;
 };
 
@@ -86,8 +77,7 @@ class Platform :
     public Object
 {
 public:
-    Platform();
-
+    void create() override;
     void update() override;
 };
 
@@ -99,20 +89,18 @@ public:
     float maxHspeed = 3;
     float maxVspeed = 9;
     bool onPlatform = false;
-    int grav = 1;
-    int face = 1;
     bool djump = true;
 
-    Player();
+    void create() override;
     void update() override;
+    ~Player() { cout << "~player" << endl; }
 };
 
 class PlayerStart :
     public Object
 {
 public:
-    PlayerStart();
-
+    void create() override;
     void update() override;
 };
 
@@ -120,8 +108,7 @@ class Save :
     public Object
 {
 public:
-    Save();
-
+    void create() override;
     void update() override;
 };
 
@@ -129,8 +116,7 @@ class SpikeDown :
     public Object
 {
 public:
-    SpikeDown();
-
+    void create() override;
     void update() override;
 };
 
@@ -138,8 +124,7 @@ class SpikeLeft :
     public Object
 {
 public:
-    SpikeLeft();
-
+    void create() override;
     void update() override;
 };
 
@@ -147,8 +132,7 @@ class SpikeRight :
     public Object
 {
 public:
-    SpikeRight();
-
+    void create() override;
     void update() override;
 };
 
@@ -156,8 +140,7 @@ class SpikeUp :
     public Object
 {
 public:
-    SpikeUp();
-
+    void create() override;
     void update() override;
 };
 
@@ -165,8 +148,7 @@ class WalljumpL :
     public Object
 {
 public:
-    WalljumpL();
-
+    void create() override;
     void update() override;
 };
 
@@ -174,8 +156,7 @@ class WalljumpR :
     public Object
 {
 public:
-    WalljumpR();
-
+    void create() override;
     void update() override;
 };
 
@@ -183,21 +164,46 @@ class Warp :
     public Object
 {
 public:
-    Warp();
-
+    void create() override;
     void update() override;
 };
+
 class Water :
     public Object
 {
 public:
-    Water();
-
+    void create() override;
     void update() override;
 };
 
-class World : public Object
+class Water2 :
+    public Object
 {
 public:
+    void create() override;
+    void update() override;
+};
+
+class Water3 :
+    public Object
+{
+public:
+    void create() override;
+    void update() override;
+};
+
+class GravityArrowUp :
+    public Object
+{
+public:
+    void create() override;
+    void update() override;
+};
+
+class GravityArrowDown :
+    public Object
+{
+public:
+    void create() override;
     void update() override;
 };

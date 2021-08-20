@@ -1,0 +1,9 @@
+﻿  Gui.cpp
+D:\Projects\CPP\imjtool\imjtool\Gui.cpp(46,69): warning C4018: '<': signed/unsigned mismatch
+D:\Projects\CPP\imjtool\imjtool\Gui.cpp(388,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Gui.cpp(396,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 3770 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  imjtool.vcxproj -> D:\Projects\CPP\imjtool\Release\imjtool.exe
