@@ -57,7 +57,7 @@ void Object::setMaskOrigin(float x, float y)
 
 shared_ptr<Object> Object::placeMeeting(float x, float y, string layer)
 {
-	for (auto i : ObjMgr.objects)
+	for (auto const& i : ObjMgr.objects)
 	{
 		if (i.get() == this || i->collisionLayers.find(layer) == i->collisionLayers.end())
 		{

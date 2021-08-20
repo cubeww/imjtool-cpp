@@ -1,5 +1,11 @@
 #include "InGame.h"
 
+#include <iostream>
+#include "random.hpp"
+
+using Random = effolkronium::random_static;
+#define PI 3.1415926535897932f
+
 void Apple::create()
 {
 	depth = 0;
@@ -380,8 +386,14 @@ void Player::update()
 	// killer
 	if (placeMeeting(x, y, "Killer"))
 	{
-		DESTROYN(Player);
+		for(auto i = 0; i < 200; i++)
+		{
+			Create(Blood, x, y);
+		}
+
+		DestroyByName(Player);
 		PlayerMgr.player = nullptr;
+		return;
 	}
 
 	updateSprite();
@@ -391,16 +403,13 @@ void Player::update()
 
 void PlayerStart::create()
 {
-	ObjMgr.objects.erase(remove_if(
-		ObjMgr.objects.begin(),
-		ObjMgr.objects.end(),
-		[&](shared_ptr<Object>& obj)
-		{
-			return obj->index == GETID(PlayerStart) && obj.get() != this;
-		}
-	), ObjMgr.objects.end());
-	DESTROYN(Player);
-	CREATE(Player, x + 17, y + 23);
+	for (auto const& o : ObjMgr.objects)
+	{
+		if (o->index == index && o.get() != this)
+			Destroy(o);
+	}
+	DestroyByName(Player);
+	Create(Player, x + 17, y + 23);
 	depth = 0;
 	setSprite("player_start");
 	PlayerMgr.save();
@@ -567,5 +576,59 @@ void GravityArrowDown::create()
 
 void GravityArrowDown::update()
 {
+	drawSelf();
+}
+
+void Blood::create()
+{
+	depth = -5;
+
+	imageIndex = Random::get(0, 2);
+	imageSpeed = 0;
+	gravity = (0.1f + Random::get(0.0f, 0.2f)) * PlayerMgr.grav;
+	auto direction = Random::get(0.0f, PI * 2);
+
+	auto speed = Random::get(0.0f, 6.0f);
+	hspeed = speed * cos(direction);
+	vspeed = speed * sin(direction);
+
+	xscale = 1.5;
+	yscale = xscale;
+	setSprite("blood");
+	addCollision("Blood");
+}
+
+void Blood::update()
+{
+	xprevious = x;
+	yprevious = y;
+
+	vspeed += gravity;
+
+	x += hspeed;
+	y += vspeed;
+
+	if (placeMeeting(x, y, "Block"))
+	{
+		x = xprevious;
+		y = yprevious;
+
+		while (!placeMeeting(x + sign(hspeed), y + sign(vspeed), "Block"))
+		{
+			x += sign(hspeed);
+			y += sign(vspeed);
+		}
+
+		hspeed = 0;
+		vspeed = 0;
+		gravity = 0;
+	}
+
+	if (y >= 640)
+	{
+		DestroyThis();
+		return;
+	}
+
 	drawSelf();
 }

@@ -23,18 +23,18 @@ public:
 		return instance;
 	}
 
-	ResourceManager resourceManager;
-	ObjectManager objectManager;
-	InputManager inputManager;
-	PlayerManager playerManager;
-	Gui gui;
-	Editor editor;
+	ResourceManager resourceManager = ResourceManager();
+	ObjectManager objectManager = ObjectManager();
+	InputManager inputManager = InputManager();
+	PlayerManager playerManager = PlayerManager();
+	Gui gui = Gui();
+	Editor editor = Editor();
 
 	unique_ptr<sf::RenderWindow> window;
 	unique_ptr<sf::RenderTexture> gameTexture;
 
 	sf::Clock deltaClock;
-	float fps;
+	float fps = 0;
 
 	void run();
 	void handleEvent();

@@ -172,59 +172,59 @@ void Gui::gameWindow()
 			};
 			if (CollapsingHeader("Player"))
 			{
-				addObject(GETID(PlayerStart), "player_start");
+				addObject(GetIndex(PlayerStart), "player_start");
 				SameLine();
-				addObject(GETID(Save), "save");
+				addObject(GetIndex(Save), "save");
 				SameLine();
-				addObject(GETID(Warp), "warp");
+				addObject(GetIndex(Warp), "warp");
 			}
 			if (CollapsingHeader("Killer"))
 			{
-				addObject(GETID(SpikeUp), "spike_up");
+				addObject(GetIndex(SpikeUp), "spike_up");
 				SameLine();
-				addObject(GETID(SpikeDown), "spike_down");
+				addObject(GetIndex(SpikeDown), "spike_down");
 				SameLine();
-				addObject(GETID(SpikeLeft), "spike_left");
+				addObject(GetIndex(SpikeLeft), "spike_left");
 				SameLine();
-				addObject(GETID(SpikeRight), "spike_right");
+				addObject(GetIndex(SpikeRight), "spike_right");
 
-				addObject(GETID(MiniSpikeUp), "mini_spike_up");
+				addObject(GetIndex(MiniSpikeUp), "mini_spike_up");
 				SameLine();
-				addObject(GETID(MiniSpikeDown), "mini_spike_down");
+				addObject(GetIndex(MiniSpikeDown), "mini_spike_down");
 				SameLine();
-				addObject(GETID(MiniSpikeLeft), "mini_spike_left");
+				addObject(GetIndex(MiniSpikeLeft), "mini_spike_left");
 				SameLine();
-				addObject(GETID(MiniSpikeRight), "mini_spike_right");
+				addObject(GetIndex(MiniSpikeRight), "mini_spike_right");
 
-				addObject(GETID(Apple), "apple");
+				addObject(GetIndex(Apple), "apple");
 				SameLine();
-				addObject(GETID(KillerBlock), "killer_block");
+				addObject(GetIndex(KillerBlock), "killer_block");
 			}
 			if (CollapsingHeader("Block & Platform"))
 			{
-				addObject(GETID(Block), "block");
+				addObject(GetIndex(Block), "block");
 				SameLine();
-				addObject(GETID(MiniBlock), "mini_block");
+				addObject(GetIndex(MiniBlock), "mini_block");
 				SameLine();
-				addObject(GETID(Platform), "platform");
+				addObject(GetIndex(Platform), "platform");
 			}
 			if (CollapsingHeader("Vine & Water"))
 			{
-				addObject(GETID(WalljumpR), "walljump_r");
+				addObject(GetIndex(WalljumpR), "walljump_r");
 				SameLine();
-				addObject(GETID(WalljumpL), "walljump_l");
+				addObject(GetIndex(WalljumpL), "walljump_l");
 				
-				addObject(GETID(Water), "water", "Water 1 (Refresh Jump, High)");
+				addObject(GetIndex(Water), "water", "Water 1 (Refresh Jump, High)");
 				SameLine();
-				addObject(GETID(Water2), "water2", "Water 2 (No Refresh Jump)");
+				addObject(GetIndex(Water2), "water2", "Water 2 (No Refresh Jump)");
 				SameLine();
-				addObject(GETID(Water3), "water3", "Water 3 (Refresh Jump)");
+				addObject(GetIndex(Water3), "water3", "Water 3 (Refresh Jump)");
 			}
 			if (CollapsingHeader("Misc"))
 			{
-				addObject(GETID(GravityArrowUp), "gravity_up");
+				addObject(GetIndex(GravityArrowUp), "gravity_up");
 				SameLine();
-				addObject(GETID(GravityArrowDown), "gravity_down");
+				addObject(GetIndex(GravityArrowDown), "gravity_down");
 			}
 			End();
 		}
@@ -255,7 +255,7 @@ void Gui::debugWindow()
 			debugValue("Undo Pos", Gm.editor.undoPos);
 			if (Button("DEL Instances"))
 			{
-				DESTROYALL();
+				DestroyAll();
 			}
 			End();
 		}
@@ -312,9 +312,9 @@ void Gui::shiftWindow()
 
 			if (Button("U", ImVec2(32, 32)))
 			{
-				for (auto i : ObjMgr.objects)
+				for (auto const& i : ObjMgr.objects)
 				{
-					if (i->index == GETID(Player))
+					if (i->index == GetIndex(Player))
 						continue;
 					Gm.editor.addMoveEvent(i, i->x, i->y, i->x, i->y - shiftY);
 					i->y -= shiftY;
@@ -323,9 +323,9 @@ void Gui::shiftWindow()
 			}
 			if (Button("L", ImVec2(32, 32)))
 			{
-				for (auto i : ObjMgr.objects)
+				for (auto const& i : ObjMgr.objects)
 				{
-					if (i->index == GETID(Player))
+					if (i->index == GetIndex(Player))
 						continue;
 					Gm.editor.addMoveEvent(i, i->x, i->y, i->x - shiftX, i->y);
 					i->x -= shiftX;
@@ -335,9 +335,9 @@ void Gui::shiftWindow()
 			SameLine();
 			if (Button("D", ImVec2(32, 32)))
 			{
-				for (auto i : ObjMgr.objects)
+				for (auto const& i : ObjMgr.objects)
 				{
-					if (i->index == GETID(Player))
+					if (i->index == GetIndex(Player))
 						continue;
 					Gm.editor.addMoveEvent(i, i->x, i->y, i->x, i->y + shiftY);
 					i->y += shiftY;
@@ -347,9 +347,9 @@ void Gui::shiftWindow()
 			SameLine();
 			if (Button("R", ImVec2(32, 32)))
 			{
-				for (auto i : ObjMgr.objects)
+				for (auto const& i : ObjMgr.objects)
 				{
-					if (i->index == GETID(Player))
+					if (i->index == GetIndex(Player))
 						continue;
 					Gm.editor.addMoveEvent(i, i->x, i->y, i->x + shiftX, i->y);
 					i->x += shiftX;

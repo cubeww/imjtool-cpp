@@ -2,7 +2,7 @@
 
 #include "InGame.h"
 
-#define floateq(x, y) (fabs(x - y) < 0.0001)
+inline bool equalF(float x, float y) { return fabs(x - y) < 0.0001; }
 
 ObjectManager::ObjectManager()
 {
@@ -32,6 +32,7 @@ ObjectManager::ObjectManager()
 	REGISTER(Water3)
 	REGISTER(GravityArrowUp)
 	REGISTER(GravityArrowDown)
+	REGISTER(Blood)
 }
 
 void ObjectManager::update()
@@ -43,15 +44,25 @@ void ObjectManager::update()
 	});
 
 	// update instances
-	for (auto i : objects)
+	for (auto i = 0; i < objects.size();)
 	{
-		i->update();
+		auto& obj = objects[i];
+		if (obj->needDestroy)
+		{
+			objects.erase(objects.begin() + i);
+		}
+		else
+		{
+			obj->update();
+			++i;
+		}
 	}
+	
 }
 
 shared_ptr<Object> ObjectManager::collisionPoint(float x, float y, int index)
 {
-	for (auto i : ObjMgr.objects)
+	for (auto const& i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
@@ -81,7 +92,7 @@ shared_ptr<Object> ObjectManager::collisionPoint(float x, float y, int index)
 vector<shared_ptr<Object>> ObjectManager::collisionPointList(float x, float y, int index)
 {
 	vector<shared_ptr<Object>> result;
-	for (auto i : ObjMgr.objects)
+	for (auto const& i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
@@ -110,7 +121,7 @@ vector<shared_ptr<Object>> ObjectManager::collisionPointList(float x, float y, i
 
 shared_ptr<Object> ObjectManager::collisionLine(float x1, float y1, float x2, float y2, int index)
 {
-	for (auto i : ObjMgr.objects)
+	for (auto const& i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
@@ -141,7 +152,7 @@ vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, 
 	auto xs = round(x1);
 	auto ys = round(y1);
 
-	for (auto i : ObjMgr.objects)
+	for (auto const& i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
@@ -177,11 +188,11 @@ vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, 
 vector<shared_ptr<Object>> ObjectManager::atPosition(float x, float y, int index)
 {
 	vector<shared_ptr<Object>> result;
-	for (auto i : ObjMgr.objects)
+	for (auto const& i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
-			if (floateq(x, i->x) && floateq(y, i->y))
+			if (equalF(x, i->x) && equalF(y, i->y))
 			{
 				result.push_back(i);
 			}

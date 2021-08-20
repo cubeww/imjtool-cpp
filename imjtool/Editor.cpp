@@ -3,8 +3,15 @@
 #include "Game.h"
 #include "Object.h"
 
-#define pointdir(x1, y1, x2, y2) (atan((y1 - y2) / (x1 - x2)))
-#define pointdist(x1, y1, x2, y2) (sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2)))
+inline float pointdir(float x1, float y1, float x2, float y2)
+{
+	return atan((y1 - y2) / (x1 - x2));
+}
+
+inline float pointdist(float x1, float y1, float x2, float y2)
+{
+	return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+}
 
 Editor::Editor()
 {
@@ -44,7 +51,7 @@ void Editor::update()
 			{
 				if (caughtObject == nullptr)
 				{
-					for (auto i : ObjMgr.objects)
+					for (auto const& i : ObjMgr.objects)
 					{
 						auto col = ObjMgr.collisionPoint(mouseInPos.x, mouseInPos.y, i->index);
 						if (col != nullptr)
@@ -71,7 +78,7 @@ void Editor::update()
 			if (leftPress)
 			{
 				auto col = ObjMgr.collisionPointList(mouseInPos.x, mouseInPos.y, ALL);
-				for (auto i : col)
+				for (auto const& i : col)
 				{
 					selectSprite = i->sprite;
 					selectIndex = i->index;
@@ -123,14 +130,14 @@ void Editor::update()
 				{
 					col = ObjMgr.collisionPointList(mouseInPos.x, mouseInPos.y, ALL);
 				}
-				for (auto i : col)
+				for (auto const& i : col)
 				{
-					if (i->index == GETID(PlayerStart) || i->index == GETID(Player))
+					if (i->index == GetIndex(PlayerStart) || i->index == GetIndex(Player))
 					{
 						continue;
 					}
 					addRemoveEvent(i->x, i->y, i->index);
-					DESTROY(i);
+					Destroy(i);
 				}
 			}
 		}
@@ -162,11 +169,11 @@ void Editor::update()
 	}
 
 	// undo & redo
-	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && inputMgr.isKeyPress(sf::Keyboard::Z))
+	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && InputMgr.isKeyPress(sf::Keyboard::Z))
 	{
 		undo();
 	}
-	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && inputMgr.isKeyPress(sf::Keyboard::Y))
+	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && InputMgr.isKeyPress(sf::Keyboard::Y))
 	{
 		redo();
 	}
@@ -219,7 +226,7 @@ void Editor::finishCreateObject(float x, float y)
 {
 	if (ObjMgr.atPosition(x, y, selectIndex).empty())
 	{
-		auto inst = CREATEI(selectIndex, x, y);
+		auto inst = CreateByIndex(selectIndex, x, y);
 		addCreateEvent(inst->x, inst->y, inst->index);
 	}
 }
@@ -240,21 +247,21 @@ void Editor::undo()
 	{
 		undoPos--;
 		auto lastEvent = undoEvents[undoPos];
-		for (auto subEvent : lastEvent->subEvents)
+		for (auto const& subEvent : lastEvent->subEvents)
 		{
 			switch (lastEvent->type)
 			{
 			case Create:
-				for (auto i : ObjMgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))
+				for (auto const& i : ObjMgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))
 				{
-					DESTROY(i);
+					Destroy(i);
 				}
 				break;
 			case Remove:
-				CREATEI(subEvent.objectIndex, subEvent.x, subEvent.y);
+				CreateByIndex(subEvent.objectIndex, subEvent.x, subEvent.y);
 				break;
 			case Move:
-				for (auto i : ObjMgr.atPosition(subEvent.newX, subEvent.newY, subEvent.objectIndex))
+				for (auto const& i : ObjMgr.atPosition(subEvent.newX, subEvent.newY, subEvent.objectIndex))
 				{
 					i->x = subEvent.oldX;
 					i->y = subEvent.oldY;
@@ -270,21 +277,21 @@ void Editor::redo()
 	if (undoPos < undoEvents.size())
 	{
 		auto lastEvent = undoEvents[undoPos];
-		for (auto subEvent : lastEvent->subEvents)
+		for (auto const& subEvent : lastEvent->subEvents)
 		{
 			switch (lastEvent->type)
 			{
 			case Create:
-				CREATEI(subEvent.objectIndex, subEvent.x, subEvent.y);
+				CreateByIndex(subEvent.objectIndex, subEvent.x, subEvent.y);
 				break;
 			case Remove:
-				for (auto i : ObjMgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))
+				for (auto const& i : ObjMgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))
 				{
-					DESTROY(i);
+					Destroy(i);
 				}
 				break;
 			case Move:
-				for (auto i : ObjMgr.atPosition(subEvent.oldX, subEvent.oldY, subEvent.objectIndex))
+				for (auto const& i : ObjMgr.atPosition(subEvent.oldX, subEvent.oldY, subEvent.objectIndex))
 				{
 					i->x = subEvent.newX;
 					i->y = subEvent.newY;
@@ -298,7 +305,8 @@ void Editor::redo()
 
 void Editor::clearUndo()
 {
-	
+	undoPos = 0;
+	undoEvents.clear();
 }
 
 

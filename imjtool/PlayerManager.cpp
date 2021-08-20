@@ -5,8 +5,9 @@ void PlayerManager::update()
 {
 	if (InputMgr.isKeyPress(sf::Keyboard::R))
 	{
-		DESTROYN(Player);
-		CREATE(Player, currentSave.x, currentSave.y);
+		DestroyByName(Player);
+		DestroyByName(Blood);
+		Create(Player, currentSave.x, currentSave.y);
 	}
 }
 

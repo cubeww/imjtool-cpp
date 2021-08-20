@@ -207,3 +207,11 @@ public:
     void create() override;
     void update() override;
 };
+
+class Blood :
+    public Object
+{
+public:
+    void create() override;
+    void update() override;
+};

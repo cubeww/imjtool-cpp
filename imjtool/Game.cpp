@@ -22,7 +22,7 @@ void Game::run()
 	loadTextures();
 
 	editor.selectSprite = resourceManager.sprites["block"];
-	editor.selectIndex = GETID(Block);
+	editor.selectIndex = GetIndex(Block);
 
 	while (window->isOpen())
 	{

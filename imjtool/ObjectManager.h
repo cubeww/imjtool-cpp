@@ -10,17 +10,20 @@ class Object;
 
 using namespace std;
 
+// object helper macros
 #define BEGIN_REGISTER int temp = 0;
 #define REGISTER(name) indexMap[#name] = temp; temp += 1; createMap[indexMap[#name]] = [&](float x, float y){ auto obj = make_shared<name>(); obj->index = indexMap[#name]; obj->x = x; obj->y = y; objects.push_back(obj); obj->create(); return obj; };
-#define GETID(name) ObjMgr.indexMap[#name]
 
-#define CREATE(name, x, y) CREATEI(GETID(name), x, y)
-#define CREATEI(index, x, y) ObjMgr.createMap[index](x, y)
+#define GetIndex(name) ObjMgr.indexMap[#name]
 
-#define DESTROY(ptr) ObjMgr.objects.erase(std::remove(ObjMgr.objects.begin(), ObjMgr.objects.end(), ptr), ObjMgr.objects.end());
-#define DESTROYI(_index) ObjMgr.objects.erase(std::remove_if(ObjMgr.objects.begin(),ObjMgr.objects.end(),[](const shared_ptr<Object>& o){return o->index == _index;}),ObjMgr.objects.end())
-#define DESTROYN(name) DESTROYI(GETID(name))
-#define DESTROYALL() ObjMgr.objects.clear()
+#define Create(name, x, y) CreateByIndex(GetIndex(name), x, y)
+#define CreateByIndex(index, x, y) ObjMgr.createMap[index](x, y)
+
+#define Destroy(ptr) ptr->needDestroy = true
+#define DestroyByIndex(_index) for_each(ObjMgr.objects.begin(), ObjMgr.objects.end(), [](shared_ptr<Object>& o){if(o->index == _index){o->needDestroy=true;}})
+#define DestroyByName(name) DestroyByIndex(GetIndex(name))
+#define DestroyThis() this->needDestroy = true
+#define DestroyAll() for_each(ObjMgr.objects.begin(), ObjMgr.objects.end(), [](shared_ptr<Object>& o){o->needDestroy=true;})
 
 #define ALL -1
 

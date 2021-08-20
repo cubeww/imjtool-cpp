@@ -14,8 +14,8 @@ using namespace ImGui;
 
 struct SubEvent
 {
-	float x, y, oldX, oldY, newX, newY;
-	int objectIndex;
+	float x = 0, y = 0, oldX = 0, oldY = 0, newX = 0, newY = 0;
+	int objectIndex = -1;
 
 	SubEvent(float _x, float _y, int _objectIndex)
 	{

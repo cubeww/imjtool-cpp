@@ -14,6 +14,7 @@ class Object
 {
 public:
 	int index = 0;
+	bool needDestroy = false;
 
 	shared_ptr<Sprite> sprite;
 	shared_ptr<Sprite> maskSprite;
