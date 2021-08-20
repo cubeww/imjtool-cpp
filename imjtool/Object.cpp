@@ -1,10 +1,11 @@
 #include "Object.h"
 
 #include "Game.h"
+#include "InGame.h"
 
-void Object::addCollision(string layer)
+void Object::addCollision(Col layer)
 {
-	collisionLayers.insert(layer);
+	collisionLayers.set(static_cast<int>(layer), true);
 }
 
 void Object::setSprite(string name, bool setMask)
@@ -55,11 +56,11 @@ void Object::setMaskOrigin(float x, float y)
 	maskYorigin = y;
 }
 
-shared_ptr<Object> Object::placeMeeting(float x, float y, string layer)
+shared_ptr<Object> Object::placeMeeting(float x, float y, Col layer)
 {
 	for (auto const& i : ObjMgr.objects)
 	{
-		if (i.get() == this || i->collisionLayers.find(layer) == i->collisionLayers.end())
+		if (!i->collisionLayers.test(static_cast<int>(layer)) || i.get() == this)
 		{
 			continue;
 		}

@@ -1,6 +1,26 @@
 #pragma once
 #include "Object.h"
 
+enum class Col
+{
+    Player,
+    Apple,
+    Block,
+    Platform,
+    Killer,
+    Save,
+    Water,
+    Water2,
+    Water3,
+    WalljumpL,
+    WalljumpR,
+    GravityArrowUp,
+    GravityArrowDown,
+    JumpRefresher,
+    Warp,
+    Blood,
+};
+
 class Apple :
     public Object
 {
@@ -93,7 +113,6 @@ public:
 
     void create() override;
     void update() override;
-    ~Player() { cout << "~player" << endl; }
 };
 
 class PlayerStart :

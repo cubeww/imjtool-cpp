@@ -11,7 +11,7 @@ void Apple::create()
 	depth = 0;
 	imageSpeed = 1 / 15;
 	setSprite("apple");
-	addCollision("Killer");
+	addCollision(Col::Killer);
 }
 
 void Apple::update()
@@ -23,7 +23,7 @@ void Block::create()
 {
 	depth = 1;
 	setSprite("block");
-	addCollision("Block");
+	addCollision(Col::Block);
 }
 
 void Block::update()
@@ -35,7 +35,7 @@ void MiniBlock::create()
 {
 	depth = 1;
 	setSprite("mini_block");
-	addCollision("Block");
+	addCollision(Col::Block);
 }
 
 void MiniBlock::update()
@@ -47,7 +47,7 @@ void JumpRefresher::create()
 {
 	depth = 0;
 	setSprite("jump_refresher");
-	addCollision("JumpRefresher");
+	addCollision(Col::JumpRefresher);
 }
 
 void JumpRefresher::update()
@@ -59,7 +59,7 @@ void KillerBlock::create()
 {
 	depth = 0;
 	setSprite("killer_block");
-	addCollision("Killer");
+	addCollision(Col::Killer);
 }
 
 void KillerBlock::update()
@@ -71,7 +71,7 @@ void MiniSpikeDown::create()
 {
 	depth = 0;
 	setSprite("mini_spike_down");
-	addCollision("Killer");
+	addCollision(Col::Killer);
 }
 
 void MiniSpikeDown::update()
@@ -83,7 +83,7 @@ void MiniSpikeLeft::create()
 {
 	depth = 0;
 	setSprite("mini_spike_left");
-	addCollision("Killer");
+	addCollision(Col::Killer);
 }
 
 void MiniSpikeLeft::update()
@@ -95,7 +95,7 @@ void MiniSpikeRight::create()
 {
 	depth = 0;
 	setSprite("mini_spike_right");
-	addCollision("Killer");
+	addCollision(Col::Killer);
 }
 
 void MiniSpikeRight::update()
@@ -107,7 +107,7 @@ void MiniSpikeUp::create()
 {
 	depth = 0;
 	setSprite("mini_spike_up");
-	addCollision("Killer");
+	addCollision(Col::Killer);
 }
 
 void MiniSpikeUp::update()
@@ -119,7 +119,7 @@ void Platform::create()
 {
 	depth = 10;
 	setSprite("platform");
-	addCollision("Platform");
+	addCollision(Col::Platform);
 }
 
 void Platform::update()
@@ -138,7 +138,7 @@ void Player::create()
 	setSprite("player_idle");
 	setMask("player_mask");
 	setOrigin(17, 23, true);
-	addCollision("Player");
+	addCollision(Col::Player);
 
 	for (auto i : ObjMgr.objects)
 	{
@@ -189,7 +189,7 @@ void Player::update()
 			setOrigin(17, 23, false);
 		}
 	}
-	if (!placeMeeting(x, y + 4 * PlayerMgr.grav, "Platform"))
+	if (!placeMeeting(x, y + 4 * PlayerMgr.grav, Col::Platform))
 	{
 		onPlatform = false;
 	}
@@ -199,9 +199,9 @@ void Player::update()
 		vspeed = sign(vspeed) * maxVspeed;
 	}
 
-	auto water = placeMeeting(x, y, "Water");
-	auto water2 = placeMeeting(x, y, "Water2");
-	auto water3 = placeMeeting(x, y, "Water3");
+	auto water = placeMeeting(x, y, Col::Water);
+	auto water2 = placeMeeting(x, y, Col::Water2);
+	auto water3 = placeMeeting(x, y, Col::Water3);
 
 	if (water || water2 || water3)
 	{
@@ -215,7 +215,7 @@ void Player::update()
 
 	if (InputMgr.isKeyPress(sf::Keyboard::LShift))
 	{
-		if (placeMeeting(x, y + 1 * PlayerMgr.grav, "Block") || placeMeeting(x, y + 1 * PlayerMgr.grav, "Platform") || onPlatform ||
+		if (placeMeeting(x, y + 1 * PlayerMgr.grav, Col::Block) || placeMeeting(x, y + 1 * PlayerMgr.grav, Col::Block) || onPlatform ||
 			water)
 		{
 			vspeed = -jump * PlayerMgr.grav;
@@ -241,9 +241,9 @@ void Player::update()
 	}
 
 	// vine
-	auto notOnBlock = !placeMeeting(x, y + 1 * PlayerMgr.grav, "Block");
-	auto onVineL = placeMeeting(x - 1, y, "WalljumpL") && notOnBlock;
-	auto onVineR = placeMeeting(x + 1, y, "WalljumpR") && notOnBlock;
+	auto notOnBlock = !placeMeeting(x, y + 1 * PlayerMgr.grav, Col::Block);
+	auto onVineL = placeMeeting(x - 1, y, Col::WalljumpL) && notOnBlock;
+	auto onVineR = placeMeeting(x + 1, y, Col::WalljumpR) && notOnBlock;
 	if (onVineL || onVineR)
 	{
 		if (onVineL)
@@ -288,24 +288,24 @@ void Player::update()
 
 	// block
 	auto dir = 0;
-	if (placeMeeting(x, y, "Block"))
+	if (placeMeeting(x, y, Col::Block))
 	{
 		x = xprevious;
 		y = yprevious;
 
-		if (placeMeeting(x + hspeed, y, "Block"))
+		if (placeMeeting(x + hspeed, y, Col::Block))
 		{
 			dir = sign(hspeed);
-			while (!placeMeeting(x + dir, y, "Block"))
+			while (!placeMeeting(x + dir, y, Col::Block))
 			{
 				x += dir;
 			}
 			hspeed = 0;
 		}
-		if (placeMeeting(x, y + vspeed, "Block"))
+		if (placeMeeting(x, y + vspeed, Col::Block))
 		{
 			dir = sign(vspeed);
-			while (!placeMeeting(x, y + dir, "Block"))
+			while (!placeMeeting(x, y + dir, Col::Block))
 			{
 				y += dir;
 			}
@@ -315,7 +315,7 @@ void Player::update()
 			}
 			vspeed = 0;
 		}
-		if (placeMeeting(x + hspeed, y + vspeed, "Block"))
+		if (placeMeeting(x + hspeed, y + vspeed, Col::Block))
 		{
 			hspeed = 0;
 		}
@@ -325,7 +325,7 @@ void Player::update()
 	}
 
 	// platform
-	auto pf = placeMeeting(x, y, "Platform");
+	auto pf = placeMeeting(x, y, Col::Platform);
 	if (pf != nullptr)
 	{
 		if (PlayerMgr.grav == 1)
@@ -373,18 +373,18 @@ void Player::update()
 	};
 
 	// gravity arrow
-	if (PlayerMgr.grav == 1 && placeMeeting(x,y,"GravityArrowUp"))
+	if (PlayerMgr.grav == 1 && placeMeeting(x,y, Col::GravityArrowUp))
 	{
 		flipGrav();
 	}
 
-	if (PlayerMgr.grav == -1 && placeMeeting(x, y, "GravityArrowDown"))
+	if (PlayerMgr.grav == -1 && placeMeeting(x, y, Col::GravityArrowDown))
 	{
 		flipGrav();
 	}
 
 	// killer
-	if (placeMeeting(x, y, "Killer"))
+	if (placeMeeting(x, y, Col::Killer))
 	{
 		for(auto i = 0; i < 200; i++)
 		{
@@ -424,7 +424,7 @@ void Save::create()
 {
 	depth = 0;
 	setSprite("save");
-	addCollision("Save");
+	addCollision(Col::Save);
 }
 
 void Save::update()
@@ -436,7 +436,7 @@ void SpikeDown::create()
 {
 	depth = 0;
 	setSprite("spike_down");
-	addCollision("Killer");
+	addCollision(Col::Killer);
 }
 
 void SpikeDown::update()
@@ -448,7 +448,7 @@ void SpikeLeft::create()
 {
 	depth = 0;
 	setSprite("spike_left");
-	addCollision("Killer");
+	addCollision(Col::Killer);
 }
 
 void SpikeLeft::update()
@@ -460,7 +460,7 @@ void SpikeRight::create()
 {
 	depth = 0;
 	setSprite("spike_right");
-	addCollision("Killer");
+	addCollision(Col::Killer);
 }
 
 void SpikeRight::update()
@@ -472,7 +472,7 @@ void SpikeUp::create()
 {
 	depth = 0;
 	setSprite("spike_up");
-	addCollision("Killer");
+	addCollision(Col::Killer);
 }
 
 void SpikeUp::update()
@@ -484,7 +484,7 @@ void WalljumpL::create()
 {
 	depth = -1;
 	setSprite("walljump_l");
-	addCollision("WalljumpL");
+	addCollision(Col::WalljumpL);
 }
 
 void WalljumpL::update()
@@ -496,7 +496,7 @@ void WalljumpR::create()
 {
 	depth = -1;
 	setSprite("walljump_r");
-	addCollision("WalljumpR");
+	addCollision(Col::WalljumpR);
 }
 
 void WalljumpR::update()
@@ -508,7 +508,7 @@ void Warp::create()
 {
 	depth = 0;
 	setSprite("warp");
-	addCollision("Warp");
+	addCollision(Col::Warp);
 }
 
 void Warp::update()
@@ -520,7 +520,7 @@ void Water::create()
 {
 	depth = -50;
 	setSprite("water");
-	addCollision("Water");
+	addCollision(Col::Water);
 }
 
 void Water::update()
@@ -532,7 +532,7 @@ void Water2::create()
 {
 	depth = -50;
 	setSprite("water2");
-	addCollision("Water2");
+	addCollision(Col::Water2);
 }
 
 void Water2::update()
@@ -545,7 +545,7 @@ void Water3::create()
 {
 	depth = -50;
 	setSprite("water3");
-	addCollision("Water3");
+	addCollision(Col::Water3);
 }
 
 void Water3::update()
@@ -558,7 +558,7 @@ void GravityArrowUp::create()
 {
 	depth = 0;
 	setSprite("gravity_up");
-	addCollision("GravityArrowUp");
+	addCollision(Col::GravityArrowUp);
 }
 
 void GravityArrowUp::update()
@@ -571,7 +571,7 @@ void GravityArrowDown::create()
 {
 	depth = 0;
 	setSprite("gravity_down");
-	addCollision("GravityArrowDown");
+	addCollision(Col::GravityArrowDown);
 }
 
 void GravityArrowDown::update()
@@ -595,7 +595,7 @@ void Blood::create()
 	xscale = 1.5;
 	yscale = xscale;
 	setSprite("blood");
-	addCollision("Blood");
+	addCollision(Col::Blood);
 }
 
 void Blood::update()
@@ -608,12 +608,12 @@ void Blood::update()
 	x += hspeed;
 	y += vspeed;
 
-	if (placeMeeting(x, y, "Block"))
+	if (placeMeeting(x, y, Col::Block))
 	{
 		x = xprevious;
 		y = yprevious;
 
-		while (!placeMeeting(x + sign(hspeed), y + sign(vspeed), "Block"))
+		while (!placeMeeting(x + sign(hspeed), y + sign(vspeed), Col::Block))
 		{
 			x += sign(hspeed);
 			y += sign(vspeed);

@@ -2,11 +2,12 @@
 
 #include <iostream>
 #include <SFML/Graphics/Color.hpp>
-#include <set>
+#include <bitset>
 
 #include "Game.h"
 
 class Sprite;
+enum class Col;
 
 using namespace std;
 
@@ -48,18 +49,18 @@ public:
 
 	float gravity = 0;
 
-	set<string> collisionLayers;
+	bitset<256> collisionLayers;
 
 	void setSprite(string name, bool setMask = true);
 	void setMask(string name);
 	void setOrigin(float x, float y, bool setMask = true);
 	void setMaskOrigin(float x, float y);
-	void addCollision(string layer);
+	void addCollision(Col layer);
 	void updateSprite();
 	void drawSelf();
 	void drawMask();
 
-	shared_ptr<Object> placeMeeting(float x, float y, string layer);
+	shared_ptr<Object> placeMeeting(float x, float y, Col layer);
 
 	virtual void create()
 	{
