@@ -7,9 +7,12 @@
 #include "InputManager.h"
 #include "PlayerManager.h"
 
-#define IS_PRESS(key) Game::get().inputManager.isKeyPress(key)
-#define IS_HOLD(key) Game::get().inputManager.isKeyHold(key)
-#define IS_RELEASE(key) Game::get().inputManager.isKeyRelease(key)
+// game manager shortcuts
+#define Gm Game::get() 
+#define ResMgr Game::get().resourceManager
+#define ObjMgr Game::get().objectManager
+#define InputMgr Game::get().inputManager
+#define PlayerMgr Game::get().playerManager
 
 class Game
 {

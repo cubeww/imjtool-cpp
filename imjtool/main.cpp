@@ -2,5 +2,5 @@
 
 int main()
 {
-	Game::get().run();
+	Gm.run();
 }

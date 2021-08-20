@@ -7,7 +7,7 @@
 
 void Sprite::addSingle(string textureName, int x, int y, int w, int h)
 {
-	auto tex = Game::get().resourceManager.textures[textureName];
+	auto tex = ResMgr.textures[textureName];
 	auto spr = make_shared<sf::Sprite>();
 	spr->setTexture(*tex);
 	spr->setTextureRect(sf::IntRect(x, y, w, h));
@@ -29,7 +29,7 @@ void Sprite::addSingle(string textureName, int x, int y, int w, int h)
 
 void Sprite::addSheet(string textureName, int xnum, int ynum)
 {
-	auto tex = Game::get().resourceManager.textures[textureName];
+	auto tex = ResMgr.textures[textureName];
 	auto size = tex->getSize();
 	auto w = size.x / xnum;
 	auto h = size.y / ynum;
@@ -69,7 +69,7 @@ void Sprite::draw(int index, float x, float y, float xorigin, float yorigin, flo
 	spr->setPosition(x, y);
 	spr->setColor(color);
 	spr->setOrigin(xorigin, yorigin);
-	Game::get().gameTexture->draw(*spr);
+	Gm.gameTexture->draw(*spr);
 }
 
 SpriteItem::SpriteItem(shared_ptr<sf::Sprite> sprite, vector<bool> data, int w, int h)

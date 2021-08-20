@@ -51,7 +51,7 @@ void ObjectManager::update()
 
 shared_ptr<Object> ObjectManager::collisionPoint(float x, float y, int index)
 {
-	for (auto i : Game::get().objectManager.objects)
+	for (auto i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
@@ -81,7 +81,7 @@ shared_ptr<Object> ObjectManager::collisionPoint(float x, float y, int index)
 vector<shared_ptr<Object>> ObjectManager::collisionPointList(float x, float y, int index)
 {
 	vector<shared_ptr<Object>> result;
-	for (auto i : Game::get().objectManager.objects)
+	for (auto i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
@@ -110,7 +110,7 @@ vector<shared_ptr<Object>> ObjectManager::collisionPointList(float x, float y, i
 
 shared_ptr<Object> ObjectManager::collisionLine(float x1, float y1, float x2, float y2, int index)
 {
-	for (auto i : Game::get().objectManager.objects)
+	for (auto i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
@@ -141,7 +141,7 @@ vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, 
 	auto xs = round(x1);
 	auto ys = round(y1);
 
-	for (auto i : Game::get().objectManager.objects)
+	for (auto i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
@@ -177,7 +177,7 @@ vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, 
 vector<shared_ptr<Object>> ObjectManager::atPosition(float x, float y, int index)
 {
 	vector<shared_ptr<Object>> result;
-	for (auto i : Game::get().objectManager.objects)
+	for (auto i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{

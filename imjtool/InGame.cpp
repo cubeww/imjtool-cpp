@@ -127,18 +127,18 @@ void Player::create()
 {
 	depth = -10;
 	imageSpeed = 0.2;
-	gravity = 0.4 * CUR_GRAV;
+	gravity = 0.4 * PlayerMgr.grav;
 
 	setSprite("player_idle");
 	setMask("player_mask");
 	setOrigin(17, 23, true);
 	addCollision("Player");
 
-	for (auto i : Game::get().objectManager.objects)
+	for (auto i : ObjMgr.objects)
 	{
 		if (i.get() == this)
 		{
-			Game::get().playerManager.player = static_pointer_cast<Player>(i);
+			PlayerMgr.player = static_pointer_cast<Player>(i);
 			break;
 		}
 	}
@@ -149,8 +149,8 @@ void Player::update()
 	xprevious = x;
 	yprevious = y;
 
-	auto L = IS_HOLD(sf::Keyboard::Left);
-	auto R = IS_HOLD(sf::Keyboard::Right);
+	auto L = InputMgr.isKeyHold(sf::Keyboard::Left);
+	auto R = InputMgr.isKeyHold(sf::Keyboard::Right);
 
 	auto h = 0;
 	if (R) h = 1;
@@ -158,7 +158,7 @@ void Player::update()
 
 	if (h != 0)
 	{
-		CUR_FACE = h;
+		PlayerMgr.face = h;
 		setSprite("player_running", false);
 		setOrigin(17, 23, false);
 		imageSpeed = 0.5;
@@ -172,18 +172,18 @@ void Player::update()
 	hspeed = maxHspeed * h;
 	if (!onPlatform)
 	{
-		if (vspeed * CUR_GRAV < -0.05)
+		if (vspeed * PlayerMgr.grav < -0.05)
 		{
 			setSprite("player_jump", false);
 			setOrigin(17, 23, false);
 		}
-		else if (vspeed * CUR_GRAV > 0.05)
+		else if (vspeed * PlayerMgr.grav > 0.05)
 		{
 			setSprite("player_fall", false);
 			setOrigin(17, 23, false);
 		}
 	}
-	if (!placeMeeting(x, y + 4 * CUR_GRAV, "Platform"))
+	if (!placeMeeting(x, y + 4 * PlayerMgr.grav, "Platform"))
 	{
 		onPlatform = false;
 	}
@@ -199,7 +199,7 @@ void Player::update()
 
 	if (water || water2 || water3)
 	{
-		vspeed = min(vspeed * CUR_SAVE.grav, 2.0f) * CUR_SAVE.grav;
+		vspeed = min(vspeed * PlayerMgr.grav, 2.0f) * PlayerMgr.grav;
 
 		if (!water2)
 		{
@@ -207,61 +207,61 @@ void Player::update()
 		}
 	}
 
-	if (IS_PRESS(sf::Keyboard::LShift))
+	if (InputMgr.isKeyPress(sf::Keyboard::LShift))
 	{
-		if (placeMeeting(x, y + 1 * CUR_GRAV, "Block") || placeMeeting(x, y + 1 * CUR_GRAV, "Platform") || onPlatform ||
+		if (placeMeeting(x, y + 1 * PlayerMgr.grav, "Block") || placeMeeting(x, y + 1 * PlayerMgr.grav, "Platform") || onPlatform ||
 			water)
 		{
-			vspeed = -jump * CUR_GRAV;
+			vspeed = -jump * PlayerMgr.grav;
 			djump = true;
 		}
 		else if (djump || water2)
 		{
 			setSprite("player_jump", false);
 			setOrigin(17, 23, false);
-			vspeed = -jump2 * CUR_GRAV;
+			vspeed = -jump2 * PlayerMgr.grav;
 			if (!water3)
 				djump = false;
 			else djump = true;
 		}
 	}
 
-	if (IS_RELEASE(sf::Keyboard::LShift))
+	if (InputMgr.isKeyRelease(sf::Keyboard::LShift))
 	{
-		if (vspeed * CUR_GRAV < 0)
+		if (vspeed * PlayerMgr.grav < 0)
 		{
 			vspeed *= 0.45;
 		}
 	}
 
 	// vine
-	auto notOnBlock = !placeMeeting(x, y + 1 * CUR_GRAV, "Block");
+	auto notOnBlock = !placeMeeting(x, y + 1 * PlayerMgr.grav, "Block");
 	auto onVineL = placeMeeting(x - 1, y, "WalljumpL") && notOnBlock;
 	auto onVineR = placeMeeting(x + 1, y, "WalljumpR") && notOnBlock;
 	if (onVineL || onVineR)
 	{
 		if (onVineL)
 		{
-			CUR_FACE = 1;
+			PlayerMgr.face = 1;
 		}
 		else
 		{
-			CUR_FACE = -1;
+			PlayerMgr.face = -1;
 		}
 
-		vspeed = 2 * CUR_GRAV;
+		vspeed = 2 * PlayerMgr.grav;
 
 		setSprite("player_sliding", false);
 		setOrigin(7, 10, false);
 		imageSpeed = 0.5;
 
-		if ((onVineL && IS_PRESS(sf::Keyboard::Right)) || (onVineR && IS_PRESS(sf::Keyboard::Left)))
+		if ((onVineL && InputMgr.isKeyPress(sf::Keyboard::Right)) || (onVineR && InputMgr.isKeyPress(sf::Keyboard::Left)))
 		{
-			if (IS_HOLD(sf::Keyboard::LShift))
+			if (InputMgr.isKeyHold(sf::Keyboard::LShift))
 			{
 				if (onVineR) hspeed = -15;
 				else hspeed = 15;
-				vspeed = -9 * CUR_GRAV;
+				vspeed = -9 * PlayerMgr.grav;
 				setSprite("player_jump", false);
 				setOrigin(17, 23, false);
 			}
@@ -303,7 +303,7 @@ void Player::update()
 			{
 				y += dir;
 			}
-			if (vspeed * CUR_GRAV > 0)
+			if (vspeed * PlayerMgr.grav > 0)
 			{
 				djump = true;
 			}
@@ -322,7 +322,7 @@ void Player::update()
 	auto pf = placeMeeting(x, y, "Platform");
 	if (pf != nullptr)
 	{
-		if (CUR_GRAV == 1)
+		if (PlayerMgr.grav == 1)
 		{
 			if (y - vspeed / 2 <= pf->y)
 			{
@@ -348,12 +348,12 @@ void Player::update()
 
 	auto flipGrav = [&]()
 	{
-		CUR_GRAV *= -1;
-		gravity = 0.4 * CUR_GRAV;
+		PlayerMgr.grav *= -1;
+		gravity = 0.4 * PlayerMgr.grav;
 		djump = true;
 		vspeed = 0;
 
-		if (CUR_GRAV == 1)
+		if (PlayerMgr.grav == 1)
 		{
 			setMask("player_mask");
 			setMaskOrigin(17, 23);
@@ -363,16 +363,16 @@ void Player::update()
 			setMask("player_mask_flip");
 			setMaskOrigin(17,8);
 		}
-		y += 4 * CUR_GRAV;
+		y += 4 * PlayerMgr.grav;
 	};
 
 	// gravity arrow
-	if (CUR_GRAV == 1 && placeMeeting(x,y,"GravityArrowUp"))
+	if (PlayerMgr.grav == 1 && placeMeeting(x,y,"GravityArrowUp"))
 	{
 		flipGrav();
 	}
 
-	if (CUR_GRAV == -1 && placeMeeting(x, y, "GravityArrowDown"))
+	if (PlayerMgr.grav == -1 && placeMeeting(x, y, "GravityArrowDown"))
 	{
 		flipGrav();
 	}
@@ -381,29 +381,29 @@ void Player::update()
 	if (placeMeeting(x, y, "Killer"))
 	{
 		DESTROYN(Player);
-		Game::get().playerManager.player = nullptr;
+		PlayerMgr.player = nullptr;
 	}
 
 	updateSprite();
-	sprite->draw(imageIndex, x, y, xorigin, yorigin, CUR_FACE, CUR_GRAV, rotation, color);
+	sprite->draw(imageIndex, x, y, xorigin, yorigin, PlayerMgr.face, PlayerMgr.grav, rotation, color);
 	//drawMask();
 }
 
 void PlayerStart::create()
 {
-	Game::get().objectManager.objects.erase(remove_if(
-		Game::get().objectManager.objects.begin(),
-		Game::get().objectManager.objects.end(),
+	ObjMgr.objects.erase(remove_if(
+		ObjMgr.objects.begin(),
+		ObjMgr.objects.end(),
 		[&](shared_ptr<Object>& obj)
 		{
 			return obj->index == GETID(PlayerStart) && obj.get() != this;
 		}
-	), Game::get().objectManager.objects.end());
+	), ObjMgr.objects.end());
 	DESTROYN(Player);
 	CREATE(Player, x + 17, y + 23);
 	depth = 0;
 	setSprite("player_start");
-	Game::get().playerManager.save();
+	PlayerMgr.save();
 }
 
 void PlayerStart::update()

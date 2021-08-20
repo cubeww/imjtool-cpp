@@ -12,15 +12,15 @@ using namespace std;
 
 #define BEGIN_REGISTER int temp = 0;
 #define REGISTER(name) indexMap[#name] = temp; temp += 1; createMap[indexMap[#name]] = [&](float x, float y){ auto obj = make_shared<name>(); obj->index = indexMap[#name]; obj->x = x; obj->y = y; objects.push_back(obj); obj->create(); return obj; };
-#define GETID(name) Game::get().objectManager.indexMap[#name]
+#define GETID(name) ObjMgr.indexMap[#name]
 
 #define CREATE(name, x, y) CREATEI(GETID(name), x, y)
-#define CREATEI(index, x, y) Game::get().objectManager.createMap[index](x, y)
+#define CREATEI(index, x, y) ObjMgr.createMap[index](x, y)
 
-#define DESTROY(ptr) Game::get().objectManager.objects.erase(std::remove(Game::get().objectManager.objects.begin(), Game::get().objectManager.objects.end(), ptr), Game::get().objectManager.objects.end());
-#define DESTROYI(_index) Game::get().objectManager.objects.erase(std::remove_if(Game::get().objectManager.objects.begin(),Game::get().objectManager.objects.end(),[](const shared_ptr<Object>& o){return o->index == _index;}),Game::get().objectManager.objects.end())
+#define DESTROY(ptr) ObjMgr.objects.erase(std::remove(ObjMgr.objects.begin(), ObjMgr.objects.end(), ptr), ObjMgr.objects.end());
+#define DESTROYI(_index) ObjMgr.objects.erase(std::remove_if(ObjMgr.objects.begin(),ObjMgr.objects.end(),[](const shared_ptr<Object>& o){return o->index == _index;}),ObjMgr.objects.end())
 #define DESTROYN(name) DESTROYI(GETID(name))
-#define DESTROYALL() Game::get().objectManager.objects.clear()
+#define DESTROYALL() ObjMgr.objects.clear()
 
 #define ALL -1
 

@@ -6,10 +6,6 @@ using namespace std;
 
 class Player;
 
-#define CUR_SAVE Game::get().playerManager.currentSave
-#define CUR_FACE Game::get().playerManager.face
-#define CUR_GRAV Game::get().playerManager.grav
-
 struct PlayerSave
 {
 	float x = -1;

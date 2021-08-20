@@ -33,19 +33,19 @@ void Gui::mainMenu()
 			Separator();
 			if (MenuItem("Exit", "ALT+F4"))
 			{
-				Game::get().window->close();
+				Gm.window->close();
 			}
 			EndMenu();
 		}
 		if (BeginMenu("Edit"))
 		{
-			if (MenuItem("Undo", "CTRL+Z", false, Game::get().editor.undoPos > 0))
+			if (MenuItem("Undo", "CTRL+Z", false, Gm.editor.undoPos > 0))
 			{
-				Game::get().editor.undo();
+				Gm.editor.undo();
 			}
-			if (MenuItem("Redo", "CTRL+Y", false, Game::get().editor.undoPos < Game::get().editor.undoEvents.size()))
+			if (MenuItem("Redo", "CTRL+Y", false, Gm.editor.undoPos < Gm.editor.undoEvents.size()))
 			{
-				Game::get().editor.redo();
+				Gm.editor.redo();
 			}
 			Separator();
 			if (MenuItem("Shift"))
@@ -122,12 +122,12 @@ void Gui::gameWindow()
 	{
 		SetNextWindowSize(ImVec2(816, 650), ImGuiCond_Once);
 		int flag = ImGuiWindowFlags_NoResize;
-		if (!Game::get().editor.mouseInTitle)
+		if (!Gm.editor.mouseInTitle)
 			flag |= ImGuiWindowFlags_NoMove;
 		if (Begin("Game Window", &showGameWindow, flag))
 		{
-			Image(*Game::get().gameTexture);
-			Game::get().editor.update();
+			Image(*Gm.gameTexture);
+			Gm.editor.update();
 
 			if (showGrid)
 			{
@@ -148,7 +148,7 @@ void Gui::gameWindow()
 			{
 				if (paletteIcons[index] == nullptr)
 				{
-					auto spr = Game::get().resourceManager.sprites[spriteName]->items[0]->sprite;
+					auto spr = ResMgr.sprites[spriteName]->items[0]->sprite;
 					spr->setPosition(16, 16);
 					spr->setOrigin(spr->getLocalBounds().width / 2, spr->getLocalBounds().height / 2);
 					auto tex = make_shared<sf::RenderTexture>();
@@ -160,8 +160,8 @@ void Gui::gameWindow()
 
 				if (ImageButton(*paletteIcons[index]))
 				{
-					Game::get().editor.selectIndex = index;
-					Game::get().editor.selectSprite = Game::get().resourceManager.sprites[spriteName];
+					Gm.editor.selectIndex = index;
+					Gm.editor.selectSprite = ResMgr.sprites[spriteName];
 				}
 				if(hint!="" && IsItemHovered())
 				{
@@ -247,12 +247,12 @@ void Gui::debugWindow()
 		SetNextWindowSize(ImVec2(250, 250), ImGuiCond_Once);
 		if (Begin("Debug Window", &showDebug))
 		{
-			debugValue("FPS", Game::get().fps);
-			debugValue("Inst", Game::get().objectManager.objects.size());
-			debugValue("Texture Count", Game::get().resourceManager.textures.size());
-			debugValue("Sprite Count", Game::get().resourceManager.sprites.size());
-			debugValue("Undo Stack Size", Game::get().editor.undoEvents.size());
-			debugValue("Undo Pos", Game::get().editor.undoPos);
+			debugValue("FPS", Gm.fps);
+			debugValue("Inst", ObjMgr.objects.size());
+			debugValue("Texture Count", ResMgr.textures.size());
+			debugValue("Sprite Count", ResMgr.sprites.size());
+			debugValue("Undo Stack Size", Gm.editor.undoEvents.size());
+			debugValue("Undo Pos", Gm.editor.undoPos);
 			if (Button("DEL Instances"))
 			{
 				DESTROYALL();
@@ -286,9 +286,9 @@ void Gui::aboutWindow()
 		Text("Immediate Mode Jump Tool");
 		Text("By Cube");
 		Text("Powered By:");
-		Image(*Game::get().resourceManager.textures["sfml"]);
+		Image(*ResMgr.textures["sfml"]);
 		Text("Simple and Fast Multimedia Library");
-		Image(*Game::get().resourceManager.textures["imgui"]);
+		Image(*ResMgr.textures["imgui"]);
 		Text("Dear ImGui");
 		if (Button("Close"))
 		{
@@ -312,49 +312,49 @@ void Gui::shiftWindow()
 
 			if (Button("U", ImVec2(32, 32)))
 			{
-				for (auto i : Game::get().objectManager.objects)
+				for (auto i : ObjMgr.objects)
 				{
 					if (i->index == GETID(Player))
 						continue;
-					Game::get().editor.addMoveEvent(i, i->x, i->y, i->x, i->y - shiftY);
+					Gm.editor.addMoveEvent(i, i->x, i->y, i->x, i->y - shiftY);
 					i->y -= shiftY;
 				}
-				Game::get().editor.finishEvent();
+				Gm.editor.finishEvent();
 			}
 			if (Button("L", ImVec2(32, 32)))
 			{
-				for (auto i : Game::get().objectManager.objects)
+				for (auto i : ObjMgr.objects)
 				{
 					if (i->index == GETID(Player))
 						continue;
-					Game::get().editor.addMoveEvent(i, i->x, i->y, i->x - shiftX, i->y);
+					Gm.editor.addMoveEvent(i, i->x, i->y, i->x - shiftX, i->y);
 					i->x -= shiftX;
 				}
-				Game::get().editor.finishEvent();
+				Gm.editor.finishEvent();
 			}
 			SameLine();
 			if (Button("D", ImVec2(32, 32)))
 			{
-				for (auto i : Game::get().objectManager.objects)
+				for (auto i : ObjMgr.objects)
 				{
 					if (i->index == GETID(Player))
 						continue;
-					Game::get().editor.addMoveEvent(i, i->x, i->y, i->x, i->y + shiftY);
+					Gm.editor.addMoveEvent(i, i->x, i->y, i->x, i->y + shiftY);
 					i->y += shiftY;
 				}
-				Game::get().editor.finishEvent();
+				Gm.editor.finishEvent();
 			}
 			SameLine();
 			if (Button("R", ImVec2(32, 32)))
 			{
-				for (auto i : Game::get().objectManager.objects)
+				for (auto i : ObjMgr.objects)
 				{
 					if (i->index == GETID(Player))
 						continue;
-					Game::get().editor.addMoveEvent(i, i->x, i->y, i->x + shiftX, i->y);
+					Gm.editor.addMoveEvent(i, i->x, i->y, i->x + shiftX, i->y);
 					i->x += shiftX;
 				}
-				Game::get().editor.finishEvent();
+				Gm.editor.finishEvent();
 			}
 
 			End();

@@ -3,7 +3,7 @@
 
 void PlayerManager::update()
 {
-	if (IS_PRESS(sf::Keyboard::R))
+	if (InputMgr.isKeyPress(sf::Keyboard::R))
 	{
 		DESTROYN(Player);
 		CREATE(Player, currentSave.x, currentSave.y);

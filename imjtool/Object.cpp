@@ -9,7 +9,7 @@ void Object::addCollision(string layer)
 
 void Object::setSprite(string name, bool setMask)
 {
-	sprite = Game::get().resourceManager.sprites[name];
+	sprite = ResMgr.sprites[name];
 	if (setMask)
 	{
 		maskSprite = sprite;
@@ -18,7 +18,7 @@ void Object::setSprite(string name, bool setMask)
 
 void Object::setMask(string name)
 {
-	maskSprite = Game::get().resourceManager.sprites[name];
+	maskSprite = ResMgr.sprites[name];
 }
 
 void Object::updateSprite()
@@ -57,7 +57,7 @@ void Object::setMaskOrigin(float x, float y)
 
 shared_ptr<Object> Object::placeMeeting(float x, float y, string layer)
 {
-	for (auto i : Game::get().objectManager.objects)
+	for (auto i : ObjMgr.objects)
 	{
 		if (i.get() == this || i->collisionLayers.find(layer) == i->collisionLayers.end())
 		{

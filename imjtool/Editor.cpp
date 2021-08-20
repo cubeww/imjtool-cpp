@@ -29,11 +29,10 @@ void Editor::update()
 	auto rightHold = IsMouseDown(ImGuiMouseButton_Right);
 	auto rightRelease = IsMouseReleased(ImGuiMouseButton_Right);
 
-	auto dragHold = IS_HOLD(sf::Keyboard::Space);
-	auto pickerHold = IS_HOLD(sf::Keyboard::LControl);
-	auto codeHold = IS_HOLD(sf::Keyboard::LAlt);
+	auto dragHold = InputMgr.isKeyHold(sf::Keyboard::Space);
+	auto pickerHold = InputMgr.isKeyHold(sf::Keyboard::LControl);
+	auto codeHold = InputMgr.isKeyHold(sf::Keyboard::LAlt);
 
-	auto& mgr = Game::get().objectManager;
 	auto snappedPos = ImVec2(floor(mouseInPos.x / snap.x) * snap.x, floor(mouseInPos.y / snap.y) * snap.y);
 	auto focused = IsWindowFocused();
 
@@ -45,9 +44,9 @@ void Editor::update()
 			{
 				if (caughtObject == nullptr)
 				{
-					for (auto i : mgr.objects)
+					for (auto i : ObjMgr.objects)
 					{
-						auto col = mgr.collisionPoint(mouseInPos.x, mouseInPos.y, i->index);
+						auto col = ObjMgr.collisionPoint(mouseInPos.x, mouseInPos.y, i->index);
 						if (col != nullptr)
 						{
 							caughtObject = col;
@@ -71,7 +70,7 @@ void Editor::update()
 		{
 			if (leftPress)
 			{
-				auto col = mgr.collisionPointList(mouseInPos.x, mouseInPos.y, ALL);
+				auto col = ObjMgr.collisionPointList(mouseInPos.x, mouseInPos.y, ALL);
 				for (auto i : col)
 				{
 					selectSprite = i->sprite;
@@ -118,11 +117,11 @@ void Editor::update()
 				vector<shared_ptr<Object>> col;
 				if (rightHoldLast)
 				{
-					col = mgr.collisionLineList(mouseLastPos.x, mouseLastPos.y, mouseInPos.x, mouseInPos.y, ALL);
+					col = ObjMgr.collisionLineList(mouseLastPos.x, mouseLastPos.y, mouseInPos.x, mouseInPos.y, ALL);
 				}
 				else
 				{
-					col = mgr.collisionPointList(mouseInPos.x, mouseInPos.y, ALL);
+					col = ObjMgr.collisionPointList(mouseInPos.x, mouseInPos.y, ALL);
 				}
 				for (auto i : col)
 				{
@@ -163,11 +162,11 @@ void Editor::update()
 	}
 
 	// undo & redo
-	if (IS_HOLD(sf::Keyboard::LControl) && IS_PRESS(sf::Keyboard::Z))
+	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && inputMgr.isKeyPress(sf::Keyboard::Z))
 	{
 		undo();
 	}
-	if (IS_HOLD(sf::Keyboard::LControl) && IS_PRESS(sf::Keyboard::Y))
+	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && inputMgr.isKeyPress(sf::Keyboard::Y))
 	{
 		redo();
 	}
@@ -218,7 +217,7 @@ void Editor::finishEvent()
 
 void Editor::finishCreateObject(float x, float y)
 {
-	if (Game::get().objectManager.atPosition(x, y, selectIndex).empty())
+	if (ObjMgr.atPosition(x, y, selectIndex).empty())
 	{
 		auto inst = CREATEI(selectIndex, x, y);
 		addCreateEvent(inst->x, inst->y, inst->index);
@@ -237,7 +236,6 @@ void Editor::finishMoveObject()
 
 void Editor::undo()
 {
-	auto& mgr = Game::get().objectManager;
 	if (undoPos >= 1)
 	{
 		undoPos--;
@@ -247,7 +245,7 @@ void Editor::undo()
 			switch (lastEvent->type)
 			{
 			case Create:
-				for (auto i : mgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))
+				for (auto i : ObjMgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))
 				{
 					DESTROY(i);
 				}
@@ -256,7 +254,7 @@ void Editor::undo()
 				CREATEI(subEvent.objectIndex, subEvent.x, subEvent.y);
 				break;
 			case Move:
-				for (auto i : mgr.atPosition(subEvent.newX, subEvent.newY, subEvent.objectIndex))
+				for (auto i : ObjMgr.atPosition(subEvent.newX, subEvent.newY, subEvent.objectIndex))
 				{
 					i->x = subEvent.oldX;
 					i->y = subEvent.oldY;
@@ -269,7 +267,6 @@ void Editor::undo()
 
 void Editor::redo()
 {
-	auto& mgr = Game::get().objectManager;
 	if (undoPos < undoEvents.size())
 	{
 		auto lastEvent = undoEvents[undoPos];
@@ -281,13 +278,13 @@ void Editor::redo()
 				CREATEI(subEvent.objectIndex, subEvent.x, subEvent.y);
 				break;
 			case Remove:
-				for (auto i : mgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))
+				for (auto i : ObjMgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))
 				{
 					DESTROY(i);
 				}
 				break;
 			case Move:
-				for (auto i : mgr.atPosition(subEvent.oldX, subEvent.oldY, subEvent.objectIndex))
+				for (auto i : ObjMgr.atPosition(subEvent.oldX, subEvent.oldY, subEvent.objectIndex))
 				{
 					i->x = subEvent.newX;
 					i->y = subEvent.newY;
