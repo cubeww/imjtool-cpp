@@ -133,7 +133,7 @@ void Editor::update()
 				}
 				for (auto const& i : col)
 				{
-					if (i->index == GetIndex(PlayerStart) || i->index == GetIndex(Player))
+					if (i->index == GetIndex(PlayerStart) || !inPalette(i->index))
 					{
 						continue;
 					}

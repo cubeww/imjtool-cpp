@@ -16,6 +16,7 @@ void Game::run()
 
 	window = make_unique<sf::RenderWindow>(sf::VideoMode(1280, 720), "ImJtool");
 	window->setFramerateLimit(50);
+	window->setKeyRepeatEnabled(false);
 
 	SFML::Init(*window);
 
@@ -23,13 +24,6 @@ void Game::run()
 
 	editor.selectSprite = resourceManager.sprites["block"];
 	editor.selectIndex = GetIndex(Block);
-
-	/*for (auto i = 0; i < 1000; i++) {
-		auto b = Create(GetIndex(Blood), 400, 304);
-		b->gravity = 0;
-		b->hspeed = 0;
-		b->vspeed = 0;
-	}*/
 
 	while (window->isOpen())
 	{
@@ -47,6 +41,8 @@ void Game::handleEvent()
 
 		if (event.type == sf::Event::Closed)
 			window->close();
+
+		InputMgr.update(event);
 	}
 }
 
@@ -55,10 +51,10 @@ void Game::update()
 	SFML::Update(*window, deltaClock.restart());
 	window->clear();
 	gameTexture->clear(sf::Color::White);
-	inputManager.update();
 	playerManager.update();
 	objectManager.update();
 	gui.update();
+	inputManager.clearPressAndRelease();
 	SFML::Render(*window);
 	window->display();
 	fps = round(1.f / deltaClock.getElapsedTime().asSeconds());
@@ -84,4 +80,23 @@ void Game::loadTextures()
 		resourceManager.createTexture(name, "textures/" + filename);
 		resourceManager.createSprite(name).addSheet(name, x, y);
 	}
+	f.close();
+
+	f.open("sfx/define.json");
+	f >> j;
+	for (auto i : j)
+	{
+		string filename = i["file"];
+		string name = filesystem::path(filename).stem().string();
+
+		auto x = 1;
+		auto y = 1;
+		if (i["x"] != nullptr)
+			x = i["x"];
+		if (i["y"] != nullptr)
+			y = i["y"];
+
+		resourceManager.createSound(name, "sfx/" + filename);
+	}
+	f.close();
 }

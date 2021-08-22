@@ -38,6 +38,9 @@ enum class Index
     MiniBlock,
 };
 
+bool inPalette(int index);
+
+
 class Apple :
     public Object
 {

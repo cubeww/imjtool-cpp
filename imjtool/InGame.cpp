@@ -5,6 +5,40 @@
 
 using Random = effolkronium::random_static;
 
+bool inPalette(int index)
+{
+	switch (static_cast<Index>(index))
+	{
+	case Index::SpikeUp:
+	case Index::SpikeDown:
+	case Index::SpikeLeft:
+	case Index::SpikeRight:
+	case Index::MiniSpikeUp:
+	case Index::MiniSpikeDown:
+	case Index::MiniSpikeLeft:
+	case Index::MiniSpikeRight:
+	case Index::Block:
+	case Index::MiniBlock:
+	case Index::Apple:
+	case Index::Save:
+	case Index::Platform:
+	case Index::KillerBlock:
+	case Index::Water:
+	case Index::Water2:
+	case Index::Water3:
+	case Index::WalljumpL:
+	case Index::WalljumpR:
+	case Index::PlayerStart:
+	case Index::Warp:
+	case Index::JumpRefresher:
+	case Index::GravityArrowUp:
+	case Index::GravityArrowDown:
+		return true;
+	default:
+		return false;
+	}
+}
+
 void Apple::create()
 {
 	depth = 0;
@@ -250,6 +284,8 @@ void Player::update()
 	{
 		if (ObjMgr.getCount(GetIndex(PlayerBullet)) < 4) 
 		{
+			ResMgr.sounds["shoot"]->play();
+
 			auto by = y;
 			if (PlayerMgr.dotkid)
 				by = y + 6;
@@ -259,16 +295,18 @@ void Player::update()
 		}
 	}
 
-	if (InputMgr.isKeyPress(sf::Keyboard::LShift))
+	if (InputMgr.isKeyPress(sf::Keyboard::LShift) || InputMgr.isKeyPress(sf::Keyboard::RShift))
 	{
 		if (placeMeeting(x, y + 1 * PlayerMgr.grav, Index::Block) || placeMeeting(x, y + 1 * PlayerMgr.grav, Index::Block) || onPlatform ||
 			water)
 		{
+			ResMgr.sounds["jump"]->play();
 			vspeed = -jump * PlayerMgr.grav;
 			djump = true;
 		}
 		else if (djump || water2 || PlayerMgr.infjump)
 		{
+			ResMgr.sounds["djump"]->play();
 			setSprite("player_jump", false);
 			setOrigin(normalXorigin, normalYorigin, false);
 			vspeed = -jump2 * PlayerMgr.grav;
@@ -278,7 +316,7 @@ void Player::update()
 		}
 	}
 
-	if (InputMgr.isKeyRelease(sf::Keyboard::LShift))
+	if (InputMgr.isKeyRelease(sf::Keyboard::LShift)|| InputMgr.isKeyRelease(sf::Keyboard::RShift))
 	{
 		if (vspeed * PlayerMgr.grav < 0)
 		{
@@ -309,8 +347,9 @@ void Player::update()
 
 		if ((onVineL && InputMgr.isKeyPress(sf::Keyboard::Right)) || (onVineR && InputMgr.isKeyPress(sf::Keyboard::Left)))
 		{
-			if (InputMgr.isKeyHold(sf::Keyboard::LShift))
+			if (InputMgr.isKeyHold(sf::Keyboard::LShift) || InputMgr.isKeyHold(sf::Keyboard::RShift))
 			{
+				ResMgr.sounds["walljump"]->play();
 				if (onVineR) hspeed = -15;
 				else hspeed = 15;
 				vspeed = -9 * PlayerMgr.grav;
@@ -444,7 +483,7 @@ void Player::update()
 		{
 			Create(GetIndex(Blood), x, y);
 		}
-
+		ResMgr.sounds["death"]->play();
 		DestroyByName(Player);
 		PlayerMgr.player = nullptr;
 		return;

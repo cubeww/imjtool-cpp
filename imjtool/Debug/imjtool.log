@@ -1,14 +1,14 @@
 ﻿  InGame.cpp
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(217,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(217,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(222,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(222,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(273,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(273,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(307,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(307,13): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(318,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(318,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(325,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(325,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(251,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(251,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(256,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(256,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(311,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(311,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(345,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(345,13): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(357,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(357,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(364,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(364,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   imjtool.vcxproj -> D:\Projects\CPP\imjtool\Debug\imjtool.exe

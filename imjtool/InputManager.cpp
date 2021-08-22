@@ -1,38 +1,26 @@
 #include "InputManager.h"
 #include "Game.h"
 
-void InputManager::update()
+void InputManager::update(sf::Event& event)
+{
+	if (event.type == sf::Event::KeyPressed) 
+	{
+		keyPress[event.key.code] = true;
+		keyHold[event.key.code] = true;
+	}
+	if (event.type == sf::Event::KeyReleased) 
+	{
+		keyHold[event.key.code] = false;
+		keyRelease[event.key.code] = true;
+	}
+}
+
+void InputManager::clearPressAndRelease()
 {
 	for (auto i = 0; i < MAX_KEY; i++)
 	{
-		if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)i))
-		{
-			if (!keyHold[i])
-			{
-				keyPress[i] = true;
-				keyRelease[i] = false;
-			}
-			else
-			{
-				keyPress[i] = false;
-				keyRelease[i] = false;
-			}
-			keyHold[i] = true;
-		}
-		else
-		{
-			if (keyHold[i])
-			{
-				keyPress[i] = false;
-				keyRelease[i] = true;
-			}
-			else
-			{
-				keyPress[i] = false;
-				keyRelease[i] = false;
-			}
-			keyHold[i] = false;
-		}
+		keyPress[i] = false;
+		keyRelease[i] = false;
 	}
 }
 
