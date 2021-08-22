@@ -2,15 +2,16 @@
 
 #include "Game.h"
 #include "Object.h"
+#include "InGame.h"
 
 inline float pointdir(float x1, float y1, float x2, float y2)
 {
-	return atan((y1 - y2) / (x1 - x2));
+	return atan2(y2 - y1, x2 - x1);
 }
 
 inline float pointdist(float x1, float y1, float x2, float y2)
 {
-	return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+	return sqrt(powf(x1 - x2, 2) + powf(y1 - y2, 2));
 }
 
 Editor::Editor()
@@ -102,13 +103,13 @@ void Editor::update()
 					auto dy = len * sin(dir);
 					auto xx = mouseLastPos.x;
 					auto yy = mouseLastPos.y;
-					auto xxnLast = -1;
-					auto yynLast = -1;
+					auto xxnLast = NAN;
+					auto yynLast = NAN;
 					for (auto i = 0; i < n; i++)
 					{
 						auto xxn = floor(xx / snap.x) * snap.x;
 						auto yyn = floor(yy / snap.y) * snap.y;
-						if (xxn != xxnLast || yyn != yynLast) {
+						if (!equalF(xxn, xxnLast) || !equalF(yyn,yynLast)) {
 							xxnLast = xxn;
 							yynLast = yyn;
 							finishCreateObject(xxn, yyn);
@@ -145,15 +146,17 @@ void Editor::update()
 		{
 			finishMoveObject();
 		}
-		if (leftRelease || rightRelease)
-		{
-			finishEvent();
-		}
 	}
 	else
 	{
 		// TODO
 	}
+
+	if (leftRelease || rightRelease)
+	{
+		finishEvent();
+	}
+
 
 	mouseLastPos.x = mouseInPos.x;
 	mouseLastPos.y = mouseInPos.y;
@@ -226,7 +229,7 @@ void Editor::finishCreateObject(float x, float y)
 {
 	if (ObjMgr.atPosition(x, y, selectIndex).empty())
 	{
-		auto inst = CreateByIndex(selectIndex, x, y);
+		auto inst = Create(selectIndex, x, y);
 		addCreateEvent(inst->x, inst->y, inst->index);
 	}
 }
@@ -258,7 +261,7 @@ void Editor::undo()
 				}
 				break;
 			case Remove:
-				CreateByIndex(subEvent.objectIndex, subEvent.x, subEvent.y);
+				Create(subEvent.objectIndex, subEvent.x, subEvent.y);
 				break;
 			case Move:
 				for (auto const& i : ObjMgr.atPosition(subEvent.newX, subEvent.newY, subEvent.objectIndex))
@@ -282,7 +285,7 @@ void Editor::redo()
 			switch (lastEvent->type)
 			{
 			case Create:
-				CreateByIndex(subEvent.objectIndex, subEvent.x, subEvent.y);
+				Create(subEvent.objectIndex, subEvent.x, subEvent.y);
 				break;
 			case Remove:
 				for (auto const& i : ObjMgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))

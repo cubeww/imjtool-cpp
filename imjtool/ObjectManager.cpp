@@ -1,12 +1,23 @@
 #include "ObjectManager.h"
 
 #include "InGame.h"
+#include "Object.h"
 
-inline bool equalF(float x, float y) { return fabs(x - y) < 0.0001; }
+#define REGISTER(name) \
+case Index::name: \
+	obj = make_shared<name>(); \
+	objects.push_back(obj); \
+	obj->index = index; \
+	obj->x = x; \
+	obj->y = y; \
+	obj->create(); \
+	break;
 
-ObjectManager::ObjectManager()
+shared_ptr<Object> ObjectManager::create(int index, float x, float y)
 {
-	BEGIN_REGISTER
+	shared_ptr<Object> obj;
+	switch (static_cast<Index>(index))
+	{
 	REGISTER(Apple)
 	REGISTER(Block)
 	REGISTER(MiniBlock)
@@ -33,7 +44,13 @@ ObjectManager::ObjectManager()
 	REGISTER(GravityArrowUp)
 	REGISTER(GravityArrowDown)
 	REGISTER(Blood)
+
+	default:
+		break;
+	}
+	return obj;
 }
+
 
 void ObjectManager::update()
 {
@@ -44,7 +61,7 @@ void ObjectManager::update()
 	});
 
 	// update instances
-	for (auto i = 0; i < objects.size();)
+	for (auto i = 0; i < static_cast<int>(objects.size());)
 	{
 		auto& obj = objects[i];
 		if (obj->needDestroy)
@@ -57,33 +74,38 @@ void ObjectManager::update()
 			++i;
 		}
 	}
-	
 }
 
 shared_ptr<Object> ObjectManager::collisionPoint(float x, float y, int index)
 {
-	for (auto const& i : ObjMgr.objects)
+	auto x1 = RoundToInt(x);
+	auto y1 = RoundToInt(y);
+	for (const auto& i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
 			// check collision
-			auto item = i->maskSprite->items[static_cast<int>(i->imageIndex) % i->maskSprite->items.size()];
-			auto spr = item->sprite;
-			int x1 = round(x);
-			int y1 = round(y);
+			auto& item = i->maskSprite->items[FloorToInt(i->imageIndex) % i->maskSprite->items.size()];
 
-			spr->setPosition(i->x, i->y);
-			spr->setRotation(i->rotation);
-			spr->setOrigin(i->maskXorigin, i->maskYorigin);
-			spr->setScale(i->xscale, i->yscale);
-			auto& trans = spr->getInverseTransform();
+			int xx, yy;
 
-			auto c1 = trans.transformPoint(sf::Vector2f(x1, y1));
-			if (c1.x >= 0 && c1.x < item->w - 1 && c1.y >= 0 && c1.y < item->h - 1 && item->data[c1.x +
-				c1.y * item->w])
+			if (equalF(i->rotation, 0))
 			{
-				return i;
+				xx = FloorToInt((x1 - i->x) / i->xscale + i->xorigin);
+				yy = FloorToInt((y1 - i->y) / i->yscale + i->yorigin);
 			}
+			else
+			{
+				auto ss = sin(-i->rotation * PI / 180);
+				auto cc = cos(-i->rotation * PI / 180);
+				xx = FloorToInt((cc * (x1 - i->x) + ss * (y1 - i->y)) / i->xscale + i->xorigin);
+				yy = FloorToInt((cc * (y1 - i->y) - ss * (x1 - i->x)) / i->yscale + i->yorigin);
+			}
+
+			if (xx < 0 || xx >= item->w) continue;
+			if (yy < 0 || yy >= item->h) continue;
+			if (!item->data[xx + (yy * item->w)]) continue;
+			return i;
 		}
 	}
 	return nullptr;
@@ -92,54 +114,37 @@ shared_ptr<Object> ObjectManager::collisionPoint(float x, float y, int index)
 vector<shared_ptr<Object>> ObjectManager::collisionPointList(float x, float y, int index)
 {
 	vector<shared_ptr<Object>> result;
-	for (auto const& i : ObjMgr.objects)
+	auto x1 = RoundToInt(x);
+	auto y1 = RoundToInt(y);
+
+	for (const auto& i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
 			// check collision
-			auto item = i->maskSprite->items[static_cast<int>(i->imageIndex) % i->maskSprite->items.size()];
-			auto spr = item->sprite;
-			int x1 = round(x);
-			int y1 = round(y);
+			auto& item = i->maskSprite->items[FloorToInt(i->imageIndex) % i->maskSprite->items.size()];
+			int xx, yy;
 
-			spr->setPosition(i->x, i->y);
-			spr->setRotation(i->rotation);
-			spr->setOrigin(i->maskXorigin, i->maskYorigin);
-			spr->setScale(i->xscale, i->yscale);
-			auto& trans = spr->getInverseTransform();
-
-			auto c1 = trans.transformPoint(sf::Vector2f(x1, y1));
-			if (c1.x >= 0 && c1.x < item->w - 1 && c1.y >= 0 && c1.y < item->h - 1 && item->data[c1.x +
-				c1.y * item->w])
+			if (equalF(i->rotation, 0))
 			{
-				result.push_back(i);
+				xx = FloorToInt((x1 - i->x) / i->xscale + i->xorigin);
+				yy = FloorToInt((y1 - i->y) / i->yscale + i->yorigin);
 			}
+			else
+			{
+				auto ss = sin(-i->rotation * PI / 180);
+				auto cc = cos(-i->rotation * PI / 180);
+				xx = FloorToInt((cc * (x1 - i->x) + ss * (y1 - i->y)) / i->xscale + i->xorigin);
+				yy = FloorToInt((cc * (y1 - i->y) - ss * (x1 - i->x)) / i->yscale + i->yorigin);
+			}
+
+			if (xx < 0 || xx >= item->w) continue;
+			if (yy < 0 || yy >= item->h) continue;
+			if (!item->data[xx + (yy * item->w)]) continue;
+			result.push_back(i);
 		}
 	}
 	return result;
-}
-
-shared_ptr<Object> ObjectManager::collisionLine(float x1, float y1, float x2, float y2, int index)
-{
-	for (auto const& i : ObjMgr.objects)
-	{
-		if (index == ALL || i->index == index)
-		{
-			auto d = sqrtf(powf(x1 - x2, 2) + powf(y1 - y2, 2));
-			auto dx = (x2 - x1) / d;
-			auto dy = (y2 - y1) / d;
-
-			for (auto j = 0; j < d; j++)
-			{
-				auto col = collisionPoint(dx, dy, index);
-				if (col != nullptr)
-				{
-					return col;
-				}
-			}
-		}
-	}
-	return nullptr;
 }
 
 vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, float x2, float y2, int index)
@@ -149,36 +154,44 @@ vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, 
 	auto dx = (x2 - x1) / d;
 	auto dy = (y2 - y1) / d;
 
-	auto xs = round(x1);
-	auto ys = round(y1);
-
-	for (auto const& i : ObjMgr.objects)
+	for (const auto& i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{
 			// check collision
-			auto item = i->maskSprite->items[static_cast<int>(i->imageIndex) % i->maskSprite->items.size()];
-			auto spr = item->sprite;
+			auto& item = i->maskSprite->items[static_cast<int>(i->imageIndex) % i->maskSprite->items.size()];
 
-			spr->setPosition(i->x, i->y);
-			spr->setRotation(i->rotation);
-			spr->setOrigin(i->maskXorigin, i->maskYorigin);
-			spr->setScale(i->xscale, i->yscale);
-			auto& trans = spr->getInverseTransform();
+			x2 = x1;
+			y2 = y1;
 
-			auto xx = xs;
-			auto yy = ys;
 			for (float j = 0; j < d; j += 1)
 			{
-				auto c1 = trans.transformPoint(sf::Vector2f(xx, yy));
-				if (c1.x >= 0 && c1.x < item->w - 1 && c1.y >= 0 && c1.y < item->h - 1 && item->data[c1.x +
-					c1.y * item->w])
+				int xx, yy;
+				if (equalF(i->rotation, 0))
 				{
-					result.push_back(i);
+					xx = FloorToInt((x2 - i->x) / i->xscale + i->xorigin);
+					yy = FloorToInt((y2 - i->y) / i->yscale + i->yorigin);
+				}
+				else
+				{
+					auto ss = sin(-i->rotation * PI / 180);
+					auto cc = cos(-i->rotation * PI / 180);
+					xx = FloorToInt((cc * (x2 - i->x) + ss * (y2 - i->y)) / i->xscale + i->xorigin);
+					yy = FloorToInt((cc * (y2 - i->y) - ss * (x2 - i->x)) / i->yscale + i->yorigin);
 				}
 
-				xx += dx;
-				yy += dy;
+				if ((xx < 0 || xx >= item->w) ||
+					(yy < 0 || yy >= item->h) ||
+					(!item->data[xx + (yy * item->w)]))
+				{
+					x2 += dx;
+					y2 += dy;
+					continue;
+				}
+
+				result.push_back(i);
+				x2 += dx;
+				y2 += dy;
 			}
 		}
 	}
@@ -188,7 +201,7 @@ vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, 
 vector<shared_ptr<Object>> ObjectManager::atPosition(float x, float y, int index)
 {
 	vector<shared_ptr<Object>> result;
-	for (auto const& i : ObjMgr.objects)
+	for (const auto& i : ObjMgr.objects)
 	{
 		if (index == ALL || i->index == index)
 		{

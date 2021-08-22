@@ -3,9 +3,9 @@
 #include "Game.h"
 #include "InGame.h"
 
-void Object::addCollision(Col layer)
+void Object::addCollision(Index layer)
 {
-	collisionLayers.set(static_cast<int>(layer), true);
+	collisionLayers[static_cast<int>(layer)] = true;
 }
 
 void Object::setSprite(string name, bool setMask)
@@ -30,13 +30,13 @@ void Object::updateSprite()
 void Object::drawSelf()
 {
 	if (sprite != nullptr)
-		sprite->draw(imageIndex, x, y, xorigin, yorigin, xscale, yscale, rotation, color);
+		sprite->draw(FloorToInt(imageIndex), x, y, xorigin, yorigin, xscale, yscale, rotation, color);
 }
 
 void Object::drawMask()
 {
 	if (maskSprite != nullptr)
-		maskSprite->draw(imageIndex, x, y, maskXorigin, maskYorigin, xscale, yscale, rotation, color);
+		maskSprite->draw(FloorToInt(imageIndex), x, y, maskXorigin, maskYorigin, xscale, yscale, rotation, color);
 }
 
 void Object::setOrigin(float x, float y, bool setMask)
@@ -56,112 +56,201 @@ void Object::setMaskOrigin(float x, float y)
 	maskYorigin = y;
 }
 
-shared_ptr<Object> Object::placeMeeting(float x, float y, Col layer)
+shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 {
-	for (auto const& i : ObjMgr.objects)
+	auto oldX = this->x;
+	auto oldY = this->y;
+
+	this->x = x;
+	this->y = y;
+
+	calcBBox();
+
+	auto& item1 = maskSprite->items[static_cast<int>(imageIndex) % maskSprite->items.size()];
+
+	auto scale1x = 1 / xscale;
+	auto scale1y = 1 / yscale;
+
+	for (const auto& obj : ObjMgr.objects)
 	{
-		if (!i->collisionLayers.test(static_cast<int>(layer)) || i.get() == this)
-		{
+		if (!obj->collisionLayers[static_cast<int>(layer)] || obj.get() == this)
 			continue;
-		}
-		// check collision
-		auto item1 = maskSprite->items[static_cast<int>(imageIndex) % maskSprite->items.size()];
-		auto item2 = i->maskSprite->items[static_cast<int>(i->imageIndex) % i->maskSprite->items.size()];
-		auto spr1 = item1->sprite;
-		auto spr2 = item2->sprite;
-		int x1 = round(x);
-		int y1 = round(y);
-		int x2 = round(i->x);
-		int y2 = round(i->y);
 
-		if (xscale == 1 && yscale == 1 && rotation == 0 && i->xscale == 1 && i->yscale == 1 && i->rotation == 0)
+		obj->calcBBox();
+
+		auto scale2x = 1 / obj->xscale;
+		auto scale2y = 1 / obj->yscale;
+
+		auto& item2 = obj->maskSprite->items[static_cast<int>(obj->imageIndex) % obj->maskSprite->items.size()];
+		
+		auto l = max(bboxLeft, obj->bboxLeft);
+		auto r = min(bboxRight, obj->bboxRight);
+		auto t = max(bboxTop, obj->bboxTop);
+		auto b = min(bboxBottom, obj->bboxBottom);
+		
+		// no rotation or scaling
+		if (equalF(scale1x, 1) && equalF(scale2x, 1) && equalF(scale1y, 1) && equalF(scale2y, 1) && equalF(rotation, 0) && equalF(obj->rotation, 0))
 		{
-			// simple mode (fast)
-			spr1->setPosition(x1, y1);
-			spr1->setRotation(rotation);
-			spr1->setOrigin(maskXorigin, maskYorigin);
-			spr1->setScale(xscale, yscale);
-			auto rect1 = spr1->getGlobalBounds();
-
-			spr2->setPosition(x2, y2);
-			spr2->setRotation(i->rotation);
-			spr2->setOrigin(i->maskXorigin, i->maskYorigin);
-			spr2->setScale(i->xscale, i->yscale);
-			auto rect2 = spr2->getGlobalBounds();
-
-			int left = max(rect1.left, rect2.left);
-			int top = max(rect1.top, rect2.top);
-			int right = min(rect1.left + rect1.width, rect2.left + rect2.width);
-			int bottom = min(rect1.top + rect1.height, rect2.top + rect2.height);
-
-			if (left >= right || top >= bottom)
+			for (auto j = t; j <= b; j++)
 			{
-				continue;
-			}
-
-			for (auto cy = top; cy < bottom; cy++)
-			{
-				for (auto cx = left; cx < right; cx++)
+				for (auto i = l; i <= r; i++)
 				{
-					int c1x = cx - x1 + maskXorigin;
-					int c1y = cy - y1 + maskYorigin;
-					auto p1 = item1->data[c1x + c1y * item1->w];
+					auto xx = FloorToInt(i - x + maskXorigin);
+					if (xx < 0 || xx >= item1->w) continue;
+					auto yy = FloorToInt(j - y + maskYorigin);
+					if (yy < 0 || yy >= item1->h) continue;
+					if (!item1->data[xx + yy * item1->w]) continue;
 
-					int c2x = cx - x2 + i->maskXorigin;
-					int c2y = cy - y2 + i->maskYorigin;
-					auto p2 = item2->data[c2x + c2y * item2->w];
+					xx = FloorToInt(i - obj->x + obj->maskXorigin);
+					if (xx < 0 || xx >= item2->w) continue;
+					yy = FloorToInt(j - obj->y + obj->maskYorigin);
+					if (yy < 0 || yy >= item2->h) continue;
+					if (!item2->data[xx + yy * item2->w]) continue;
 
-					if (p1 && p2)
-						return i;
+					this->x = oldX;
+					this->y = oldY;
+					return obj;
 				}
 			}
 		}
+
+		// scaling but no rotation
+		else if (equalF(rotation, 0) && equalF(obj->rotation, 0))
+		{
+			for (auto j = t; j <= b; j++)
+			{
+				for (auto i = l; i <= r; i++)
+				{
+					auto xx = FloorToInt((i - x) * scale1x + maskXorigin);
+					if (xx < 0 || xx >= item1->w) continue;
+					auto yy = FloorToInt((j - y) * scale1y + maskYorigin);
+					if (yy < 0 || yy >= item1->h) continue;
+					if (!item1->data[xx + yy * item1->w]) continue;
+
+					xx = FloorToInt((i - obj->x) * scale2x + obj->maskXorigin);
+					if (xx < 0 || xx >= item2->w) continue;
+					yy = FloorToInt((j - obj->y) * scale2y + obj->maskYorigin);
+					if (yy < 0 || yy >= item2->h) continue;
+					if (!item2->data[xx + yy * item2->w]) continue;
+
+					this->x = oldX;
+					this->y = oldY;
+					return obj;
+				}
+			}
+		}
+
+		// scaling and rotation
 		else
 		{
-			// transform mode (slow)
-			spr1->setPosition(x1, y1);
-			spr1->setRotation(rotation);
-			spr1->setOrigin(maskXorigin, maskYorigin);
-			spr1->setScale(xscale, yscale);
-			auto rect1 = spr1->getGlobalBounds();
-			auto& trans1 = spr1->getInverseTransform();
+			auto ss1 = sin(-rotation * PI / 180);
+			auto cc1 = cos(-rotation * PI / 180);
+			auto ss2 = sin(-obj->rotation * PI / 180);
+			auto cc2 = cos(-obj->rotation * PI / 180);
 
-			spr2->setPosition(x2, y2);
-			spr2->setRotation(i->rotation);
-			spr2->setOrigin(i->maskXorigin, i->maskYorigin);
-			spr2->setScale(i->xscale, i->yscale);
-			auto rect2 = spr2->getGlobalBounds();
-			auto& trans2 = spr2->getInverseTransform();
-
-			int left = max(rect1.left, rect2.left);
-			int top = max(rect1.top, rect2.top);
-			int right = min(rect1.left + rect1.width, rect2.left + rect2.width);
-			int bottom = min(rect1.top + rect1.height, rect2.top + rect2.height);
-
-			if (left >= right || top >= bottom)
+			for (auto j = t; j <= b; j++)
 			{
-				continue;
-			}
-
-			for (auto cy = top; cy < bottom; cy++)
-			{
-				for (auto cx = left; cx < right; cx++)
+				for (auto i = l; i <= r; i++)
 				{
-					sf::Vector2f p(cx, cy);
+					auto xx = FloorToInt((cc1 * (i - x) + ss1 * (j - y)) * scale1x + maskXorigin);
+					if (xx < 0 || xx >= item1->w) continue;
+					auto yy = FloorToInt((cc1 * (j - y) - ss1 * (i - x)) * scale1y + maskYorigin);
+					if (yy < 0 || yy >= item1->h) continue;
+					if (!item1->data[xx + yy * item1->w]) continue;
 
-					auto c1 = trans1.transformPoint(p);
-					auto p1 = c1.x >= 0 && c1.x < item1->w - 1 && c1.y >= 0 && c1.y < item1->h - 1 && item1->data[c1.x +
-						c1.y * item1->w];
+					xx = FloorToInt((cc2 * (i - obj->x) + ss2 * (j - obj->y)) * scale2x + obj->maskXorigin);
+					if (xx < 0 || xx >= item2->w) continue;
+					yy = FloorToInt((cc2 * (j - obj->y) - ss2 * (i - obj->x)) * scale2y + obj->maskYorigin);
+					if (yy < 0 || yy >= item2->h) continue;
+					if (!item2->data[xx + yy * item2->w]) continue;
 
-					auto c2 = trans2.transformPoint(p);
-					auto p2 = c2.x >= 0 && c2.x < item2->w - 1 && c2.y >= 0 && c2.y < item2->h - 1 && item2->data[c2.x +
-						c2.y * item2->w];
-
-					if (p1 && p2)
-						return i;
+					this->x = oldX;
+					this->y = oldY;
+					return obj;
 				}
 			}
 		}
 	}
+	this->x = oldX;
+	this->y = oldY;
 	return nullptr;
+}
+
+void Object::moveContact(float hspeed, float vspeed, Index layer)
+{
+	auto len = FloorToInt(sqrtf(powf(hspeed, 2) + powf(vspeed, 2)));
+	auto dx = hspeed / len;
+	auto dy = vspeed / len;
+	for (auto i = 0; i < len; i++)
+	{
+		auto lastX = x;
+		auto lastY = y;
+
+		x += dx;
+		y += dy;
+		if (placeMeeting(x, y, layer) != nullptr)
+		{
+			x = lastX;
+			y = lastY;
+			break;
+		}
+	}
+}
+
+void Object::calcBBox()
+{
+	auto& item = maskSprite->items[FloorToInt(imageIndex) % maskSprite->items.size()];
+
+	if (equalF(rotation, 0))
+	{
+		bboxLeft = RoundToInt(x + xscale * (item->left - maskXorigin));
+		bboxRight = RoundToInt(x + xscale * (item->right - maskXorigin + 1) - 1);
+
+		if (bboxLeft > bboxRight)
+			swap(bboxLeft, bboxRight);
+
+		bboxTop = RoundToInt(y + yscale * (item->top - maskYorigin));
+		bboxBottom = RoundToInt(y + yscale * (item->bottom - maskYorigin + 1) - 1);
+
+		if (bboxTop > bboxBottom)
+			swap(bboxTop, bboxBottom);
+	}
+	else
+	{
+		auto xmin = xscale * (item->left - maskXorigin);
+		auto xmax = xscale * (item->right - maskXorigin + 1) - 1;
+
+		auto ymin = yscale * (item->top - maskYorigin);
+		auto ymax = yscale * (item->bottom - maskYorigin + 1) - 1;
+
+		auto cc = cos(rotation * PI / 180);
+		auto ss = sin(rotation * PI / 180);
+
+		auto ccXmax = cc * xmax;
+		auto ccXmin = cc * xmin;
+		auto ssYmax = ss * ymax;
+		auto ssYmin = ss * ymin;
+
+		if (ccXmax < ccXmin)
+			swap(ccXmax, ccXmin);
+
+		if (ssYmax < ssYmin)
+			swap(ssYmax, ssYmin);
+
+		bboxLeft = FloorToInt(x + ccXmin + ssYmin);
+		bboxRight = FloorToInt(x + ccXmax + ssYmax);
+
+		auto ccYmax = cc * ymax;
+		auto ccYmin = cc * ymin;
+		auto ssXmax = ss * xmax;
+		auto ssXmin = ss * xmin;
+		if (ccYmax < ccYmin)
+			swap(ccYmax, ccYmin);
+
+		if (ssXmax < ssXmin)
+			swap(ssXmax, ssXmin);
+
+		bboxTop = FloorToInt(y + ccYmin - ssXmax);
+		bboxBottom = FloorToInt(y + ccYmax - ssXmin);
+	}
 }

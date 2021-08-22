@@ -14,25 +14,37 @@ void Sprite::addSingle(string textureName, int x, int y, int w, int h)
 	auto image = tex->copyToImage();
 	// get data
 	auto data = vector<bool>(w * h);
+	auto left = w - 1;
+	auto top = h - 1;
+	auto right = 0;
+	auto bottom = 0;
 	auto i = 0;
 	for (auto yy = 0; yy < h; yy++)
 	{
 		for (auto xx = 0; xx < w; xx++)
 		{
-			data[i] = image.getPixel(xx, yy).a != 0;
+			if( image.getPixel(xx, yy).a != 0 )
+			{
+				data[i] = true;
+				left = min(left, xx);
+				right = max(right, xx);
+				top = min(top, yy);
+				bottom = max(bottom, yy);
+			}
+			else data[i] = false;
 			i++;
 		}
 	}
 
-	items.push_back(make_shared<SpriteItem>(spr, data, w, h));
+	items.push_back(make_shared<SpriteItem>(spr, data, w, h, left, right, top, bottom));
 }
 
 void Sprite::addSheet(string textureName, int xnum, int ynum)
 {
 	auto tex = ResMgr.textures[textureName];
 	auto size = tex->getSize();
-	auto w = size.x / xnum;
-	auto h = size.y / ynum;
+	int w = size.x / xnum;
+	int h = size.y / ynum;
 	auto image = tex->copyToImage();
 	for (auto y = 0; y < ynum; y++)
 	{
@@ -44,17 +56,28 @@ void Sprite::addSheet(string textureName, int xnum, int ynum)
 
 			// get data
 			auto data = vector<bool>(w * h);
+			auto left = w - 1;
+			auto top = h - 1;
+			auto right = 0;
+			auto bottom = 0;
 			auto i = 0;
 			for (auto yy = h * y; yy < h * y + h; yy++)
 			{
 				for (auto xx = w * x; xx < w * x + w; xx++)
 				{
-					data[i] = image.getPixel(xx, yy).a != 0;
+					if (image.getPixel(xx, yy).a != 0)
+					{
+						data[i] = true;
+						left = min(left, xx % w);
+						right = max(right, xx % w);
+						top = min(top, yy % h);
+						bottom = max(bottom, yy % h);
+					}
+					else data[i] = false;
 					i++;
 				}
 			}
-
-			items.push_back(make_shared< SpriteItem>(spr, data, w, h));
+			items.push_back(make_shared< SpriteItem>(spr, data, w, h, left, right, top, bottom));
 		}
 	}
 }
@@ -72,10 +95,14 @@ void Sprite::draw(int index, float x, float y, float xorigin, float yorigin, flo
 	Gm.gameTexture->draw(*spr);
 }
 
-SpriteItem::SpriteItem(shared_ptr<sf::Sprite> sprite, vector<bool> data, int w, int h)
+SpriteItem::SpriteItem(shared_ptr<sf::Sprite> sprite, vector<bool> data, int w, int h, int left, int right, int top, int bottom)
 {
 	this->sprite = sprite;
 	this->data = data;
 	this->w = w;
 	this->h = h;
+	this->left = left;
+	this->right = right;
+	this->top = top;
+	this->bottom = bottom;
 }

@@ -24,6 +24,13 @@ void Game::run()
 	editor.selectSprite = resourceManager.sprites["block"];
 	editor.selectIndex = GetIndex(Block);
 
+	/*for (auto i = 0; i < 1000; i++) {
+		auto b = Create(GetIndex(Blood), 400, 304);
+		b->gravity = 0;
+		b->hspeed = 0;
+		b->vspeed = 0;
+	}*/
+
 	while (window->isOpen())
 	{
 		handleEvent();

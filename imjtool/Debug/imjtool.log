@@ -1,80 +1,37 @@
-﻿  Object.cpp
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(33,16): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(39,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(72,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(73,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(74,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(75,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(80,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(80,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(86,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(86,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(92,13): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(93,12): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(94,14): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(95,15): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(106,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(107,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(110,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(111,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(122,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(122,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(129,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(129,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(136,13): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(137,12): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(138,14): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(139,15): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(150,25): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(150,21): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(153,105): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
-          with
-          [
-              T=float
-          ]
-D:\Projects\CPP\imjtool\imjtool\Object.cpp(157,105): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
-          with
-          [
-              T=float
-          ]
+﻿  Editor.cpp
+  Game.cpp
+  Gui.cpp
+  imgui-SFML.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  InGame.cpp
+  InputManager.cpp
+  main.cpp
+  Object.cpp
+  ObjectManager.cpp
+  PlayerManager.cpp
+  ResourceManager.cpp
+  Sprite.cpp
+  Running Code Analysis for C/C++...
+  Generating Code...
   imjtool.vcxproj -> D:\Projects\CPP\imjtool\Debug\imjtool.exe
+D:\Projects\CPP\imjtool\imjtool\Editor.cpp(189): warning C26812: The enum type 'UndoEventType' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).
+D:\Projects\CPP\imjtool\3rdparty\json\json.hpp(7370): warning C26819: Unannotated fallthrough between switch labels (es.78).
+D:\Projects\CPP\imjtool\3rdparty\json\json.hpp(7407): warning C26819: Unannotated fallthrough between switch labels (es.78).
+D:\Projects\CPP\imjtool\imjtool\imgui-SFML.cpp(515): warning C26812: The enum type 'sf::Joystick::Axis' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).
+D:\Projects\CPP\imjtool\imjtool\imgui-SFML.cpp(748): warning C26451: Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).
+D:\Projects\CPP\imjtool\imjtool\imgui-SFML.cpp(749): warning C26451: Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).
+D:\Projects\CPP\imjtool\imjtool\imgui-SFML.cpp(912): warning C26812: The enum type 'ImGuiNavInput_' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).
+D:\Projects\CPP\imjtool\imjtool\imgui-SFML.cpp(965): warning C26812: The enum type 'sf::Cursor::Type' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).
+D:\Projects\CPP\imjtool\3rdparty\sfml\include\SFML\System\Utf.inl(66): warning C26819: Unannotated fallthrough between switch labels (es.78).
+D:\Projects\CPP\imjtool\3rdparty\sfml\include\SFML\System\Utf.inl(67): warning C26819: Unannotated fallthrough between switch labels (es.78).
+D:\Projects\CPP\imjtool\3rdparty\sfml\include\SFML\System\Utf.inl(68): warning C26819: Unannotated fallthrough between switch labels (es.78).
+D:\Projects\CPP\imjtool\3rdparty\sfml\include\SFML\System\Utf.inl(69): warning C26819: Unannotated fallthrough between switch labels (es.78).
+D:\Projects\CPP\imjtool\3rdparty\sfml\include\SFML\System\Utf.inl(70): warning C26819: Unannotated fallthrough between switch labels (es.78).
+D:\Projects\CPP\imjtool\3rdparty\imgui\include\imstb_truetype.h(2111): warning C26819: Unannotated fallthrough between switch labels (es.78).
+D:\Projects\CPP\imjtool\imjtool\ObjectManager.h(26): warning C26451: Arithmetic overflow: Using operator '-' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '-' to avoid overflow (io.2).
+D:\Projects\CPP\imjtool\imjtool\Object.h(80): warning C26495: Variable 'Object::collisionLayers' is uninitialized. Always initialize a member variable (type.6).
+D:\Projects\CPP\imjtool\imjtool\ResourceManager.cpp(14): warning C26816: The pointer points to memory allocated on the stack.

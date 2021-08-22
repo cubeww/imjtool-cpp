@@ -1,10 +1,12 @@
 #pragma once
 #include "Object.h"
 
-enum class Col
+#define PI 3.1415926535897932f
+
+enum class Index
 {
+    // collision
     Player,
-    Apple,
     Block,
     Platform,
     Killer,
@@ -19,6 +21,20 @@ enum class Col
     JumpRefresher,
     Warp,
     Blood,
+
+    // no collision
+    SpikeUp,
+    SpikeDown,
+    SpikeLeft,
+    SpikeRight,
+    MiniSpikeUp,
+    MiniSpikeDown,
+    MiniSpikeLeft,
+    MiniSpikeRight,
+    Apple,
+    KillerBlock,
+    PlayerStart,
+    MiniBlock,
 };
 
 class Apple :

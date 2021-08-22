@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Projects\CPP\imjtool\3rdparty\json\</FILEPATH>
+      <FILENAME>json.hpp</FILENAME>
+      <LINE>7370</LINE>
+      <COLUMN>17</COLUMN>
+    </SFA>
+    <DEFECTCODE>26819</DEFECTCODE>
+    <DESCRIPTION>Unannotated fallthrough between switch labels (es.78).</DESCRIPTION>
+    <FUNCTION>nlohmann::detail::lexer&lt;nlohmann::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt; &gt;,nlohmann::detail::input_stream_adapter&gt;::scan_comment</FUNCTION>
+    <DECORATED>?scan_comment@?$lexer@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@@nlohmann@@Vinput_stream_adapter@detail@2@@detail@nlohmann@@AAE_NXZ</DECORATED>
+    <FUNCLINE>7346</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Projects\CPP\imjtool\3rdparty\json\</FILEPATH>
+      <FILENAME>json.hpp</FILENAME>
+      <LINE>7407</LINE>
+      <COLUMN>30</COLUMN>
+    </SFA>
+    <DEFECTCODE>26819</DEFECTCODE>
+    <DESCRIPTION>Unannotated fallthrough between switch labels (es.78).</DESCRIPTION>
+    <FUNCTION>nlohmann::detail::lexer&lt;nlohmann::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt; &gt;,nlohmann::detail::input_stream_adapter&gt;::scan_comment</FUNCTION>
+    <DECORATED>?scan_comment@?$lexer@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@@nlohmann@@Vinput_stream_adapter@detail@2@@detail@nlohmann@@AAE_NXZ</DECORATED>
+    <FUNCLINE>7346</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Projects\CPP\imjtool\3rdparty\json\</FILEPATH>
+      <FILENAME>json.hpp</FILENAME>
+      <LINE>7370</LINE>
+      <COLUMN>17</COLUMN>
+    </SFA>
+    <DEFECTCODE>26819</DEFECTCODE>
+    <DESCRIPTION>Unannotated fallthrough between switch labels (es.78).</DESCRIPTION>
+    <FUNCTION>nlohmann::detail::lexer&lt;nlohmann::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt; &gt;,nlohmann::detail::iterator_input_adapter&lt;char const *&gt; &gt;::scan_comment</FUNCTION>
+    <DECORATED>?scan_comment@?$lexer@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@@nlohmann@@V?$iterator_input_adapter@PBD@detail@2@@detail@nlohmann@@AAE_NXZ</DECORATED>
+    <FUNCLINE>7346</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Projects\CPP\imjtool\3rdparty\json\</FILEPATH>
+      <FILENAME>json.hpp</FILENAME>
+      <LINE>7407</LINE>
+      <COLUMN>30</COLUMN>
+    </SFA>
+    <DEFECTCODE>26819</DEFECTCODE>
+    <DESCRIPTION>Unannotated fallthrough between switch labels (es.78).</DESCRIPTION>
+    <FUNCTION>nlohmann::detail::lexer&lt;nlohmann::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt; &gt;,nlohmann::detail::iterator_input_adapter&lt;char const *&gt; &gt;::scan_comment</FUNCTION>
+    <DECORATED>?scan_comment@?$lexer@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@@nlohmann@@V?$iterator_input_adapter@PBD@detail@2@@detail@nlohmann@@AAE_NXZ</DECORATED>
+    <FUNCLINE>7346</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

@@ -27,5 +27,10 @@ public:
 	int w;
 	int h;
 
-	SpriteItem(shared_ptr<sf::Sprite> sprite, vector<bool> data, int w, int h);
+	int left;
+	int right;
+	int top;
+	int bottom;
+
+	SpriteItem(shared_ptr<sf::Sprite> sprite, vector<bool> data, int w, int h, int left, int right, int top, int bottom);
 };

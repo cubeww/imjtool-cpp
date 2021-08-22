@@ -29,6 +29,7 @@ private:
 	int gridW = 32;
 	int gridH = 32;
 	bool showGridWindow = false;
+	bool showMouseCoord = false;
 	shared_ptr<sf::RenderTexture> gridTexture;
 
 	int shiftX = 32;

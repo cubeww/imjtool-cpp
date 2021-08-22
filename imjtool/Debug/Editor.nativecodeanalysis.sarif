@@ -1,0 +1,1018 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "The enum type 'UndoEventType' is unscoped. Prefer 'enum class' over 'enum' (Enum.3)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/Projects/CPP/imjtool/imjtool/Editor.cpp"
+                },
+                "region": {
+                  "startLine": 189,
+                  "startColumn": 37,
+                  "endLine": 189,
+                  "endColumn": 37
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?addCreateEvent@Editor@@QAEXMMH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.29.30133.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "commandLine": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX86\\x86\\c1xx.dll\" -ACf{1F7B090C-16DB-4822-966A-A93D26ED4681} -ACpmspft140.dll -Alint -D_PREFAST_ -D_AST_FE_ -Analyze -zm0x00CDD1C0 -il C:\\Users\\h7613\\AppData\\Local\\Temp\\_CL_b4297651ast -typedil -f Editor.cpp -Ze -D_MSC_EXTENSIONS -Zp8 -Gs -pc \\:/ -D_MSC_VER=1929 -D_MSC_FULL_VER=192930133 -D_MSC_BUILD=0 -D_WIN32 -D_M_IX86=600 -D_M_IX86_FP=2 -GR -D_CPPRTTI -I D:\\Projects\\CPP\\imjtool\\3rdparty\\json -I D:\\Projects\\CPP\\imjtool\\3rdparty\\imgui\\include -I D:\\Projects\\CPP\\imjtool\\3rdparty\\random -I D:\\Projects\\CPP\\imjtool\\3rdparty\\sfml\\include -nologo -W 3 -diagnostics:column -D_GUARDOVERFLOW_CRT_ALLOCATORS=1 -Ot -DCODE_ANALYSIS -DSFML_STATIC -DWIN32 -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -EHs -D_CPPUNWIND -EHc -D__MSVC_RUNTIME_CHECKS -RTCs -RTCu -MDd -D_DEBUG -D_MT -D_DLL -GS -D_M_FP_PRECISE -permissive- -Zc:wchar_t -Zc:forScope -std:c++latest -FoDebug\\Editor.obj -FdDebug\\vc142.pdb -external:W 3 -Gd -analyze:projectdirectory D:\\Projects\\CPP\\imjtool\\imjtool -analyze:rulesetdirectory ;C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\\\Rule Sets; -analyze:ruleset C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\Rule Sets\\NativeRecommendedRules.ruleset -analyze:quiet -analyze:plugin C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX86\\x86\\EspXEngine.dll -FC -errorreport:prompt -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\atlmfc\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um -external:I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\include -external:I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\atlmfc\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\atlmfc\\include -external:I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -external:I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um -I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um",
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/sprite.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "72f9559edffcf49b05cd4660a98012a9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/sprite.h"
+          },
+          "hashes": {
+            "md5": "d589c6109e08d3a8eb509c10e5ff571d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics.hpp"
+          },
+          "hashes": {
+            "md5": "92ae1fb727662a0480b6e0f0c0cb2f64"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window.hpp"
+          },
+          "hashes": {
+            "md5": "57150448b4f0fc5923e059f5d9003608"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system.hpp"
+          },
+          "hashes": {
+            "md5": "abdc32580bf3754511c59cd0ffd07af7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/config.hpp"
+          },
+          "hashes": {
+            "md5": "79367476ad239718af3bac17d6678594"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/clock.hpp"
+          },
+          "hashes": {
+            "md5": "5aac8fd64298adc589b351ee1dde29ec"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/export.hpp"
+          },
+          "hashes": {
+            "md5": "447736c1a2430bba477583b74bd138af"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/time.hpp"
+          },
+          "hashes": {
+            "md5": "e359819c305da1c21dd13c94a852f501"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/err.hpp"
+          },
+          "hashes": {
+            "md5": "4ccfd29b5c8aa4b78b8fc62947974faa"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/fileinputstream.hpp"
+          },
+          "hashes": {
+            "md5": "4be83229e52b1a4a02a152b522a3112f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/inputstream.hpp"
+          },
+          "hashes": {
+            "md5": "0e3f680f848dceb17c5940034099fff3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/noncopyable.hpp"
+          },
+          "hashes": {
+            "md5": "1eaa018f85f78ada8b5e9876df2ab3e5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/lock.hpp"
+          },
+          "hashes": {
+            "md5": "70e119da853cf632b20ab8565cf4b56f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/memoryinputstream.hpp"
+          },
+          "hashes": {
+            "md5": "5f64152cab0120eb19dea8b6ae39224f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/mutex.hpp"
+          },
+          "hashes": {
+            "md5": "bf2f3fd7f1ff87bcd7a7cbb59f5a1b49"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/sleep.hpp"
+          },
+          "hashes": {
+            "md5": "3e384e09991353c3f55bbd058763f7fa"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/string.hpp"
+          },
+          "hashes": {
+            "md5": "804eb52948e1709a4258de89f074d54a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/utf.hpp"
+          },
+          "hashes": {
+            "md5": "34faf3a521dd334e97a27f3d388f92d1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/utf.inl"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "aff70a851901080ee91fb2296d7efb24"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/string.inl"
+          },
+          "hashes": {
+            "md5": "4a7e280a78ab1668f19047bc6c7a5095"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/thread.hpp"
+          },
+          "hashes": {
+            "md5": "f0839d37b4ab7604645cfa728c5d527a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/thread.inl"
+          },
+          "hashes": {
+            "md5": "ea277319e6ee48cd8a0632c1afcb39b8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/threadlocal.hpp"
+          },
+          "hashes": {
+            "md5": "c60e2f483b502c3a230d4daab44f5868"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/threadlocalptr.hpp"
+          },
+          "hashes": {
+            "md5": "5d68b1d1711541f5d3fb504a4a658a08"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/threadlocalptr.inl"
+          },
+          "hashes": {
+            "md5": "e66eab4dad0a5dc8d56c60b7c484be89"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/vector2.hpp"
+          },
+          "hashes": {
+            "md5": "1ee6ea4744555ffcfe19381215d19865"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/vector2.inl"
+          },
+          "hashes": {
+            "md5": "acdd5107243c1ba598b34c866ab7e13a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/vector3.hpp"
+          },
+          "hashes": {
+            "md5": "faeaa57530c47a6b60e9497f5c4ec340"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/system/vector3.inl"
+          },
+          "hashes": {
+            "md5": "c50630c11a627fdc378cb8573b5c436c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/clipboard.hpp"
+          },
+          "hashes": {
+            "md5": "7414e53c4423ac8174c118e516690be2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/export.hpp"
+          },
+          "hashes": {
+            "md5": "bfc821b0762ef8aaa8091343e29a6d4c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/context.hpp"
+          },
+          "hashes": {
+            "md5": "d1db5a05b9b4f3c575e3929888a90053"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/glresource.hpp"
+          },
+          "hashes": {
+            "md5": "dc0eaff1f769371273fb35e365819b82"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/contextsettings.hpp"
+          },
+          "hashes": {
+            "md5": "0f967b95e14ed319047a4dcc884b3410"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/cursor.hpp"
+          },
+          "hashes": {
+            "md5": "015d0a877f7b33273bbb5de22eb0139a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/event.hpp"
+          },
+          "hashes": {
+            "md5": "8eec40f56407d16e10bd70e5d0a5f744"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/joystick.hpp"
+          },
+          "hashes": {
+            "md5": "17633c7af8d82d93862391d74891c40b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/keyboard.hpp"
+          },
+          "hashes": {
+            "md5": "5d58b408d2a03156394d121214483aa5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/mouse.hpp"
+          },
+          "hashes": {
+            "md5": "4899f008b6f11121227e8bb155c82ae5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/sensor.hpp"
+          },
+          "hashes": {
+            "md5": "5e48d305fd1361369d0c122e3b95ea52"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/touch.hpp"
+          },
+          "hashes": {
+            "md5": "9654a6b745073b7faa231175adf5713a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/videomode.hpp"
+          },
+          "hashes": {
+            "md5": "3c8574fe0a43e6bafad19310c541c548"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/window.hpp"
+          },
+          "hashes": {
+            "md5": "e0aa5f7c92ee7c04b96775ded1e69641"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/windowhandle.hpp"
+          },
+          "hashes": {
+            "md5": "422f86ee48216938021dc29d718b3e05"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/window/windowstyle.hpp"
+          },
+          "hashes": {
+            "md5": "7e99556b9efb96e6dc7d766963ab36be"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/blendmode.hpp"
+          },
+          "hashes": {
+            "md5": "b13908702f42e8b62d19972aeab8103a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/export.hpp"
+          },
+          "hashes": {
+            "md5": "4c99b37ab064eecd2dc04f890e0e7934"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/circleshape.hpp"
+          },
+          "hashes": {
+            "md5": "6be7c2c3c4b714078fa6643f855aa29a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/shape.hpp"
+          },
+          "hashes": {
+            "md5": "1946ac466bebf294cc9a45f1882fc12f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/drawable.hpp"
+          },
+          "hashes": {
+            "md5": "f9d06982dc605f317e1199a845dc698c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/renderstates.hpp"
+          },
+          "hashes": {
+            "md5": "8b35c55635db9f44a5ae0f687497da6d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/transform.hpp"
+          },
+          "hashes": {
+            "md5": "ed3bc8923bc026a6711f74705dca995e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/rect.hpp"
+          },
+          "hashes": {
+            "md5": "8056555a37b33bf962b6fde792f22cf7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/rect.inl"
+          },
+          "hashes": {
+            "md5": "7da8c0a42f2f40e306aa7cb56bdfd01f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/transformable.hpp"
+          },
+          "hashes": {
+            "md5": "9956ba6144bdf970c894b111a88811ad"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/vertexarray.hpp"
+          },
+          "hashes": {
+            "md5": "6b6ab650cc6c5ccc8fd949c5e79715ec"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/vertex.hpp"
+          },
+          "hashes": {
+            "md5": "3a00427928109925f7bc31cd9b034dc4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/color.hpp"
+          },
+          "hashes": {
+            "md5": "07301ae0ee0cdd62bc5ef0a1abb97d5c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/primitivetype.hpp"
+          },
+          "hashes": {
+            "md5": "7985138d8b859333fb7c22c0c87ef455"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/convexshape.hpp"
+          },
+          "hashes": {
+            "md5": "11455f0d393f92c19632e1ee6ca937c5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/font.hpp"
+          },
+          "hashes": {
+            "md5": "ab8997e87f3301351cc2b314bf558327"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/glyph.hpp"
+          },
+          "hashes": {
+            "md5": "f28c2ea7e6ed9c5fb6f9efd8b196b665"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/texture.hpp"
+          },
+          "hashes": {
+            "md5": "e59e1715710360873d7207fcc1dba829"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/image.hpp"
+          },
+          "hashes": {
+            "md5": "4c03355f7edc894da0c9505e33cd7fee"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/rectangleshape.hpp"
+          },
+          "hashes": {
+            "md5": "88e5765320af861086d51d1a7f8c9bd0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/rendertarget.hpp"
+          },
+          "hashes": {
+            "md5": "cec87cae5dc5f1e5f3b338af75f8d25f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/view.hpp"
+          },
+          "hashes": {
+            "md5": "c4ac69c50d2bb7086b8164b70695f18b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/rendertexture.hpp"
+          },
+          "hashes": {
+            "md5": "6f1eee45daeb5036ea596fb604ec4056"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/renderwindow.hpp"
+          },
+          "hashes": {
+            "md5": "ee4ca86b595bad41046ba75c2576ce40"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/shader.hpp"
+          },
+          "hashes": {
+            "md5": "dbeb9ae58c3c79d9e004a678d8919e1f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/glsl.hpp"
+          },
+          "hashes": {
+            "md5": "4002e4ee2443fbdc132fcef62770db29"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/glsl.inl"
+          },
+          "hashes": {
+            "md5": "ad0fc995381df6682af199386a2d4e08"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/sprite.hpp"
+          },
+          "hashes": {
+            "md5": "9d767102b7ce21e4db9d3d95bebda280"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/text.hpp"
+          },
+          "hashes": {
+            "md5": "9eac2ce966feb79ee9c27cb24c6db3ae"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/graphics/vertexbuffer.hpp"
+          },
+          "hashes": {
+            "md5": "88fb14b7772c2668960fc608b9799550"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/game.h"
+          },
+          "hashes": {
+            "md5": "349b9555cd86780b8b6c6f73d4fd8e57"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/editor.h"
+          },
+          "hashes": {
+            "md5": "f0532cb5c2f605f5fc939d90221f8394"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/imgui/include/imgui.h"
+          },
+          "hashes": {
+            "md5": "78b2168bdf4de4cd37af5f4c77286762"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/imgui/include/imconfig.h"
+          },
+          "hashes": {
+            "md5": "ba819c635fb54d237ce2b7331dd1b48a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/imgui/include/imgui-sfml.h"
+          },
+          "hashes": {
+            "md5": "fdc183cb2317c91ba3167cfad771294c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/imgui/include/imgui-sfml_export.h"
+          },
+          "hashes": {
+            "md5": "269910f4ab3967cf7fe1fea65c141bb3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/objectmanager.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "efc8d71dde53a4d9870cbc6ece5140c9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/resourcemanager.h"
+          },
+          "hashes": {
+            "md5": "a0e11242796586e56e28204d7a24e85d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/gui.h"
+          },
+          "hashes": {
+            "md5": "e8b26b6e0be7fd942d630d8ef4470f9b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/inputmanager.h"
+          },
+          "hashes": {
+            "md5": "20df3c23ead414e9af45425ad62e316f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/playermanager.h"
+          },
+          "hashes": {
+            "md5": "45a1316ae8a0c9693dde1d22b79dd6b9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Projects/CPP/imjtool/imjtool/ResourceManager.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "97689e20d33965a2e182deb4b55b4895"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/playermanager.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "233b8e6fc1c854dabd04642b45fc1864"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/ingame.h"
+          },
+          "hashes": {
+            "md5": "524a4ac8a01e5d392d105bdc0bc754b4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/object.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "056d58e6291e3b5d593cedea6f717f30"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/objectmanager.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "a84ac9ae304c33b7163ef978f57768e0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/object.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "d048c04b311bddf9fde05f779619f738"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/main.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "089577ddcfef29a812ae8c682e3dcd10"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/inputmanager.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "9eed6ac7f64500601bbded2a49ab562a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/ingame.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "75c19fdf62f010d142d2e793a001f7fa"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/random/random.hpp"
+          },
+          "hashes": {
+            "md5": "5161a42357623ea02bfa621ff6d56f2a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/imgui_widgets.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "baba7eb1758e5e20ae9b9518c883ddee"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/imgui/include/imgui_internal.h"
+          },
+          "hashes": {
+            "md5": "8bbbf28e198e37df5c35e35b0830014a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/imgui/include/imstb_textedit.h"
+          },
+          "hashes": {
+            "md5": "1310a7c1c1617ac4995b1e90e3b1a32c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/imgui_tables.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "3f6c1f8e0f2245ff87af1a9ffdee6479"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Projects/CPP/imjtool/3rdparty/imgui/include/imstb_truetype.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "1afa4a6723bd0088c795f98327416f72"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/imgui_draw.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "d160fc14daf4e375a707f2c4544d00fd"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/imgui/include/imstb_rectpack.h"
+          },
+          "hashes": {
+            "md5": "f63ce0be310a45a733df420c9e0a1309"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/imgui_demo.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "110a8c5f4fd7497ee367b465742f23b6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/imgui.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "76585c7b0f362f911e5d8260dcabdac0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Projects/CPP/imjtool/imjtool/imgui-SFML.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "f65f2110df4cb5c17edd7aaadfcdb6da"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/3rdparty/sfml/include/sfml/opengl.hpp"
+          },
+          "hashes": {
+            "md5": "ce4980014ed7e524c221e58909234021"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/gui.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "393ef43dacaa7610e30fd45a7798312d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Projects/CPP/imjtool/3rdparty/json/json.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "9a64d02fa2b9b33463a52f1d18d81f6b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/projects/cpp/imjtool/imjtool/game.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "cd48f9cd61ee2256565a174731c0862a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Projects/CPP/imjtool/imjtool/Editor.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "9b552eec9bc24fdc24572376fa18470d"
+          }
+        }
+      ]
+    }
+  ]
+}

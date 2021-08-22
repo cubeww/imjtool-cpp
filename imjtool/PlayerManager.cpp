@@ -7,7 +7,7 @@ void PlayerManager::update()
 	{
 		DestroyByName(Player);
 		DestroyByName(Blood);
-		Create(Player, currentSave.x, currentSave.y);
+		Create(GetIndex(Player), currentSave.x, currentSave.y);
 	}
 }
 

@@ -71,7 +71,7 @@ public:
 
 	vector<shared_ptr<UndoEvent>> undoEvents;
 	shared_ptr<UndoEvent> curEvent;
-	int undoPos = 0;
+	size_t undoPos = 0;
 	bool leftHoldLast = false;
 	bool rightHoldLast = false;
 	bool mouseInTitle = false;

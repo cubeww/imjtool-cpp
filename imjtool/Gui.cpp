@@ -4,6 +4,7 @@
 #include <imgui-SFML.h>
 
 #include "Object.h"
+#include "InGame.h"
 //
 //namespace Win
 //{
@@ -37,7 +38,7 @@ void Gui::mainMenu()
 			}
 			EndMenu();
 		}
-		if (BeginMenu("Edit"))
+		if (BeginMenu("Edit", showGameWindow))
 		{
 			if (MenuItem("Undo", "CTRL+Z", false, Gm.editor.undoPos > 0))
 			{
@@ -54,7 +55,7 @@ void Gui::mainMenu()
 			}
 			EndMenu();
 		}
-		if (BeginMenu("View"))
+		if (BeginMenu("View", showGameWindow))
 		{
 			if (BeginMenu("Grid"))
 			{
@@ -73,10 +74,93 @@ void Gui::mainMenu()
 				}
 				EndMenu();
 			}
+			Separator();
+			if (MenuItem("Show Mouse Coord", nullptr, showMouseCoord))
+			{
+				showMouseCoord = !showMouseCoord;
+			}
+			Separator();
+			if (BeginMenu("Skin"))
+			{
+				if (MenuItem("Next"))
+				{
+					// TODO
+				}
+				if (MenuItem("Previous"))
+				{
+					// TODO
+				}
+				Separator();
+				if (MenuItem("Choose"))
+				{
+					// TODO
+				}
+				EndMenu();
+			}
+
 			EndMenu();
 		}
-		if (BeginMenu("Player"))
+		if (BeginMenu("Player", showGameWindow))
 		{
+			if (MenuItem("Dot Kid", nullptr, PlayerMgr.dotkid))
+			{
+				PlayerMgr.dotkid = !PlayerMgr.dotkid;
+			}
+			if (MenuItem("Outline", nullptr, PlayerMgr.dotkidOutline))
+			{
+				PlayerMgr.dotkidOutline = !PlayerMgr.dotkidOutline;
+			}
+			Separator();
+			if (MenuItem("Enable Death", nullptr, PlayerMgr.deathEnable))
+			{
+				PlayerMgr.deathEnable = !PlayerMgr.deathEnable;
+			}
+			if (MenuItem("Inf Jump", nullptr, PlayerMgr.infjump))
+			{
+				PlayerMgr.infjump = !PlayerMgr.infjump;
+			}
+			Separator();
+			if (BeginMenu("Save Type"))
+			{
+				if (MenuItem("Only Shoot", nullptr, PlayerMgr.saveType == SaveType::OnlyShoot))
+				{
+					PlayerMgr.saveType = SaveType::OnlyShoot;
+				}
+				if (MenuItem("Shoot Or Bullet", nullptr, PlayerMgr.saveType == SaveType::ShootOrBullet))
+				{
+					PlayerMgr.saveType = SaveType::ShootOrBullet;
+				}
+				EndMenu();
+			}
+			if (BeginMenu("Map Border Type"))
+			{
+				if (MenuItem("Killer", nullptr, PlayerMgr.deathBorder == DeathBorder::Killer))
+				{
+					PlayerMgr.deathBorder = DeathBorder::Killer;
+				}
+				if (MenuItem("Solid", nullptr, PlayerMgr.deathBorder == DeathBorder::Solid))
+				{
+					PlayerMgr.deathBorder = DeathBorder::Solid;
+				}
+				EndMenu();
+			}
+			Separator();
+			if (BeginMenu("Mask (Hitbox)"))
+			{
+				if (MenuItem("Only Player", nullptr, PlayerMgr.showMask == ShowMask::OnlyPlayer))
+				{
+					PlayerMgr.showMask = ShowMask::OnlyPlayer;
+				}
+				if (MenuItem("Only Mask", nullptr, PlayerMgr.showMask == ShowMask::OnlyMask))
+				{
+					PlayerMgr.showMask = ShowMask::OnlyMask;
+				}
+				if (MenuItem("Player And Mask", nullptr, PlayerMgr.showMask == ShowMask::PlayerAndMask))
+				{
+					PlayerMgr.showMask = ShowMask::PlayerAndMask;
+				}
+				EndMenu();
+			}
 			EndMenu();
 		}
 		if (BeginMenu("Window"))
@@ -126,6 +210,8 @@ void Gui::gameWindow()
 			flag |= ImGuiWindowFlags_NoMove;
 		if (Begin("Game Window", &showGameWindow, flag))
 		{
+			auto cursorStartPos = GetCursorStartPos();
+			auto windowPos = GetWindowPos();
 			Image(*Gm.gameTexture);
 			Gm.editor.update();
 
@@ -135,6 +221,17 @@ void Gui::gameWindow()
 				auto col = sf::Color::Black;
 				col.a = 66;
 				Image(*gridTexture, col);
+			}
+			if (showMouseCoord)
+			{
+				auto pos = ImVec2(GetMousePos().x - windowPos.x - cursorStartPos.x, GetMousePos().y - windowPos.y - cursorStartPos.y);
+				if (pos.x >= 0 && pos.x <= 800 && pos.y >= 0 && pos.y <= 608)
+				{
+					BeginTooltip();
+					auto coord = "(" + to_string(FloorToInt(pos.x)) + ", " + to_string(FloorToInt(pos.y)) + ")";
+					Text(coord.data());
+					EndTooltip();
+				}
 			}
 			End();
 		}
@@ -163,7 +260,7 @@ void Gui::gameWindow()
 					Gm.editor.selectIndex = index;
 					Gm.editor.selectSprite = ResMgr.sprites[spriteName];
 				}
-				if(hint!="" && IsItemHovered())
+				if (hint != "" && IsItemHovered())
 				{
 					BeginTooltip();
 					Text(hint.data());
@@ -213,7 +310,7 @@ void Gui::gameWindow()
 				addObject(GetIndex(WalljumpR), "walljump_r");
 				SameLine();
 				addObject(GetIndex(WalljumpL), "walljump_l");
-				
+
 				addObject(GetIndex(Water), "water", "Water 1 (Refresh Jump, High)");
 				SameLine();
 				addObject(GetIndex(Water2), "water2", "Water 2 (No Refresh Jump)");
@@ -279,7 +376,7 @@ void Gui::aboutWindow()
 	{
 		OpenPopup("About");
 	}
-	
+
 	SetNextWindowSize(ImVec2(420, 420), ImGuiCond_Once);
 	if (BeginPopupModal("About", &showAbout))
 	{
@@ -400,7 +497,7 @@ void Gui::updateGrid()
 	{
 		sf::RectangleShape rect;
 		rect.setFillColor(sf::Color::Black);
-		rect.setPosition(0, yy);
+		rect.setPosition(0, static_cast<float>(yy));
 		rect.setSize(sf::Vector2f(800, 1));
 		gridTexture->draw(rect);
 	}
@@ -408,7 +505,7 @@ void Gui::updateGrid()
 	{
 		sf::RectangleShape rect;
 		rect.setFillColor(sf::Color::Black);
-		rect.setPosition(xx, 0);
+		rect.setPosition(static_cast<float>(xx), 0);
 		rect.setSize(sf::Vector2f(1, 608));
 		gridTexture->draw(rect);
 	}

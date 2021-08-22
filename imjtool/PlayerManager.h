@@ -14,6 +14,25 @@ struct PlayerSave
 	float grav = 1;
 };
 
+enum class ShowMask
+{
+	OnlyPlayer,
+	OnlyMask,
+	PlayerAndMask,
+};
+
+enum class SaveType
+{
+	OnlyShoot,
+	ShootOrBullet,
+};
+
+enum class DeathBorder
+{
+	Killer,
+	Solid,
+};
+
 class PlayerManager
 {
 public:
@@ -22,6 +41,13 @@ public:
 
 	float face = 1;
 	float grav = 1;
+	bool dotkid = false;
+	bool dotkidOutline = false;
+	bool deathEnable = true;
+	bool infjump = false;
+	ShowMask showMask = ShowMask::OnlyMask;
+	SaveType saveType = SaveType::OnlyShoot;
+	DeathBorder deathBorder = DeathBorder::Killer;
 
 	void update();
 	void save();
