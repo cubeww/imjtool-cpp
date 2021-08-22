@@ -82,12 +82,12 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 		auto scale2y = 1 / obj->yscale;
 
 		auto& item2 = obj->maskSprite->items[static_cast<int>(obj->imageIndex) % obj->maskSprite->items.size()];
-		
+
 		auto l = max(bboxLeft, obj->bboxLeft);
 		auto r = min(bboxRight, obj->bboxRight);
 		auto t = max(bboxTop, obj->bboxTop);
 		auto b = min(bboxBottom, obj->bboxBottom);
-		
+
 		// no rotation or scaling
 		if (equalF(scale1x, 1) && equalF(scale2x, 1) && equalF(scale1y, 1) && equalF(scale2y, 1) && equalF(rotation, 0) && equalF(obj->rotation, 0))
 		{
@@ -178,21 +178,24 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 
 void Object::moveContact(float hspeed, float vspeed, Index layer)
 {
-	auto len = FloorToInt(sqrtf(powf(hspeed, 2) + powf(vspeed, 2)));
+	if (placeMeeting(x, y, layer) != nullptr)
+		return;
+
+	auto len = sqrtf(powf(hspeed, 2) + powf(vspeed, 2));
 	auto dx = hspeed / len;
 	auto dy = vspeed / len;
-	for (auto i = 0; i < len; i++)
-	{
-		auto lastX = x;
-		auto lastY = y;
+	len = RoundToInt(len);
 
-		x += dx;
-		y += dy;
-		if (placeMeeting(x, y, layer) != nullptr)
+	for (auto i = 0; i <= len; i++)
+	{
+		if (placeMeeting(x + dx, y + dy, layer) == nullptr)
 		{
-			x = lastX;
-			y = lastY;
-			break;
+			x += dx;
+			y += dy;
+		}
+		else
+		{
+			return;
 		}
 	}
 }

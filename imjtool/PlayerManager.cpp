@@ -5,9 +5,7 @@ void PlayerManager::update()
 {
 	if (InputMgr.isKeyPress(sf::Keyboard::R))
 	{
-		DestroyByName(Player);
-		DestroyByName(Blood);
-		Create(GetIndex(Player), currentSave.x, currentSave.y);
+		load();
 	}
 }
 
@@ -24,13 +22,15 @@ void PlayerManager::save()
 
 void PlayerManager::load()
 {
-	if (player != nullptr)
-	{
-		player->x = currentSave.x;
-		player->y = currentSave.y;
-		grav = currentSave.grav;
-		face = currentSave.face;
-	}
+	DestroyByName(Player);
+	DestroyByName(Blood);
+
+	Create(GetIndex(Player), currentSave.x, currentSave.y);
+
+	player->x = currentSave.x;
+	player->y = currentSave.y;
+	grav = currentSave.grav;
+	face = currentSave.face;
 }
 
 

@@ -21,6 +21,7 @@ enum class Index
     JumpRefresher,
     Warp,
     Blood,
+    PlayerBullet,
 
     // no collision
     SpikeUp,
@@ -246,6 +247,15 @@ public:
 class Blood :
     public Object
 {
+public:
+    void create() override;
+    void update() override;
+};
+
+class PlayerBullet :
+    public Object
+{
+    int timer = 0;
 public:
     void create() override;
     void update() override;

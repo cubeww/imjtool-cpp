@@ -40,4 +40,5 @@ public:
 	vector<shared_ptr<Object>> collisionLineList(float x1, float y1, float x2, float y2, int index);
 
 	vector<shared_ptr<Object>> atPosition(float x, float y, int index);
+	int getCount(int index);
 };

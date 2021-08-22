@@ -44,6 +44,7 @@ shared_ptr<Object> ObjectManager::create(int index, float x, float y)
 	REGISTER(GravityArrowUp)
 	REGISTER(GravityArrowDown)
 	REGISTER(Blood)
+	REGISTER(PlayerBullet)
 
 	default:
 		break;
@@ -209,6 +210,19 @@ vector<shared_ptr<Object>> ObjectManager::atPosition(float x, float y, int index
 			{
 				result.push_back(i);
 			}
+		}
+	}
+	return result;
+}
+
+int ObjectManager::getCount(int index)
+{
+	auto result = 0;
+	for (auto const& i : objects)
+	{
+		if (i->index == index)
+		{
+			result++;
 		}
 	}
 	return result;

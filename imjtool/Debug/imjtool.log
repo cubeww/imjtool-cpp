@@ -1,37 +1,14 @@
-﻿  Editor.cpp
-  Game.cpp
-  Gui.cpp
-  imgui-SFML.cpp
-  imgui.cpp
-  imgui_demo.cpp
-  imgui_draw.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  InGame.cpp
-  InputManager.cpp
-  main.cpp
-  Object.cpp
-  ObjectManager.cpp
-  PlayerManager.cpp
-  ResourceManager.cpp
-  Sprite.cpp
-  Running Code Analysis for C/C++...
-  Generating Code...
+﻿  InGame.cpp
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(217,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(217,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(222,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(222,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(273,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(273,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(307,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(307,13): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(318,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(318,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(325,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(325,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   imjtool.vcxproj -> D:\Projects\CPP\imjtool\Debug\imjtool.exe
-D:\Projects\CPP\imjtool\imjtool\Editor.cpp(189): warning C26812: The enum type 'UndoEventType' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).
-D:\Projects\CPP\imjtool\3rdparty\json\json.hpp(7370): warning C26819: Unannotated fallthrough between switch labels (es.78).
-D:\Projects\CPP\imjtool\3rdparty\json\json.hpp(7407): warning C26819: Unannotated fallthrough between switch labels (es.78).
-D:\Projects\CPP\imjtool\imjtool\imgui-SFML.cpp(515): warning C26812: The enum type 'sf::Joystick::Axis' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).
-D:\Projects\CPP\imjtool\imjtool\imgui-SFML.cpp(748): warning C26451: Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).
-D:\Projects\CPP\imjtool\imjtool\imgui-SFML.cpp(749): warning C26451: Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).
-D:\Projects\CPP\imjtool\imjtool\imgui-SFML.cpp(912): warning C26812: The enum type 'ImGuiNavInput_' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).
-D:\Projects\CPP\imjtool\imjtool\imgui-SFML.cpp(965): warning C26812: The enum type 'sf::Cursor::Type' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).
-D:\Projects\CPP\imjtool\3rdparty\sfml\include\SFML\System\Utf.inl(66): warning C26819: Unannotated fallthrough between switch labels (es.78).
-D:\Projects\CPP\imjtool\3rdparty\sfml\include\SFML\System\Utf.inl(67): warning C26819: Unannotated fallthrough between switch labels (es.78).
-D:\Projects\CPP\imjtool\3rdparty\sfml\include\SFML\System\Utf.inl(68): warning C26819: Unannotated fallthrough between switch labels (es.78).
-D:\Projects\CPP\imjtool\3rdparty\sfml\include\SFML\System\Utf.inl(69): warning C26819: Unannotated fallthrough between switch labels (es.78).
-D:\Projects\CPP\imjtool\3rdparty\sfml\include\SFML\System\Utf.inl(70): warning C26819: Unannotated fallthrough between switch labels (es.78).
-D:\Projects\CPP\imjtool\3rdparty\imgui\include\imstb_truetype.h(2111): warning C26819: Unannotated fallthrough between switch labels (es.78).
-D:\Projects\CPP\imjtool\imjtool\ObjectManager.h(26): warning C26451: Arithmetic overflow: Using operator '-' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '-' to avoid overflow (io.2).
-D:\Projects\CPP\imjtool\imjtool\Object.h(80): warning C26495: Variable 'Object::collisionLayers' is uninitialized. Always initialize a member variable (type.6).
-D:\Projects\CPP\imjtool\imjtool\ResourceManager.cpp(14): warning C26816: The pointer points to memory allocated on the stack.

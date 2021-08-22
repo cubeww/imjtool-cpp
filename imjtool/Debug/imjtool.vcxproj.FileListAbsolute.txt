@@ -1,2 +1,0 @@
-D:\Projects\CPP\imjtool\Debug\imjtool.exe.lastcodeanalysissucceeded
-D:\Projects\CPP\imjtool\imjtool\Debug\NativeCodeAnalysis.read.1.tlog

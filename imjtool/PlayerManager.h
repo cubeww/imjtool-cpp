@@ -45,7 +45,7 @@ public:
 	bool dotkidOutline = false;
 	bool deathEnable = true;
 	bool infjump = false;
-	ShowMask showMask = ShowMask::OnlyMask;
+	ShowMask showMask = ShowMask::OnlyPlayer;
 	SaveType saveType = SaveType::OnlyShoot;
 	DeathBorder deathBorder = DeathBorder::Killer;
 
