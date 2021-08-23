@@ -46,6 +46,7 @@ shared_ptr<Object> ObjectManager::create(int index, float x, float y)
 	REGISTER(GravityArrowDown)
 	REGISTER(Blood)
 	REGISTER(PlayerBullet)
+	REGISTER(BulletBlocker)
 
 	default:
 		break;

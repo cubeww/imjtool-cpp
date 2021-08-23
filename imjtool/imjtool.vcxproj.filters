@@ -63,6 +63,9 @@
     <ClCompile Include="SkinManager.cpp">
       <Filter>ImJtool</Filter>
     </ClCompile>
+    <ClCompile Include="imgui_stdlib.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h">
@@ -97,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="SkinManager.h">
       <Filter>ImJtool</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_stdlib.h">
+      <Filter>ImGui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

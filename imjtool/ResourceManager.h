@@ -15,6 +15,9 @@ public:
 	map<string, shared_ptr<sf::SoundBuffer>> soundBuffers;
 	map<string, shared_ptr<sf::Sound>> sounds;
 
+	void loadTextures();
+	void loadSounds();
+
 	void createTexture(string name, string filename);
 	Sprite& createSprite(string name);
 	void createSound(string name, string filename);

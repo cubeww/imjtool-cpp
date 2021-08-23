@@ -156,6 +156,7 @@
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
+    <ClCompile Include="imgui_stdlib.cpp" />
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="InGame.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Editor.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gui.h" />
+    <ClInclude Include="imgui_stdlib.h" />
     <ClInclude Include="InGame.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Object.h" />

@@ -2,6 +2,7 @@
 
 #include <map>
 #include <iostream>
+#include <vector>
 
 #include "imgui.h"
 
@@ -24,7 +25,11 @@ private:
 	bool showDebug = true;
 	bool showAbout = false;
 	bool showShift = false;
+
 	bool showSkin = false;
+	int skinSelect = 0;
+	string skinSearchStr;
+	vector<int> skinSearchVec;
 
 	bool showGrid = false;
 	int gridW = 32;

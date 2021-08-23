@@ -810,11 +810,25 @@ void PlayerBullet::update()
 		return;
 	}
 
-	if (placeMeeting(x, y, Index::Block) != nullptr)
+	if (placeMeeting(x, y, Index::Block) != nullptr || placeMeeting(x, y, Index::BulletBlocker) != nullptr)
 	{
 		DestroyThis();
 		return;
 	}
+
+	drawSelf();
+}
+
+void BulletBlocker::create()
+{
+	depth = 0;
+
+	setSprite("bullet_blocker");
+	addCollision(Index::BulletBlocker);
+}
+
+void BulletBlocker::update()
+{
 
 	drawSelf();
 }

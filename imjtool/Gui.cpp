@@ -6,6 +6,8 @@
 #include "Object.h"
 #include "InGame.h"
 
+#include "imgui_stdlib.h"
+
 //
 //namespace Win
 //{
@@ -519,10 +521,98 @@ void Gui::skinWindow()
 		OpenPopup("Skin");
 	}
 
-	SetNextWindowSize(ImVec2(420, 420), ImGuiCond_Once);
+	SetNextWindowSize(ImVec2(430, 330), ImGuiCond_Once);
 	if (BeginPopupModal("Skin", &showSkin))
 	{
-		
+		Columns(2);
+		Text("Search");
+		SameLine();
+		if (InputText("##SearchSkin", &skinSearchStr))
+		{
+			skinSearchVec.clear();
+			int index = 0;
+			for (auto name : SkinMgr.skinNames)
+			{
+				if (name.find(skinSearchStr))
+				{
+					skinSearchVec.push_back(index);
+				}
+				index++;
+			}
+		}
+		if (BeginListBox("##Skins", ImVec2(200, 250)))
+		{
+			int index = 0;
+			for (auto const& name : SkinMgr.skinNames)
+			{
+				if (find(skinSearchVec.begin(), skinSearchVec.end(), index) != skinSearchVec.end())
+				{
+					index++;
+					continue;
+				}
+				if (Selectable(name.data(), skinSelect == index) || SkinMgr.previewSkin == nullptr)
+				{
+					skinSelect = index;
+					SkinMgr.previewSkin = make_shared<SkinPackage>(name);
+				}
+
+				index++;
+			}
+			EndListBox();
+		}
+		NextColumn();
+		Text("Preview:");
+
+		auto startPos = GetCursorPos();
+		auto drawPreview = [&](shared_ptr<SkinObject> obj, shared_ptr<SkinObject> def, int xx, int yy)
+		{
+			SetCursorPos(ImVec2(startPos.x + xx, startPos.y + yy));
+			if (obj->valid)
+			{
+				obj->sprite->items[0]->sprite->setOrigin(0, 0);
+				Image(*obj->sprite->items[0]->sprite);
+			}
+			else
+			{
+				def->sprite->items[0]->sprite->setOrigin(0, 0);
+				Image(*def->sprite->items[0]->sprite);
+			}
+		};
+		auto d = 32;
+		drawPreview(SkinMgr.previewSkin->warp, SkinMgr.defaultSkin->warp, 0, 0);
+		drawPreview(SkinMgr.previewSkin->spikeUp, SkinMgr.defaultSkin->spikeUp, d, 0);
+		drawPreview(SkinMgr.previewSkin->jumpRefresher, SkinMgr.defaultSkin->jumpRefresher, d * 2 + 8, 8);
+		drawPreview(SkinMgr.previewSkin->block, SkinMgr.defaultSkin->block, d * 3, 0);
+		drawPreview(SkinMgr.previewSkin->walljumpR, SkinMgr.defaultSkin->walljumpR, d * 3, 0);
+		drawPreview(SkinMgr.previewSkin->block, SkinMgr.defaultSkin->block, d * 4, 0);
+		drawPreview(SkinMgr.previewSkin->walljumpL, SkinMgr.defaultSkin->walljumpL, d * 4, 0);
+
+		drawPreview(SkinMgr.previewSkin->spikeLeft, SkinMgr.defaultSkin->spikeLeft, 0, d);
+		drawPreview(SkinMgr.previewSkin->block, SkinMgr.defaultSkin->block, d, d);
+		drawPreview(SkinMgr.previewSkin->spikeRight, SkinMgr.defaultSkin->spikeRight, d * 2, d);
+		drawPreview(SkinMgr.previewSkin->platform, SkinMgr.defaultSkin->platform, d * 3, d);
+		drawPreview(SkinMgr.previewSkin->apple, SkinMgr.defaultSkin->apple, d * 4, d);
+
+		drawPreview(SkinMgr.previewSkin->playerStart, SkinMgr.defaultSkin->playerStart, 0, d * 2);
+		drawPreview(SkinMgr.previewSkin->spikeDown, SkinMgr.defaultSkin->spikeDown, d, d * 2);
+		drawPreview(SkinMgr.previewSkin->miniSpikeUp, SkinMgr.defaultSkin->miniSpikeUp, d * 2, d * 2);
+		drawPreview(SkinMgr.previewSkin->miniSpikeRight, SkinMgr.defaultSkin->miniSpikeRight, d * 2 + 16, d * 2);
+		drawPreview(SkinMgr.previewSkin->miniSpikeLeft, SkinMgr.defaultSkin->miniSpikeLeft, d * 2, d * 2 + 16);
+		drawPreview(SkinMgr.previewSkin->miniSpikeDown, SkinMgr.defaultSkin->miniSpikeDown, d * 2 + 16, d * 2 + 16);
+		drawPreview(SkinMgr.previewSkin->water2, SkinMgr.defaultSkin->water2, d * 3, d * 2);
+		drawPreview(SkinMgr.previewSkin->save, SkinMgr.defaultSkin->save, d * 4, d * 2);
+
+		Columns();
+		if (Button("Apply"))
+		{
+			showSkin = false;
+		}
+		SameLine();
+		if (Button("Cancel"))
+		{
+			showSkin = false;
+		}
 		EndPopup();
 	}
+
 }

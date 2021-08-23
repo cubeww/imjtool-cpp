@@ -20,8 +20,10 @@ void Game::run()
 
 	SFML::Init(*window);
 
-	loadTextures();
+	resourceManager.loadTextures();
+	resourceManager.loadSounds();
 	skinManager.loadConfig();
+	skinManager.loadDefault();
 
 	editor.selectSprite = resourceManager.sprites["block"];
 	editor.selectIndex = GetIndex(Block);
@@ -59,45 +61,4 @@ void Game::update()
 	SFML::Render(*window);
 	window->display();
 	fps = round(1.f / deltaClock.getElapsedTime().asSeconds());
-}
-
-void Game::loadTextures()
-{
-	ifstream f("textures/define.json");
-	json j;
-	f >> j;
-	for (auto i : j)
-	{
-		string filename = i["file"];
-		string name = filesystem::path(filename).stem().string();
-
-		auto x = 1;
-		auto y = 1;
-		if (i["x"] != nullptr)
-			x = i["x"];
-		if (i["y"] != nullptr)
-			y = i["y"];
-
-		resourceManager.createTexture(name, "textures/" + filename);
-		resourceManager.createSprite(name).addSheet(name, x, y);
-	}
-	f.close();
-
-	f.open("sfx/define.json");
-	f >> j;
-	for (auto i : j)
-	{
-		string filename = i["file"];
-		string name = filesystem::path(filename).stem().string();
-
-		auto x = 1;
-		auto y = 1;
-		if (i["x"] != nullptr)
-			x = i["x"];
-		if (i["y"] != nullptr)
-			y = i["y"];
-
-		resourceManager.createSound(name, "sfx/" + filename);
-	}
-	f.close();
 }

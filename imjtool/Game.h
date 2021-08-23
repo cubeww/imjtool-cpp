@@ -42,5 +42,4 @@ public:
 	void run();
 	void handleEvent();
 	void update();
-	void loadTextures();
 };
