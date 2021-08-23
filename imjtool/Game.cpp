@@ -21,6 +21,7 @@ void Game::run()
 	SFML::Init(*window);
 
 	loadTextures();
+	skinManager.loadConfig();
 
 	editor.selectSprite = resourceManager.sprites["block"];
 	editor.selectIndex = GetIndex(Block);

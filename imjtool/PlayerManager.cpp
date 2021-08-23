@@ -11,10 +11,10 @@ void PlayerManager::update()
 
 void PlayerManager::save()
 {
-	if (player != nullptr) 
+	if (!player.expired()) 
 	{
-		currentSave.x = player->x;
-		currentSave.y = player->y;
+		currentSave.x = player.lock()->x;
+		currentSave.y = player.lock()->y;
 		currentSave.grav = grav;
 		currentSave.face = face;
 	}
@@ -27,8 +27,8 @@ void PlayerManager::load()
 
 	Create(GetIndex(Player), currentSave.x, currentSave.y);
 
-	player->x = currentSave.x;
-	player->y = currentSave.y;
+	player.lock()->x = currentSave.x;
+	player.lock()->y = currentSave.y;
 	grav = currentSave.grav;
 	face = currentSave.face;
 }

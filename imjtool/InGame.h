@@ -147,6 +147,11 @@ class Save :
     public Object
 {
 public:
+    int timer = 0;
+    int timer2 = 0;
+    bool canSave = false;
+    
+    void save();
     void create() override;
     void update() override;
 };

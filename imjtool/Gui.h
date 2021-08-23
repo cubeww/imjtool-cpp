@@ -24,6 +24,7 @@ private:
 	bool showDebug = true;
 	bool showAbout = false;
 	bool showShift = false;
+	bool showSkin = false;
 
 	bool showGrid = false;
 	int gridW = 32;
@@ -43,6 +44,7 @@ private:
 	void aboutWindow();
 	void shiftWindow();
 	void gridWindow();
+	void skinWindow();
 
 	void updateGrid();
 };

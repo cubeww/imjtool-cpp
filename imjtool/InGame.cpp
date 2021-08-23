@@ -152,6 +152,7 @@ void Platform::create()
 {
 	depth = 10;
 	setSprite("platform");
+	addCollision(Index::Block);
 	addCollision(Index::Platform);
 }
 
@@ -173,14 +174,7 @@ void Player::create()
 	setOrigin(17, 23, true);
 	addCollision(Index::Player);
 
-	for (auto i : ObjMgr.objects)
-	{
-		if (i.get() == this)
-		{
-			PlayerMgr.player = static_pointer_cast<Player>(i);
-			break;
-		}
-	}
+	PlayerMgr.player = static_pointer_cast<Player>(weakPtr.lock());
 }
 
 void Player::update()
@@ -280,6 +274,7 @@ void Player::update()
 		}
 	}
 
+	// shoot
 	if (InputMgr.isKeyPress(sf::Keyboard::Z))
 	{
 		if (ObjMgr.getCount(GetIndex(PlayerBullet)) < 4) 
@@ -295,9 +290,10 @@ void Player::update()
 		}
 	}
 
+	// jump press
 	if (InputMgr.isKeyPress(sf::Keyboard::LShift) || InputMgr.isKeyPress(sf::Keyboard::RShift))
 	{
-		if (placeMeeting(x, y + 1 * PlayerMgr.grav, Index::Block) || placeMeeting(x, y + 1 * PlayerMgr.grav, Index::Block) || onPlatform ||
+		if (placeMeeting(x, y + 1 * PlayerMgr.grav, Index::Block) || onPlatform ||
 			water)
 		{
 			ResMgr.sounds["jump"]->play();
@@ -316,6 +312,7 @@ void Player::update()
 		}
 	}
 
+	// jump release
 	if (InputMgr.isKeyRelease(sf::Keyboard::LShift)|| InputMgr.isKeyRelease(sf::Keyboard::RShift))
 	{
 		if (vspeed * PlayerMgr.grav < 0)
@@ -373,7 +370,8 @@ void Player::update()
 
 	// block
 	auto dir = 0;
-	if (placeMeeting(x, y, Index::Block))
+	auto block = placeMeeting(x, y, Index::Block);
+	if (block != nullptr && !block->collisionLayers[GetIndex(Platform)])
 	{
 		x = xprevious;
 		y = yprevious;
@@ -485,7 +483,6 @@ void Player::update()
 		}
 		ResMgr.sounds["death"]->play();
 		DestroyByName(Player);
-		PlayerMgr.player = nullptr;
 		return;
 	}
 
@@ -547,8 +544,41 @@ void Save::create()
 
 void Save::update()
 {
+	if (--timer == 0)
+		canSave = true;
+
+	if (--timer2 == 0)
+		imageIndex = 0;
+
+	auto press = InputMgr.isKeyPress(sf::Keyboard::Z);
+	auto enter = placeMeeting(x, y, Index::Player);
+	if (PlayerMgr.saveType == SaveType::OnlyShoot)
+	{
+		if (enter && press)
+		{
+			save();
+		}
+	}
+	else
+	{
+		if ((enter && press) || placeMeeting(x, y, Index::PlayerBullet))
+		{
+			save();
+		}
+	}
+
 	drawSelf();
 }
+
+void Save::save()
+{
+	timer = 30;
+	timer2 = 59;
+	imageIndex = 1;
+	canSave = false;
+	PlayerMgr.save();
+}
+
 
 void SpikeDown::create()
 {
@@ -631,6 +661,12 @@ void Warp::create()
 
 void Warp::update()
 {
+	auto player = placeMeeting(x, y, Index::Player);
+	if (player != nullptr)
+	{
+		Destroy(player);
+	}
+
 	drawSelf();
 }
 
@@ -755,7 +791,7 @@ void PlayerBullet::create()
 	imageSpeed = 1;
 	setSprite("bullet");
 	setOrigin(1, 1);
-	addCollision(Index::Save);
+	addCollision(Index::PlayerBullet);
 }
 
 void PlayerBullet::update()

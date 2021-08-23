@@ -25,6 +25,8 @@ public:
 	shared_ptr<Sprite> sprite;
 	shared_ptr<Sprite> maskSprite;
 
+	weak_ptr<Object> weakPtr;
+
 	float imageIndex = 0;
 	float imageSpeed = 0;
 

@@ -1,14 +1,28 @@
-﻿  InGame.cpp
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(251,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(251,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(256,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(256,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(311,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(311,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(345,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(345,13): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(357,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(357,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(364,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\InGame.cpp(364,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  imjtool.vcxproj -> D:\Projects\CPP\imjtool\Debug\imjtool.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  Editor.cpp
+  Game.cpp
+  Gui.cpp
+  InGame.cpp
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(245,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(245,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(250,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(250,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(307,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(307,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(342,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(342,13): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(354,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(354,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(361,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(361,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  InputManager.cpp
+  Object.cpp
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(187,8): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  ObjectManager.cpp
+  PlayerManager.cpp
+  SkinManager.cpp
+D:\Projects\CPP\imjtool\3rdparty\ini\ini.h(343,44): warning C4244: 'argument': conversion from 'std::streamoff' to 'const unsigned int', possible loss of data
+  Sprite.cpp
+  main.cpp
+  Generating Code...
+  imjtool.vcxproj -> D:\Projects\CPP\imjtool\bin\imjtool.exe

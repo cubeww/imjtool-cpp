@@ -37,7 +37,7 @@ class PlayerManager
 {
 public:
 	PlayerSave currentSave;
-	shared_ptr<Player> player;
+	weak_ptr<Player> player;
 
 	float face = 1;
 	float grav = 1;

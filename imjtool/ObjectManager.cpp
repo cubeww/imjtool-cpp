@@ -10,6 +10,7 @@ case Index::name: \
 	obj->index = index; \
 	obj->x = x; \
 	obj->y = y; \
+	obj->weakPtr = weak_ptr<Object>(obj); \
 	obj->create(); \
 	break;
 

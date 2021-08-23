@@ -5,12 +5,12 @@
 
 #include "Object.h"
 #include "InGame.h"
+
 //
 //namespace Win
 //{
 //#include <windows.h>
 //}
-
 
 void Gui::mainMenu()
 {
@@ -93,7 +93,7 @@ void Gui::mainMenu()
 				Separator();
 				if (MenuItem("Choose"))
 				{
-					// TODO
+					showSkin = true;
 				}
 				EndMenu();
 			}
@@ -106,7 +106,7 @@ void Gui::mainMenu()
 			{
 				PlayerMgr.dotkid = !PlayerMgr.dotkid;
 			}
-			if (MenuItem("Outline", nullptr, PlayerMgr.dotkidOutline))
+			if (MenuItem("Outline", nullptr, PlayerMgr.dotkidOutline, PlayerMgr.dotkid))
 			{
 				PlayerMgr.dotkidOutline = !PlayerMgr.dotkidOutline;
 			}
@@ -145,7 +145,7 @@ void Gui::mainMenu()
 				EndMenu();
 			}
 			Separator();
-			if (BeginMenu("Mask (Hitbox)"))
+			if (BeginMenu("Mask (Hitbox)", !PlayerMgr.dotkid))
 			{
 				if (MenuItem("Only Player", nullptr, PlayerMgr.showMask == ShowMask::OnlyPlayer))
 				{
@@ -192,7 +192,7 @@ void Gui::mainMenu()
 			Separator();
 			if (MenuItem("About"))
 			{
-				showAbout = !showAbout;
+				showAbout = true;
 			}
 			EndMenu();
 		}
@@ -368,6 +368,7 @@ void Gui::update()
 	aboutWindow();
 	shiftWindow();
 	gridWindow();
+	skinWindow();
 }
 
 void Gui::aboutWindow()
@@ -508,5 +509,20 @@ void Gui::updateGrid()
 		rect.setPosition(static_cast<float>(xx), 0);
 		rect.setSize(sf::Vector2f(1, 608));
 		gridTexture->draw(rect);
+	}
+}
+
+void Gui::skinWindow()
+{
+	if (showSkin)
+	{
+		OpenPopup("Skin");
+	}
+
+	SetNextWindowSize(ImVec2(420, 420), ImGuiCond_Once);
+	if (BeginPopupModal("Skin", &showSkin))
+	{
+		
+		EndPopup();
 	}
 }

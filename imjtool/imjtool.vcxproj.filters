@@ -60,6 +60,9 @@
     <ClCompile Include="PlayerManager.cpp">
       <Filter>ImJtool</Filter>
     </ClCompile>
+    <ClCompile Include="SkinManager.cpp">
+      <Filter>ImJtool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h">
@@ -90,6 +93,9 @@
       <Filter>ImJtool</Filter>
     </ClInclude>
     <ClInclude Include="PlayerManager.h">
+      <Filter>ImJtool</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinManager.h">
       <Filter>ImJtool</Filter>
     </ClInclude>
   </ItemGroup>

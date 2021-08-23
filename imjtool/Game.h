@@ -6,6 +6,7 @@
 #include "Gui.h"
 #include "InputManager.h"
 #include "PlayerManager.h"
+#include "SkinManager.h"
 
 // game manager shortcuts
 #define Gm Game::get() 
@@ -13,6 +14,7 @@
 #define ObjMgr Game::get().objectManager
 #define InputMgr Game::get().inputManager
 #define PlayerMgr Game::get().playerManager
+#define SkinMgr Game::get().skinManager
 
 class Game
 {
@@ -27,6 +29,7 @@ public:
 	ObjectManager objectManager = ObjectManager();
 	InputManager inputManager = InputManager();
 	PlayerManager playerManager = PlayerManager();
+	SkinManager skinManager = SkinManager();
 	Gui gui = Gui();
 	Editor editor = Editor();
 
