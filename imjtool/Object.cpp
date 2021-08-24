@@ -73,7 +73,7 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 
 	for (const auto& obj : ObjMgr.objects)
 	{
-		if (!obj->collisionLayers[static_cast<int>(layer)] || obj.get() == this)
+		if (obj->maskSprite == nullptr || !obj->collisionLayers[static_cast<int>(layer)] || obj.get() == this)
 			continue;
 
 		obj->calcBBox();
@@ -95,15 +95,15 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 			{
 				for (auto i = l; i <= r; i++)
 				{
-					auto xx = FloorToInt(i - x + maskXorigin);
+					auto xx = RoundToInt(i - x + maskXorigin);
 					if (xx < 0 || xx >= item1->w) continue;
-					auto yy = FloorToInt(j - y + maskYorigin);
+					auto yy = RoundToInt(j - y + maskYorigin);
 					if (yy < 0 || yy >= item1->h) continue;
 					if (!item1->data[xx + yy * item1->w]) continue;
 
-					xx = FloorToInt(i - obj->x + obj->maskXorigin);
+					xx = RoundToInt(i - obj->x + obj->maskXorigin);
 					if (xx < 0 || xx >= item2->w) continue;
-					yy = FloorToInt(j - obj->y + obj->maskYorigin);
+					yy = RoundToInt(j - obj->y + obj->maskYorigin);
 					if (yy < 0 || yy >= item2->h) continue;
 					if (!item2->data[xx + yy * item2->w]) continue;
 
@@ -121,15 +121,15 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 			{
 				for (auto i = l; i <= r; i++)
 				{
-					auto xx = FloorToInt((i - x) * scale1x + maskXorigin);
+					auto xx = RoundToInt((i - x) * scale1x + maskXorigin);
 					if (xx < 0 || xx >= item1->w) continue;
-					auto yy = FloorToInt((j - y) * scale1y + maskYorigin);
+					auto yy = RoundToInt((j - y) * scale1y + maskYorigin);
 					if (yy < 0 || yy >= item1->h) continue;
 					if (!item1->data[xx + yy * item1->w]) continue;
 
-					xx = FloorToInt((i - obj->x) * scale2x + obj->maskXorigin);
+					xx = RoundToInt((i - obj->x) * scale2x + obj->maskXorigin);
 					if (xx < 0 || xx >= item2->w) continue;
-					yy = FloorToInt((j - obj->y) * scale2y + obj->maskYorigin);
+					yy = RoundToInt((j - obj->y) * scale2y + obj->maskYorigin);
 					if (yy < 0 || yy >= item2->h) continue;
 					if (!item2->data[xx + yy * item2->w]) continue;
 
@@ -152,15 +152,15 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 			{
 				for (auto i = l; i <= r; i++)
 				{
-					auto xx = FloorToInt((cc1 * (i - x) + ss1 * (j - y)) * scale1x + maskXorigin);
+					auto xx = RoundToInt((cc1 * (i - x) + ss1 * (j - y)) * scale1x + maskXorigin);
 					if (xx < 0 || xx >= item1->w) continue;
-					auto yy = FloorToInt((cc1 * (j - y) - ss1 * (i - x)) * scale1y + maskYorigin);
+					auto yy = RoundToInt((cc1 * (j - y) - ss1 * (i - x)) * scale1y + maskYorigin);
 					if (yy < 0 || yy >= item1->h) continue;
 					if (!item1->data[xx + yy * item1->w]) continue;
 
-					xx = FloorToInt((cc2 * (i - obj->x) + ss2 * (j - obj->y)) * scale2x + obj->maskXorigin);
+					xx = RoundToInt((cc2 * (i - obj->x) + ss2 * (j - obj->y)) * scale2x + obj->maskXorigin);
 					if (xx < 0 || xx >= item2->w) continue;
-					yy = FloorToInt((cc2 * (j - obj->y) - ss2 * (i - obj->x)) * scale2y + obj->maskYorigin);
+					yy = RoundToInt((cc2 * (j - obj->y) - ss2 * (i - obj->x)) * scale2y + obj->maskYorigin);
 					if (yy < 0 || yy >= item2->h) continue;
 					if (!item2->data[xx + yy * item2->w]) continue;
 
@@ -258,48 +258,17 @@ void Object::calcBBox()
 	}
 }
 
-#define APPLY_SKIN(index, inskin) \
-case Index::index: \
-if (SkinMgr.curSkin != nullptr && SkinMgr.curSkin->inskin->valid) \
-{ \
-	sprite = SkinMgr.curSkin->inskin->sprite; \
-	if (SkinMgr.curSkin->inskin->speed != NAN) \
-	{ \
-		imageSpeed = SkinMgr.curSkin->inskin->speed; \
-	} \
-} \
-else \
-{ \
-	sprite = SkinMgr.defaultSkin->inskin->sprite; \
-} \
-break;
-
 void Object::applySkin()
 {
-	switch (static_cast<Index>(index))
+	auto name = spriteOf(index);
+	auto obj = SkinMgr.getCurrent(name);
+	if (obj != nullptr)
 	{
-		APPLY_SKIN(SpikeUp, spikeUp)
-		APPLY_SKIN(SpikeDown, spikeDown)
-		APPLY_SKIN(SpikeLeft, spikeLeft)
-		APPLY_SKIN(SpikeRight, spikeRight)
-		APPLY_SKIN(MiniSpikeUp, miniSpikeUp)
-		APPLY_SKIN(MiniSpikeDown, miniSpikeDown)
-		APPLY_SKIN(MiniSpikeLeft, miniSpikeLeft)
-		APPLY_SKIN(MiniSpikeRight, miniSpikeRight)
-		APPLY_SKIN(Apple, apple)
-		APPLY_SKIN(KillerBlock, killerBlock)
-		APPLY_SKIN(Block, block)
-		APPLY_SKIN(MiniBlock, miniBlock)
-		APPLY_SKIN(BulletBlocker, bulletBlocker)
-		APPLY_SKIN(Platform, platform)
-		APPLY_SKIN(WalljumpL, walljumpL)
-		APPLY_SKIN(WalljumpR, walljumpR)
-		APPLY_SKIN(Water, water)
-		APPLY_SKIN(Water2, water2)
-		APPLY_SKIN(Water3, water3)
-		APPLY_SKIN(Warp, warp)
-		APPLY_SKIN(PlayerStart, playerStart)
-		APPLY_SKIN(JumpRefresher, jumpRefresher)
-		APPLY_SKIN(Save, save)
+		sprite = obj->sprite;
+		if (!isnan(obj->speed))
+		{
+			imageSpeed = obj->speed;
+		}
 	}
+	else sprite = ResMgr.sprites[name];
 }

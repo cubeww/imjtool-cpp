@@ -24,51 +24,6 @@ void SkinManager::loadConfig()
 	}
 }
 
-void SkinManager::loadDefault()
-{
-	defaultSkin = make_shared<SkinPackage>();
-	curSkin = make_shared<SkinPackage>();
-}
-
-SkinPackage::SkinPackage()
-{
-	// create default skin package
-	bgType = BgType::Stretch;
-
-	hspeed = 0;
-	vspeed = 0;
-
-	spikeUp = make_shared<SkinObject>(ResMgr.sprites["spike_up"]);
-	spikeDown = make_shared<SkinObject>(ResMgr.sprites["spike_down"]);
-	spikeLeft = make_shared<SkinObject>(ResMgr.sprites["spike_left"]);
-	spikeRight = make_shared<SkinObject>(ResMgr.sprites["spike_right"]);
-
-	miniSpikeUp = make_shared<SkinObject>(ResMgr.sprites["mini_spike_up"]);
-	miniSpikeDown = make_shared<SkinObject>(ResMgr.sprites["mini_spike_down"]);
-	miniSpikeLeft = make_shared<SkinObject>(ResMgr.sprites["mini_spike_left"]);
-	miniSpikeRight = make_shared<SkinObject>(ResMgr.sprites["mini_spike_right"]);
-
-	apple = make_shared<SkinObject>(ResMgr.sprites["apple"]);
-	killerBlock = make_shared<SkinObject>(ResMgr.sprites["killer_block"]);
-
-	block = make_shared<SkinObject>(ResMgr.sprites["block"]);
-	miniBlock = make_shared<SkinObject>(ResMgr.sprites["mini_block"]);
-	bulletBlocker = make_shared<SkinObject>(ResMgr.sprites["bullet_blocker"]);
-	platform = make_shared<SkinObject>(ResMgr.sprites["platform"]);
-
-	walljumpL = make_shared<SkinObject>(ResMgr.sprites["walljump_l"]);
-	walljumpR = make_shared<SkinObject>(ResMgr.sprites["walljump_r"]);
-	water = make_shared<SkinObject>(ResMgr.sprites["water"]);
-	water2 = make_shared<SkinObject>(ResMgr.sprites["water2"]);
-	water3 = make_shared<SkinObject>(ResMgr.sprites["water3"]);
-
-	warp = make_shared<SkinObject>(ResMgr.sprites["warp"]);
-	playerStart = make_shared<SkinObject>(ResMgr.sprites["player_start"]);
-	jumpRefresher = make_shared<SkinObject>(ResMgr.sprites["jump_refresher"]);
-
-	save = make_shared<SkinObject>(ResMgr.sprites["save"]);
-}
-
 SkinPackage::SkinPackage(string name)
 {
 	auto path = "skins/" + name + "/";
@@ -117,79 +72,109 @@ SkinPackage::SkinPackage(string name)
 	hspeed = readFloat("bg", "hspeed", 0);
 	vspeed = readFloat("bg", "vspeed", 0);
 
-	spikeUp = make_shared<SkinObject>(path + "spikeup.png", spikeFrames, 1, spikeSpeed);
-	spikeDown = make_shared<SkinObject>(path + "spikedown.png", spikeFrames, 1, spikeSpeed);
-	spikeLeft = make_shared<SkinObject>(path + "spikeleft.png", spikeFrames, 1, spikeSpeed);
-	spikeRight = make_shared<SkinObject>(path + "spikeright.png", spikeFrames, 1, spikeSpeed);
+	auto addObject = [&](int index, string filename, int xnum = 1, int ynum = 1, float speed = NAN, bool tile = true)
+	{
+		auto name = spriteOf(index);
+		if (filesystem::exists(filename))
+		{
+			objects[name] = make_shared<SkinObject>(filename, xnum, ynum, speed);
+		}
+	};
 
-	miniSpikeUp = make_shared<SkinObject>(path + "miniup.png", miniSpikeFrames, 1, miniSpikeSpeed);
-	miniSpikeDown = make_shared<SkinObject>(path + "minidown.png", miniSpikeFrames, 1, miniSpikeSpeed);
-	miniSpikeLeft = make_shared<SkinObject>(path + "minileft.png", miniSpikeFrames, 1, miniSpikeSpeed);
-	miniSpikeRight = make_shared<SkinObject>(path + "miniright.png", miniSpikeFrames, 1, miniSpikeSpeed);
+	addObject(GetIndex(SpikeUp), path + "spikeup.png", spikeFrames, 1, spikeSpeed);
+	addObject(GetIndex(SpikeDown), path + "spikedown.png", spikeFrames, 1, spikeSpeed);
+	addObject(GetIndex(SpikeLeft), path + "spikeleft.png", spikeFrames, 1, spikeSpeed);
+	addObject(GetIndex(SpikeRight), path + "spikeright.png", spikeFrames, 1, spikeSpeed);
 
-	apple = make_shared<SkinObject>(path + "apple.png", 2, 1);
-	killerBlock = make_shared<SkinObject>(path + "killerblock.png");
+	addObject(GetIndex(MiniSpikeUp), path + "miniup.png", miniSpikeFrames, 1, miniSpikeSpeed);
+	addObject(GetIndex(MiniSpikeDown), path + "minidown.png", miniSpikeFrames, 1, miniSpikeSpeed);
+	addObject(GetIndex(MiniSpikeLeft), path + "minileft.png", miniSpikeFrames, 1, miniSpikeSpeed);
+	addObject(GetIndex(MiniSpikeRight), path + "miniright.png", miniSpikeFrames, 1, miniSpikeSpeed);
 
-	block = make_shared<SkinObject>(path + "block.png");
-	miniBlock = make_shared<SkinObject>(path + "miniblock.png");
-	bulletBlocker = make_shared<SkinObject>(path + "bulletblocker.png");
-	platform = make_shared<SkinObject>(path + "platform.png");
+	addObject(GetIndex(Apple), path + "apple.png", 2, 1);
+	addObject(GetIndex(KillerBlock), path + "killerblock.png");
 
-	walljumpL = make_shared<SkinObject>(path + "walljumpL.png");
-	walljumpR = make_shared<SkinObject>(path + "walljumpR.png");
-	water = make_shared<SkinObject>(path + "water1.png");
-	water2 = make_shared<SkinObject>(path + "water2.png");
-	water3 = make_shared<SkinObject>(path + "water3.png");
+	addObject(GetIndex(Block), path + "block.png");
+	addObject(GetIndex(MiniBlock), path + "miniblock.png");
+	addObject(GetIndex(BulletBlocker), path + "bulletblocker.png");
+	addObject(GetIndex(Platform), path + "platform.png");
 
-	warp = make_shared<SkinObject>(path + "warp.png");
-	playerStart = make_shared<SkinObject>(path + "playerstart.png");
-	jumpRefresher = make_shared<SkinObject>(path + "jumprefresher.png");
+	addObject(GetIndex(WalljumpL), path + "walljumpL.png");
+	addObject(GetIndex(WalljumpR), path + "walljumpR.png");
+	addObject(GetIndex(Water), path + "water1.png");
+	addObject(GetIndex(Water2), path + "water2.png");
+	addObject(GetIndex(Water3), path + "water3.png");
 
-	save = make_shared<SkinObject>(path + "save.png", 2, 1);
+	addObject(GetIndex(Warp), path + "warp.png");
+	addObject(GetIndex(PlayerStart), path + "playerstart.png");
+	addObject(GetIndex(JumpRefresher), path + "jumprefresher.png");
+
+	addObject(GetIndex(Save), path + "save.png", 2, 1);
+
+	addObject(GetIndex(Bg), path + "bg.png", 1, 1, 0, bgType == BgType::Tile);
 }
 
-SkinObject::SkinObject(string filename, int xnum, int ynum, float speed)
+SkinObject::SkinObject(string filename, int xnum, int ynum, float speed, bool tile)
 {
-	if (filesystem::exists(filename)) 
-	{
-		auto tex = make_shared<sf::Texture>();
-		tex->loadFromFile(filename);
+	auto tex = make_shared<sf::Texture>();
+	tex->loadFromFile(filename);
+	tex->setRepeated(tile);
 
-		auto spr = make_shared<Sprite>();
-		spr->addSheet(tex, xnum, ynum, false);
+	auto spr = make_shared<Sprite>();
+	spr->addSheet(tex, xnum, ynum, false);
 
-		texture = tex;
-		sprite = spr;
-		this->speed = speed;
-
-		valid = true;
-	}
-	else
-	{
-		valid = false;
-	}
-}
-
-SkinObject::SkinObject(shared_ptr<Sprite> sprite, float speed)
-{
-	texture = nullptr;
-	this->sprite = sprite;
+	texture = tex;
+	sprite = spr;
 	this->speed = speed;
-
-	valid = true;
 }
-
 void SkinManager::apply(shared_ptr<SkinPackage> package)
 {
 	curSkin = package;
 
 	for (auto i : ObjMgr.objects)
 	{
-		if (inPalette(i->index))
+		if (isSkinable(i->index))
 		{
 			i->applySkin();
+
+			if (i->index == GetIndex(Bg))
+			{
+				i->x = 0;
+				i->y = 0;
+			}
 		}
 	}
 
 	Gm.gui.paletteIcons.clear();
+}
+
+shared_ptr<SkinObject> SkinManager::getCurrent(string name)
+{
+	if (curSkin != nullptr) {
+		if (curSkin->objects.contains(name))
+		{
+			return curSkin->objects[name];
+		}
+	}
+	return nullptr;
+}
+
+shared_ptr<Sprite> SkinManager::getCurrentSprite(string name)
+{
+	if (curSkin != nullptr) {
+		if (curSkin->objects.contains(name))
+		{
+			return curSkin->objects[name]->sprite;
+		}
+	}
+	return ResMgr.sprites[name];
+}
+
+shared_ptr<SkinObject> SkinManager::getPreview(string name)
+{
+	if (previewSkin->objects.contains(name))
+	{
+		return previewSkin->objects[name];
+	}
+	return nullptr;
 }

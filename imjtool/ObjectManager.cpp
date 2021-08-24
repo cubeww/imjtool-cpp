@@ -19,34 +19,35 @@ shared_ptr<Object> ObjectManager::create(int index, float x, float y)
 	shared_ptr<Object> obj;
 	switch (static_cast<Index>(index))
 	{
-	REGISTER(Apple)
-	REGISTER(Block)
-	REGISTER(MiniBlock)
-	REGISTER(JumpRefresher)
-	REGISTER(KillerBlock)
-	REGISTER(Platform)
-	REGISTER(Player)
-	REGISTER(PlayerStart)
-	REGISTER(Save)
-	REGISTER(Warp)
-	REGISTER(SpikeDown)
-	REGISTER(SpikeLeft)
-	REGISTER(SpikeRight)
-	REGISTER(SpikeUp)
-	REGISTER(MiniSpikeDown)
-	REGISTER(MiniSpikeLeft)
-	REGISTER(MiniSpikeRight)
-	REGISTER(MiniSpikeUp)
-	REGISTER(WalljumpL)
-	REGISTER(WalljumpR)
-	REGISTER(Water)
-	REGISTER(Water2)
-	REGISTER(Water3)
-	REGISTER(GravityArrowUp)
-	REGISTER(GravityArrowDown)
-	REGISTER(Blood)
-	REGISTER(PlayerBullet)
-	REGISTER(BulletBlocker)
+		REGISTER(Apple)
+			REGISTER(Block)
+			REGISTER(MiniBlock)
+			REGISTER(JumpRefresher)
+			REGISTER(KillerBlock)
+			REGISTER(Platform)
+			REGISTER(Player)
+			REGISTER(PlayerStart)
+			REGISTER(Save)
+			REGISTER(Warp)
+			REGISTER(SpikeDown)
+			REGISTER(SpikeLeft)
+			REGISTER(SpikeRight)
+			REGISTER(SpikeUp)
+			REGISTER(MiniSpikeDown)
+			REGISTER(MiniSpikeLeft)
+			REGISTER(MiniSpikeRight)
+			REGISTER(MiniSpikeUp)
+			REGISTER(WalljumpL)
+			REGISTER(WalljumpR)
+			REGISTER(Water)
+			REGISTER(Water2)
+			REGISTER(Water3)
+			REGISTER(GravityArrowUp)
+			REGISTER(GravityArrowDown)
+			REGISTER(Blood)
+			REGISTER(PlayerBullet)
+			REGISTER(BulletBlocker)
+			REGISTER(Bg)
 
 	default:
 		break;
@@ -59,9 +60,9 @@ void ObjectManager::update()
 {
 	// sort depth
 	sort(objects.begin(), objects.end(), [](const shared_ptr<Object>& obj1, const shared_ptr<Object>& obj2)
-	{
-		return (obj1->depth > obj2->depth);
-	});
+		{
+			return (obj1->depth > obj2->depth);
+		});
 
 	// update instances
 	for (auto i = 0; i < static_cast<int>(objects.size());)
@@ -85,7 +86,7 @@ shared_ptr<Object> ObjectManager::collisionPoint(float x, float y, int index)
 	auto y1 = RoundToInt(y);
 	for (const auto& i : ObjMgr.objects)
 	{
-		if (index == ALL || i->index == index)
+		if (i->maskSprite != nullptr && (index == ALL || i->index == index))
 		{
 			// check collision
 			auto& item = i->maskSprite->items[FloorToInt(i->imageIndex) % i->maskSprite->items.size()];
@@ -122,7 +123,7 @@ vector<shared_ptr<Object>> ObjectManager::collisionPointList(float x, float y, i
 
 	for (const auto& i : ObjMgr.objects)
 	{
-		if (index == ALL || i->index == index)
+		if (i->maskSprite != nullptr && (index == ALL || i->index == index))
 		{
 			// check collision
 			auto& item = i->maskSprite->items[FloorToInt(i->imageIndex) % i->maskSprite->items.size()];
@@ -159,7 +160,7 @@ vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, 
 
 	for (const auto& i : ObjMgr.objects)
 	{
-		if (index == ALL || i->index == index)
+		if (i->maskSprite != nullptr && (index == ALL || i->index == index))
 		{
 			// check collision
 			auto& item = i->maskSprite->items[static_cast<int>(i->imageIndex) % i->maskSprite->items.size()];

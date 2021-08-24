@@ -23,10 +23,10 @@ void Game::run()
 	resourceManager.loadTextures();
 	resourceManager.loadSounds();
 	skinManager.loadConfig();
-	skinManager.loadDefault();
 
-	editor.selectSprite = resourceManager.sprites["block"];
 	editor.selectIndex = GetIndex(Block);
+
+	Create(GetIndex(Bg), 0, 0);
 
 	while (window->isOpen())
 	{

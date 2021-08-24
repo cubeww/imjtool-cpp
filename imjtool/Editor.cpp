@@ -81,7 +81,6 @@ void Editor::update()
 				auto col = ObjMgr.collisionPointList(mouseInPos.x, mouseInPos.y, ALL);
 				for (auto const& i : col)
 				{
-					selectSprite = i->sprite;
 					selectIndex = i->index;
 				}
 			}
@@ -165,10 +164,10 @@ void Editor::update()
 
 	if (cursorInArea)
 	{
-		// draw
+		// draw preview
 		SetCursorPos(ImVec2(snappedPos.x + cursorStartPos.x, snappedPos.y + cursorStartPos.y));
-		auto spr = selectSprite->items[0]->sprite;
-		Image(*spr, sf::Color(255, 255, 255, 100));
+		auto spr = SkinMgr.getCurrentSprite(spriteOf(selectIndex));
+		Image(*spr->items[0]->sprite, sf::Color(255, 255, 255, 100));
 	}
 
 	// undo & redo

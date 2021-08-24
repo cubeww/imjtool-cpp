@@ -243,14 +243,12 @@ void Gui::gameWindow()
 		SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Once);
 		if (Begin("Palette", &showPalette))
 		{
-			auto addObjectWithSkin = [&](int index, shared_ptr<SkinObject> sprite, shared_ptr<SkinObject> defsprite, string hint = "")
+			auto addObject = [&](int index, string hint = "")
 			{
-				if (SkinMgr.curSkin == nullptr || !sprite->valid)
-					sprite = std::move(defsprite);
-
+				auto name = spriteOf(index);
 				if (paletteIcons[index] == nullptr)
 				{
-					auto spr = sprite->sprite->items[0]->sprite;
+					shared_ptr<sf::Sprite> spr = SkinMgr.getCurrentSprite(name)->items[0]->sprite;
 					spr->setPosition(16, 16);
 					spr->setOrigin(spr->getLocalBounds().width / 2, spr->getLocalBounds().height / 2);
 					auto tex = make_shared<sf::RenderTexture>();
@@ -263,33 +261,6 @@ void Gui::gameWindow()
 				if (ImageButton(*paletteIcons[index]))
 				{
 					Gm.editor.selectIndex = index;
-					Gm.editor.selectSprite = sprite->sprite;
-				}
-				if (hint != "" && IsItemHovered())
-				{
-					BeginTooltip();
-					Text(hint.data());
-					EndTooltip();
-				}
-			};
-			auto addObject = [&](int index, shared_ptr<Sprite> sprite, string hint = "")
-			{
-				if (paletteIcons[index] == nullptr)
-				{
-					auto spr = sprite->items[0]->sprite;
-					spr->setPosition(16, 16);
-					spr->setOrigin(spr->getLocalBounds().width / 2, spr->getLocalBounds().height / 2);
-					auto tex = make_shared<sf::RenderTexture>();
-					tex->create(32, 32);
-					tex->clear(sf::Color::Transparent);
-					tex->draw(*spr);
-					paletteIcons[index] = tex;
-				}
-
-				if (ImageButton(*paletteIcons[index]))
-				{
-					Gm.editor.selectIndex = index;
-					Gm.editor.selectSprite = sprite;
 				}
 				if (hint != "" && IsItemHovered())
 				{
@@ -300,59 +271,62 @@ void Gui::gameWindow()
 			};
 			if (CollapsingHeader("Player"))
 			{
-				addObjectWithSkin(GetIndex(PlayerStart), SkinMgr.curSkin->playerStart, SkinMgr.defaultSkin->playerStart);
+				addObject(GetIndex(PlayerStart));
 				SameLine();
-				addObjectWithSkin(GetIndex(Save), SkinMgr.curSkin->save, SkinMgr.defaultSkin->save);
+				addObject(GetIndex(Save));
 				SameLine();
-				addObjectWithSkin(GetIndex(Warp), SkinMgr.curSkin->warp, SkinMgr.defaultSkin->warp);
+				addObject(GetIndex(Warp));
 			}
 			if (CollapsingHeader("Killer"))
 			{
-				addObjectWithSkin(GetIndex(SpikeUp), SkinMgr.curSkin->spikeUp, SkinMgr.defaultSkin->spikeUp);
+				addObject(GetIndex(SpikeUp));
 				SameLine();
-				addObjectWithSkin(GetIndex(SpikeDown), SkinMgr.curSkin->spikeDown, SkinMgr.defaultSkin->spikeDown);
+				addObject(GetIndex(SpikeDown));
 				SameLine();
-				addObjectWithSkin(GetIndex(SpikeLeft), SkinMgr.curSkin->spikeLeft, SkinMgr.defaultSkin->spikeLeft);
+				addObject(GetIndex(SpikeLeft));
 				SameLine();
-				addObjectWithSkin(GetIndex(SpikeRight), SkinMgr.curSkin->spikeRight, SkinMgr.defaultSkin->spikeRight);
+				addObject(GetIndex(SpikeRight));
 
-				addObjectWithSkin(GetIndex(MiniSpikeUp), SkinMgr.curSkin->miniSpikeUp, SkinMgr.defaultSkin->miniSpikeUp);
+				addObject(GetIndex(MiniSpikeUp));
 				SameLine();
-				addObjectWithSkin(GetIndex(MiniSpikeDown), SkinMgr.curSkin->miniSpikeDown, SkinMgr.defaultSkin->miniSpikeDown);
+				addObject(GetIndex(MiniSpikeDown));
 				SameLine();
-				addObjectWithSkin(GetIndex(MiniSpikeLeft), SkinMgr.curSkin->miniSpikeLeft, SkinMgr.defaultSkin->miniSpikeLeft);
+				addObject(GetIndex(MiniSpikeLeft));
 				SameLine();
-				addObjectWithSkin(GetIndex(MiniSpikeRight), SkinMgr.curSkin->miniSpikeRight, SkinMgr.defaultSkin->miniSpikeRight);
+				addObject(GetIndex(MiniSpikeRight));
 
-				addObjectWithSkin(GetIndex(Apple), SkinMgr.curSkin->apple, SkinMgr.defaultSkin->apple);
+				addObject(GetIndex(Apple));
 				SameLine();
-				addObjectWithSkin(GetIndex(KillerBlock), SkinMgr.curSkin->killerBlock, SkinMgr.defaultSkin->killerBlock);
+				addObject(GetIndex(KillerBlock));
 			}
 			if (CollapsingHeader("Block & Platform"))
 			{
-				addObjectWithSkin(GetIndex(Block), SkinMgr.curSkin->block, SkinMgr.defaultSkin->block);
+				addObject(GetIndex(Block));
 				SameLine();
-				addObjectWithSkin(GetIndex(MiniBlock), SkinMgr.curSkin->miniBlock, SkinMgr.defaultSkin->miniBlock);
+				addObject(GetIndex(MiniBlock));
 				SameLine();
-				addObjectWithSkin(GetIndex(Platform), SkinMgr.curSkin->platform, SkinMgr.defaultSkin->platform);
+				addObject(GetIndex(Platform));
+				SameLine();
+				addObject(GetIndex(BulletBlocker));
+				
 			}
 			if (CollapsingHeader("Vine & Water"))
 			{
-				addObjectWithSkin(GetIndex(WalljumpR), SkinMgr.curSkin->walljumpR, SkinMgr.defaultSkin->walljumpR);
+				addObject(GetIndex(WalljumpR));
 				SameLine();
-				addObjectWithSkin(GetIndex(WalljumpL), SkinMgr.curSkin->walljumpL, SkinMgr.defaultSkin->walljumpL);
+				addObject(GetIndex(WalljumpL));
 
-				addObjectWithSkin(GetIndex(Water), SkinMgr.curSkin->water, SkinMgr.defaultSkin->water, "Water 1 (Refresh Jump, High)");
+				addObject(GetIndex(Water), "Water 1 (Refresh Jump, High)");
 				SameLine();
-				addObjectWithSkin(GetIndex(Water2), SkinMgr.curSkin->water2, SkinMgr.defaultSkin->water2, "Water 2 (No Refresh Jump)");
+				addObject(GetIndex(Water2), "Water 2 (No Refresh Jump)");
 				SameLine();
-				addObjectWithSkin(GetIndex(Water3), SkinMgr.curSkin->water3, SkinMgr.defaultSkin->water3, "Water 3 (Refresh Jump)");
+				addObject(GetIndex(Water3), "Water 3 (Refresh Jump)");
 			}
 			if (CollapsingHeader("Misc"))
 			{
-				addObject(GetIndex(GravityArrowUp), ResMgr.sprites["gravity_up"]);
+				addObject(GetIndex(GravityArrowUp));
 				SameLine();
-				addObject(GetIndex(GravityArrowDown), ResMgr.sprites["gravity_down"]);
+				addObject(GetIndex(GravityArrowDown));
 			}
 			End();
 		}
@@ -593,45 +567,44 @@ void Gui::skinWindow()
 		Text("Preview:");
 
 		auto startPos = GetCursorPos();
-		auto drawPreview = [&](shared_ptr<SkinObject> obj, shared_ptr<SkinObject> def, int xx, int yy)
+		auto drawPreview = [&](int index, int xx, int yy)
 		{
+			auto name = spriteOf(index);
 			SetCursorPos(ImVec2(startPos.x + xx, startPos.y + yy));
-			if (obj->valid)
+
+			auto obj = SkinMgr.getPreview(name);
+			if (obj != nullptr)
 			{
-				obj->sprite->items[0]->sprite->setOrigin(0, 0);
-				obj->sprite->items[0]->sprite->setPosition(0, 0);
 				Image(*obj->sprite->items[0]->sprite);
 			}
 			else
 			{
-				def->sprite->items[0]->sprite->setOrigin(0, 0);
-				def->sprite->items[0]->sprite->setPosition(0, 0);
-				Image(*def->sprite->items[0]->sprite);
+				Image(*ResMgr.sprites[name]->items[0]->sprite);
 			}
 		};
 		auto d = 32;
-		drawPreview(SkinMgr.previewSkin->warp, SkinMgr.defaultSkin->warp, 0, 0);
-		drawPreview(SkinMgr.previewSkin->spikeUp, SkinMgr.defaultSkin->spikeUp, d, 0);
-		drawPreview(SkinMgr.previewSkin->jumpRefresher, SkinMgr.defaultSkin->jumpRefresher, d * 2 + 8, 8);
-		drawPreview(SkinMgr.previewSkin->block, SkinMgr.defaultSkin->block, d * 3, 0);
-		drawPreview(SkinMgr.previewSkin->walljumpR, SkinMgr.defaultSkin->walljumpR, d * 3, 0);
-		drawPreview(SkinMgr.previewSkin->block, SkinMgr.defaultSkin->block, d * 4, 0);
-		drawPreview(SkinMgr.previewSkin->walljumpL, SkinMgr.defaultSkin->walljumpL, d * 4, 0);
+		drawPreview(GetIndex(Warp), 0, 0);
+		drawPreview(GetIndex(SpikeUp), d, 0);
+		drawPreview(GetIndex(JumpRefresher), d * 2, 0);
+		drawPreview(GetIndex(Block), d * 3, 0);
+		drawPreview(GetIndex(WalljumpR), d * 3, 0);
+		drawPreview(GetIndex(Block), d * 4, 0);
+		drawPreview(GetIndex(WalljumpL), d * 4, 0);
 
-		drawPreview(SkinMgr.previewSkin->spikeLeft, SkinMgr.defaultSkin->spikeLeft, 0, d);
-		drawPreview(SkinMgr.previewSkin->block, SkinMgr.defaultSkin->block, d, d);
-		drawPreview(SkinMgr.previewSkin->spikeRight, SkinMgr.defaultSkin->spikeRight, d * 2, d);
-		drawPreview(SkinMgr.previewSkin->platform, SkinMgr.defaultSkin->platform, d * 3, d);
-		drawPreview(SkinMgr.previewSkin->apple, SkinMgr.defaultSkin->apple, d * 4, d);
+		drawPreview(GetIndex(SpikeLeft), 0, d);
+		drawPreview(GetIndex(Block), d, d);
+		drawPreview(GetIndex(SpikeRight), d * 2, d);
+		drawPreview(GetIndex(Platform), d * 3, d);
+		drawPreview(GetIndex(Apple), d * 4, d);
 
-		drawPreview(SkinMgr.previewSkin->playerStart, SkinMgr.defaultSkin->playerStart, 0, d * 2);
-		drawPreview(SkinMgr.previewSkin->spikeDown, SkinMgr.defaultSkin->spikeDown, d, d * 2);
-		drawPreview(SkinMgr.previewSkin->miniSpikeUp, SkinMgr.defaultSkin->miniSpikeUp, d * 2, d * 2);
-		drawPreview(SkinMgr.previewSkin->miniSpikeRight, SkinMgr.defaultSkin->miniSpikeRight, d * 2 + 16, d * 2);
-		drawPreview(SkinMgr.previewSkin->miniSpikeLeft, SkinMgr.defaultSkin->miniSpikeLeft, d * 2, d * 2 + 16);
-		drawPreview(SkinMgr.previewSkin->miniSpikeDown, SkinMgr.defaultSkin->miniSpikeDown, d * 2 + 16, d * 2 + 16);
-		drawPreview(SkinMgr.previewSkin->water2, SkinMgr.defaultSkin->water2, d * 3, d * 2);
-		drawPreview(SkinMgr.previewSkin->save, SkinMgr.defaultSkin->save, d * 4, d * 2);
+		drawPreview(GetIndex(PlayerStart), 0, d * 2);
+		drawPreview(GetIndex(SpikeDown), d, d * 2);
+		drawPreview(GetIndex(MiniSpikeUp), d * 2, d * 2);
+		drawPreview(GetIndex(MiniSpikeRight), d * 2 + 16, d * 2);
+		drawPreview(GetIndex(MiniSpikeLeft), d * 2, d * 2 + 16);
+		drawPreview(GetIndex(MiniSpikeDown), d * 2 + 16, d * 2 + 16);
+		drawPreview(GetIndex(Water2), d * 3, d * 2);
+		drawPreview(GetIndex(Save), d * 4, d * 2);
 
 		Columns();
 		if (Button("Apply"))

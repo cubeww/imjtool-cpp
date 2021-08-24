@@ -33,23 +33,95 @@ bool inPalette(int index)
 	case Index::JumpRefresher:
 	case Index::GravityArrowUp:
 	case Index::GravityArrowDown:
+	case Index::BulletBlocker:
 		return true;
 	default:
 		return false;
 	}
 }
 
+bool isSkinable(int index)
+{
+	switch (static_cast<Index>(index))
+	{
+	case Index::SpikeUp:
+	case Index::SpikeDown:
+	case Index::SpikeLeft:
+	case Index::SpikeRight:
+	case Index::MiniSpikeUp:
+	case Index::MiniSpikeDown:
+	case Index::MiniSpikeLeft:
+	case Index::MiniSpikeRight:
+	case Index::Block:
+	case Index::MiniBlock:
+	case Index::Apple:
+	case Index::Save:
+	case Index::Platform:
+	case Index::KillerBlock:
+	case Index::Water:
+	case Index::Water2:
+	case Index::Water3:
+	case Index::WalljumpL:
+	case Index::WalljumpR:
+	case Index::PlayerStart:
+	case Index::Warp:
+	case Index::JumpRefresher:
+	case Index::BulletBlocker:
+	case Index::Bg:
+		return true;
+	default:
+		return false;
+	}
+}
+
+string spriteOf(int index)
+{
+	switch (static_cast<Index>(index))
+	{
+	case Index::SpikeUp: return "spike_up";
+	case Index::SpikeDown: return "spike_down";
+	case Index::SpikeLeft: return "spike_left";
+	case Index::SpikeRight: return "spike_right";
+	case Index::MiniSpikeUp: return "mini_spike_up";
+	case Index::MiniSpikeDown: return "mini_spike_down";
+	case Index::MiniSpikeLeft: return "mini_spike_left";
+	case Index::MiniSpikeRight: return "mini_spike_right";
+	case Index::Block: return "block";
+	case Index::MiniBlock: return "mini_block";
+	case Index::Apple: return "apple";
+	case Index::Save: return "save";
+	case Index::Platform: return "platform";
+	case Index::KillerBlock: return "killer_block";
+	case Index::Water: return "water";
+	case Index::Water2: return "water2";
+	case Index::Water3: return "water3";
+	case Index::WalljumpL: return "walljump_l";
+	case Index::WalljumpR: return "walljump_r";
+	case Index::PlayerStart: return "player_start";
+	case Index::Warp: return "warp";
+	case Index::JumpRefresher: return "jump_refresher";
+	case Index::GravityArrowUp: return "gravity_up";
+	case Index::GravityArrowDown: return "gravity_down";
+	case Index::BulletBlocker: return "bullet_blocker";
+	case Index::Bg: return "bg";
+	}
+	return "undefined";
+}
+
+
 void Apple::create()
 {
 	depth = 0;
-	imageSpeed = 1 / 15;
+	imageSpeed = 1.0f / 15.0f;
 	setMask("apple");
+	setOrigin(10, 12);
 	applySkin();
 	addCollision(Index::Killer);
 }
 
 void Apple::update()
 {
+	imageIndex += imageSpeed;
 	drawSelf();
 }
 
@@ -115,6 +187,7 @@ void MiniSpikeDown::create()
 
 void MiniSpikeDown::update()
 {
+	imageIndex += imageSpeed;
 	drawSelf();
 }
 
@@ -128,6 +201,7 @@ void MiniSpikeLeft::create()
 
 void MiniSpikeLeft::update()
 {
+	imageIndex += imageSpeed;
 	drawSelf();
 }
 
@@ -141,6 +215,7 @@ void MiniSpikeRight::create()
 
 void MiniSpikeRight::update()
 {
+	imageIndex += imageSpeed;
 	drawSelf();
 }
 
@@ -154,6 +229,7 @@ void MiniSpikeUp::create()
 
 void MiniSpikeUp::update()
 {
+	imageIndex += imageSpeed;
 	drawSelf();
 }
 
@@ -214,16 +290,16 @@ void Player::update()
 		}
 	}
 
-	auto normalXorigin = 17;
-	auto normalYorigin = 23;
-	auto slideXorigin = 7;
-	auto slideYorigin = 10;
+	auto normalXorigin = 17.0f;
+	auto normalYorigin = 23.0f;
+	auto slideXorigin = 7.0f;
+	auto slideYorigin = 10.0f;
 	if (PlayerMgr.dotkid)
 	{
-		normalXorigin = 16;
-		normalYorigin = 8;
-		slideXorigin = 16;
-		slideYorigin = 8;
+		normalXorigin = 16.0f;
+		normalYorigin = 8.0f;
+		slideXorigin = 16.0f;
+		slideYorigin = 8.0f;
 	}
 
 	auto L = InputMgr.isKeyHold(sf::Keyboard::Left);
@@ -287,7 +363,7 @@ void Player::update()
 	// shoot
 	if (InputMgr.isKeyPress(sf::Keyboard::Z))
 	{
-		if (ObjMgr.getCount(GetIndex(PlayerBullet)) < 4) 
+		if (ObjMgr.getCount(GetIndex(PlayerBullet)) < 4)
 		{
 			ResMgr.sounds["shoot"]->play();
 
@@ -323,7 +399,7 @@ void Player::update()
 	}
 
 	// jump release
-	if (InputMgr.isKeyRelease(sf::Keyboard::LShift)|| InputMgr.isKeyRelease(sf::Keyboard::RShift))
+	if (InputMgr.isKeyRelease(sf::Keyboard::LShift) || InputMgr.isKeyRelease(sf::Keyboard::RShift))
 	{
 		if (vspeed * PlayerMgr.grav < 0)
 		{
@@ -446,7 +522,7 @@ void Player::update()
 		djump = true;
 		vspeed = 0;
 
-		if (!PlayerMgr.dotkid) 
+		if (!PlayerMgr.dotkid)
 		{
 			if (PlayerMgr.grav == 1)
 			{
@@ -459,7 +535,7 @@ void Player::update()
 				setMaskOrigin(17, 8);
 			}
 		}
-		else 
+		else
 		{
 			if (PlayerMgr.grav == 1)
 			{
@@ -602,6 +678,7 @@ void SpikeDown::create()
 
 void SpikeDown::update()
 {
+	imageIndex += imageSpeed;
 	drawSelf();
 }
 
@@ -615,6 +692,7 @@ void SpikeLeft::create()
 
 void SpikeLeft::update()
 {
+	imageIndex += imageSpeed;
 	drawSelf();
 }
 
@@ -628,6 +706,7 @@ void SpikeRight::create()
 
 void SpikeRight::update()
 {
+	imageIndex += imageSpeed;
 	drawSelf();
 }
 
@@ -641,6 +720,7 @@ void SpikeUp::create()
 
 void SpikeUp::update()
 {
+	imageIndex += imageSpeed;
 	drawSelf();
 }
 
@@ -855,3 +935,77 @@ void BulletBlocker::update()
 
 	drawSelf();
 }
+
+void Bg::create()
+{
+	depth = 100;
+	for (auto i = 0; i < 10; i++)
+	{
+		rects[i] = sf::RectangleShape(sf::Vector2f(800, 608));
+		rects[i].setTextureRect(sf::Rect(0, 0, 800, 608));
+	}
+
+	rects[0].setPosition(-800, -608);
+	rects[1].setPosition(0, -608);
+	rects[2].setPosition(800, -608);
+
+	rects[3].setPosition(-800, 0);
+	rects[4].setPosition(0, 0);
+	rects[5].setPosition(800, 0);
+
+	rects[6].setPosition(-800, 608);
+	rects[7].setPosition(0, 608);
+	rects[8].setPosition(800, 608);
+
+	applySkin();
+}
+
+void Bg::update()
+{
+	auto tex = sprite->items[0]->sprite->getTexture();
+
+	if (SkinMgr.curSkin != nullptr)
+	{
+		hspeed = SkinMgr.curSkin->hspeed;
+		vspeed = SkinMgr.curSkin->vspeed;
+	}
+
+	if (SkinMgr.curSkin != nullptr && SkinMgr.curSkin->bgType == BgType::Stretch)
+	{
+		x = FloorToInt(x + hspeed) % 800;
+		y = FloorToInt(y + vspeed) % 608;
+
+		rects[0].setPosition(x - 800, y - 608);
+		rects[1].setPosition(x, y - 608);
+		rects[2].setPosition(x + 800, y - 608);
+
+		rects[3].setPosition(x - 800, y);
+		rects[4].setPosition(x, y);
+		rects[5].setPosition(x + 800, y);
+
+		rects[6].setPosition(x - 800, y + 608);
+		rects[7].setPosition(x, y + 608);
+		rects[8].setPosition(x + 800, y + 608);
+
+		for (auto i = 0; i < 9; i++)
+		{
+			rects[i].setTexture(tex);
+			Gm.gameTexture->draw(rects[i]);
+		}
+
+	}
+	else
+	{
+		rects[9].setTexture(tex);
+		auto size = tex->getSize();
+
+		x = FloorToInt(x + hspeed) % size.x;
+		y = FloorToInt(y + vspeed) % size.y;
+
+		rects[9].setTextureRect(sf::IntRect(0, 0, 800 + size.x, 608 + size.y));
+		rects[9].setSize(sf::Vector2f(800 + size.x, 608 + size.y));
+		rects[9].setPosition(x - size.x, y - size.y);
+		Gm.gameTexture->draw(rects[9]);
+	}
+}
+

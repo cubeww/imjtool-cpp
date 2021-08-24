@@ -37,10 +37,12 @@ enum class Index
     KillerBlock,
     PlayerStart,
     MiniBlock,
+    Bg,
 };
 
+string spriteOf(int index);
 bool inPalette(int index);
-
+bool isSkinable(int index);
 
 class Apple :
     public Object
@@ -274,6 +276,20 @@ class BulletBlocker :
     public Object
 {
 public:
+    void create() override;
+    void update() override;
+};
+
+class Bg :
+    public Object
+{
+public:
+    // 0 1 2
+    // 3 4 5
+    // 6 7 8
+    // 9 - tile rect
+    sf::RectangleShape rects[10];
+
     void create() override;
     void update() override;
 };

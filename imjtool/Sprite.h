@@ -16,8 +16,6 @@ public:
 	void addSheet(shared_ptr<sf::Texture> tex, int xnum = 1, int ynum = 1, bool getData = true);
 
 	void draw(int index, float x, float y, float xorigin, float yorigin, float xscale, float yscale, float rotation, sf::Color color);
-
-	~Sprite() { cout << "free Sprite" << endl; }
 };
 
 class SpriteItem

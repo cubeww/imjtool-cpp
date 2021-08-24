@@ -61,7 +61,6 @@ class Editor
 {
 public:
 	Editor();
-	shared_ptr<Sprite> selectSprite;
 	int selectIndex = 0;
 	ImVec2 snap = ImVec2(32, 32);
 
