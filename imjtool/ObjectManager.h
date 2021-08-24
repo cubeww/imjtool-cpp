@@ -10,9 +10,9 @@ using namespace std;
 // object helper macros
 #define GetIndex(name) (static_cast<int>(Index::name))
 
-#define Create(index, x, y) ObjMgr.create(index, x, y)
+#define CreateInst(index, x, y) ObjMgr.create(index, x, y)
 
-#define Destroy(ptr) ptr->needDestroy = true
+#define DestroyInst(ptr) ptr->needDestroy = true
 #define DestroyByIndex(_index) for_each(ObjMgr.objects.begin(), ObjMgr.objects.end(), [](shared_ptr<Object>& o){if(o->index == _index){o->needDestroy=true;}})
 #define DestroyByName(name) DestroyByIndex(GetIndex(name))
 #define DestroyThis() this->needDestroy = true

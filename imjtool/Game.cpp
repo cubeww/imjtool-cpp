@@ -26,8 +26,8 @@ void Game::run()
 
 	editor.selectIndex = GetIndex(Block);
 
-	Create(GetIndex(Bg), 0, 0);
-	Create(GetIndex(Grid), 0, 0);
+	CreateInst(GetIndex(Bg), 0, 0);
+	CreateInst(GetIndex(Grid), 0, 0);
 
 	while (window->isOpen())
 	{

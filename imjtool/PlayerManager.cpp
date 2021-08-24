@@ -25,7 +25,7 @@ void PlayerManager::load()
 	DestroyByName(Player);
 	DestroyByName(Blood);
 
-	Create(GetIndex(Player), currentSave.x, currentSave.y);
+	CreateInst(GetIndex(Player), currentSave.x, currentSave.y);
 
 	player.lock()->x = currentSave.x;
 	player.lock()->y = currentSave.y;

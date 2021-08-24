@@ -20,36 +20,36 @@ Editor::Editor()
 
 void Editor::update()
 {
-	auto mousePos = GetMousePos();
-	auto windowPos = GetWindowPos();
-	auto windowSize = GetWindowSize();
-	auto cursorStartPos = GetCursorStartPos();
+	auto mousePos = ImGui::GetMousePos();
+	auto windowPos = ImGui::GetWindowPos();
+	auto windowSize = ImGui::GetWindowSize();
+	auto cursorStartPos = ImGui::GetCursorStartPos();
 	auto mouseInPos = ImVec2(mousePos.x - windowPos.x - cursorStartPos.x, mousePos.y - windowPos.y - cursorStartPos.y);
 
 	mouseInTitle = sf::FloatRect(windowPos.x, windowPos.y, windowSize.x, cursorStartPos.y).contains(mousePos.x, mousePos.y);
 	auto cursorInArea = sf::FloatRect(0, 0, 799, 607).contains(mouseInPos.x, mouseInPos.y);
 
-	auto leftPress = IsMouseClicked(ImGuiMouseButton_Left);
-	auto leftHold = IsMouseDown(ImGuiMouseButton_Left);
-	auto leftRelease = IsMouseReleased(ImGuiMouseButton_Left);
+	auto leftPress = ImGui::IsMouseClicked(ImGuiMouseButton_Left);
+	auto leftHold = ImGui::IsMouseDown(ImGuiMouseButton_Left);
+	auto leftRelease = ImGui::IsMouseReleased(ImGuiMouseButton_Left);
 
-	auto rightPress = IsMouseClicked(ImGuiMouseButton_Right);
-	auto rightHold = IsMouseDown(ImGuiMouseButton_Right);
-	auto rightRelease = IsMouseReleased(ImGuiMouseButton_Right);
+	auto rightPress = ImGui::IsMouseClicked(ImGuiMouseButton_Right);
+	auto rightHold = ImGui::IsMouseDown(ImGuiMouseButton_Right);
+	auto rightRelease = ImGui::IsMouseReleased(ImGuiMouseButton_Right);
 
 	auto dragHold = InputMgr.isKeyHold(sf::Keyboard::Space);
 	auto pickerHold = InputMgr.isKeyHold(sf::Keyboard::LControl);
 	auto codeHold = InputMgr.isKeyHold(sf::Keyboard::LAlt);
 
 	auto snappedPos = ImVec2(floor(mouseInPos.x / snap.x) * snap.x, floor(mouseInPos.y / snap.y) * snap.y);
-	auto focused = IsWindowFocused();
-	SetMouseCursor(ImGuiMouseCursor_Arrow);
+	auto focused = ImGui::IsWindowFocused();
+	ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
 
 	if (cursorInArea)
 	{
 		if (dragHold && focused)
 		{
-			SetMouseCursor(ImGuiMouseCursor_Hand);
+			ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
 			if (leftHold)
 			{
 				if (caughtObject == nullptr)
@@ -78,7 +78,7 @@ void Editor::update()
 		}
 		else if (pickerHold && focused)
 		{
-			SetMouseCursor(ImGuiMouseCursor_Arrow);
+			ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
 			if (leftPress)
 			{
 				auto col = ObjMgr.collisionPointList(mouseInPos.x, mouseInPos.y, ALL);
@@ -90,7 +90,7 @@ void Editor::update()
 		}
 		else if (codeHold && focused)
 		{
-			SetMouseCursor(ImGuiMouseCursor_TextInput);
+			ImGui::SetMouseCursor(ImGuiMouseCursor_TextInput);
 		}
 		else
 		{
@@ -140,7 +140,7 @@ void Editor::update()
 						continue;
 					}
 					addRemoveEvent(i->x, i->y, i->index);
-					Destroy(i);
+					DestroyInst(i);
 				}
 			}
 		}
@@ -165,8 +165,8 @@ void Editor::update()
 	{
 		// draw preview
 		auto spr = SkinMgr.getCurrentSprite(spriteOf(selectIndex));
-		SetCursorPos(ImVec2(snappedPos.x + cursorStartPos.x - spr->xOrigin, snappedPos.y + cursorStartPos.y - spr->yOrigin));
-		Image(*spr->items[0]->sprite, sf::Color(255, 255, 255, 100));
+		ImGui::SetCursorPos(ImVec2(snappedPos.x + cursorStartPos.x - spr->xOrigin, snappedPos.y + cursorStartPos.y - spr->yOrigin));
+		ImGui::Image(*spr->items[0]->sprite, sf::Color(255, 255, 255, 100));
 	}
 
 	// undo & redo
@@ -227,7 +227,7 @@ void Editor::finishCreateObject(float x, float y)
 {
 	if (ObjMgr.atPosition(x, y, selectIndex).empty())
 	{
-		auto inst = Create(selectIndex, x, y);
+		auto inst = CreateInst(selectIndex, x, y);
 		addCreateEvent(inst->x, inst->y, inst->index);
 	}
 }
@@ -255,11 +255,11 @@ void Editor::undo()
 			case Create:
 				for (auto const& i : ObjMgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))
 				{
-					Destroy(i);
+					DestroyInst(i);
 				}
 				break;
 			case Remove:
-				Create(subEvent.objectIndex, subEvent.x, subEvent.y);
+				CreateInst(subEvent.objectIndex, subEvent.x, subEvent.y);
 				break;
 			case Move:
 				for (auto const& i : ObjMgr.atPosition(subEvent.newX, subEvent.newY, subEvent.objectIndex))
@@ -283,12 +283,12 @@ void Editor::redo()
 			switch (lastEvent->type)
 			{
 			case Create:
-				Create(subEvent.objectIndex, subEvent.x, subEvent.y);
+				CreateInst(subEvent.objectIndex, subEvent.x, subEvent.y);
 				break;
 			case Remove:
 				for (auto const& i : ObjMgr.atPosition(subEvent.x, subEvent.y, subEvent.objectIndex))
 				{
-					Destroy(i);
+					DestroyInst(i);
 				}
 				break;
 			case Move:

@@ -39,6 +39,8 @@ enum class Index
     MiniBlock,
     Bg,
     Grid,
+
+    Undefined,
 };
 
 string spriteOf(int index);

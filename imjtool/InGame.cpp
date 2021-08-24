@@ -349,7 +349,7 @@ void Player::update()
 			if (PlayerMgr.dotkid)
 				by = y + 6;
 
-			auto b = Create(GetIndex(PlayerBullet), x, by);
+			auto b = CreateInst(GetIndex(PlayerBullet), x, by);
 			b->hspeed = PlayerMgr.face * 16;
 		}
 	}
@@ -527,7 +527,7 @@ void Player::update()
 	{
 		for (auto i = 0; i < 200; i++)
 		{
-			Create(GetIndex(Blood), x, y);
+			CreateInst(GetIndex(Blood), x, y);
 		}
 		ResMgr.sounds["death"]->play();
 		DestroyByName(Player);
@@ -572,10 +572,10 @@ void PlayerStart::create()
 	for (const auto& o : ObjMgr.objects)
 	{
 		if (o->index == index && o.get() != this)
-			Destroy(o);
+			DestroyInst(o);
 	}
 	DestroyByName(Player);
-	Create(GetIndex(Player), x + 17, y + 23);
+	CreateInst(GetIndex(Player), x + 17, y + 23);
 	depth = 0;
 	setMask("player_start");
 	applySkin();
@@ -728,7 +728,7 @@ void Warp::update()
 	auto player = placeMeeting(x, y, Index::Player);
 	if (player != nullptr)
 	{
-		Destroy(player);
+		DestroyInst(player);
 	}
 
 	drawSelf();

@@ -5,10 +5,11 @@ using namespace std;
 
 class MapManager
 {
-	void saveJmap();
+public:
+	void saveJmap(string filename);
 	void loadJmap(string filename);
 
-	void saveRMJ();
-	void loadRMJ();
+	void saveRMJ(string filename);
+	void loadRMJ(string filename);
 };
 
