@@ -243,11 +243,14 @@ void Gui::gameWindow()
 		SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Once);
 		if (Begin("Palette", &showPalette))
 		{
-			auto addObject = [&](int index, string spriteName, string hint = "")
+			auto addObjectWithSkin = [&](int index, shared_ptr<SkinObject> sprite, shared_ptr<SkinObject> defsprite, string hint = "")
 			{
+				if (SkinMgr.curSkin == nullptr || !sprite->valid)
+					sprite = std::move(defsprite);
+
 				if (paletteIcons[index] == nullptr)
 				{
-					auto spr = ResMgr.sprites[spriteName]->items[0]->sprite;
+					auto spr = sprite->sprite->items[0]->sprite;
 					spr->setPosition(16, 16);
 					spr->setOrigin(spr->getLocalBounds().width / 2, spr->getLocalBounds().height / 2);
 					auto tex = make_shared<sf::RenderTexture>();
@@ -260,7 +263,33 @@ void Gui::gameWindow()
 				if (ImageButton(*paletteIcons[index]))
 				{
 					Gm.editor.selectIndex = index;
-					Gm.editor.selectSprite = ResMgr.sprites[spriteName];
+					Gm.editor.selectSprite = sprite->sprite;
+				}
+				if (hint != "" && IsItemHovered())
+				{
+					BeginTooltip();
+					Text(hint.data());
+					EndTooltip();
+				}
+			};
+			auto addObject = [&](int index, shared_ptr<Sprite> sprite, string hint = "")
+			{
+				if (paletteIcons[index] == nullptr)
+				{
+					auto spr = sprite->items[0]->sprite;
+					spr->setPosition(16, 16);
+					spr->setOrigin(spr->getLocalBounds().width / 2, spr->getLocalBounds().height / 2);
+					auto tex = make_shared<sf::RenderTexture>();
+					tex->create(32, 32);
+					tex->clear(sf::Color::Transparent);
+					tex->draw(*spr);
+					paletteIcons[index] = tex;
+				}
+
+				if (ImageButton(*paletteIcons[index]))
+				{
+					Gm.editor.selectIndex = index;
+					Gm.editor.selectSprite = sprite;
 				}
 				if (hint != "" && IsItemHovered())
 				{
@@ -271,59 +300,59 @@ void Gui::gameWindow()
 			};
 			if (CollapsingHeader("Player"))
 			{
-				addObject(GetIndex(PlayerStart), "player_start");
+				addObjectWithSkin(GetIndex(PlayerStart), SkinMgr.curSkin->playerStart, SkinMgr.defaultSkin->playerStart);
 				SameLine();
-				addObject(GetIndex(Save), "save");
+				addObjectWithSkin(GetIndex(Save), SkinMgr.curSkin->save, SkinMgr.defaultSkin->save);
 				SameLine();
-				addObject(GetIndex(Warp), "warp");
+				addObjectWithSkin(GetIndex(Warp), SkinMgr.curSkin->warp, SkinMgr.defaultSkin->warp);
 			}
 			if (CollapsingHeader("Killer"))
 			{
-				addObject(GetIndex(SpikeUp), "spike_up");
+				addObjectWithSkin(GetIndex(SpikeUp), SkinMgr.curSkin->spikeUp, SkinMgr.defaultSkin->spikeUp);
 				SameLine();
-				addObject(GetIndex(SpikeDown), "spike_down");
+				addObjectWithSkin(GetIndex(SpikeDown), SkinMgr.curSkin->spikeDown, SkinMgr.defaultSkin->spikeDown);
 				SameLine();
-				addObject(GetIndex(SpikeLeft), "spike_left");
+				addObjectWithSkin(GetIndex(SpikeLeft), SkinMgr.curSkin->spikeLeft, SkinMgr.defaultSkin->spikeLeft);
 				SameLine();
-				addObject(GetIndex(SpikeRight), "spike_right");
+				addObjectWithSkin(GetIndex(SpikeRight), SkinMgr.curSkin->spikeRight, SkinMgr.defaultSkin->spikeRight);
 
-				addObject(GetIndex(MiniSpikeUp), "mini_spike_up");
+				addObjectWithSkin(GetIndex(MiniSpikeUp), SkinMgr.curSkin->miniSpikeUp, SkinMgr.defaultSkin->miniSpikeUp);
 				SameLine();
-				addObject(GetIndex(MiniSpikeDown), "mini_spike_down");
+				addObjectWithSkin(GetIndex(MiniSpikeDown), SkinMgr.curSkin->miniSpikeDown, SkinMgr.defaultSkin->miniSpikeDown);
 				SameLine();
-				addObject(GetIndex(MiniSpikeLeft), "mini_spike_left");
+				addObjectWithSkin(GetIndex(MiniSpikeLeft), SkinMgr.curSkin->miniSpikeLeft, SkinMgr.defaultSkin->miniSpikeLeft);
 				SameLine();
-				addObject(GetIndex(MiniSpikeRight), "mini_spike_right");
+				addObjectWithSkin(GetIndex(MiniSpikeRight), SkinMgr.curSkin->miniSpikeRight, SkinMgr.defaultSkin->miniSpikeRight);
 
-				addObject(GetIndex(Apple), "apple");
+				addObjectWithSkin(GetIndex(Apple), SkinMgr.curSkin->apple, SkinMgr.defaultSkin->apple);
 				SameLine();
-				addObject(GetIndex(KillerBlock), "killer_block");
+				addObjectWithSkin(GetIndex(KillerBlock), SkinMgr.curSkin->killerBlock, SkinMgr.defaultSkin->killerBlock);
 			}
 			if (CollapsingHeader("Block & Platform"))
 			{
-				addObject(GetIndex(Block), "block");
+				addObjectWithSkin(GetIndex(Block), SkinMgr.curSkin->block, SkinMgr.defaultSkin->block);
 				SameLine();
-				addObject(GetIndex(MiniBlock), "mini_block");
+				addObjectWithSkin(GetIndex(MiniBlock), SkinMgr.curSkin->miniBlock, SkinMgr.defaultSkin->miniBlock);
 				SameLine();
-				addObject(GetIndex(Platform), "platform");
+				addObjectWithSkin(GetIndex(Platform), SkinMgr.curSkin->platform, SkinMgr.defaultSkin->platform);
 			}
 			if (CollapsingHeader("Vine & Water"))
 			{
-				addObject(GetIndex(WalljumpR), "walljump_r");
+				addObjectWithSkin(GetIndex(WalljumpR), SkinMgr.curSkin->walljumpR, SkinMgr.defaultSkin->walljumpR);
 				SameLine();
-				addObject(GetIndex(WalljumpL), "walljump_l");
+				addObjectWithSkin(GetIndex(WalljumpL), SkinMgr.curSkin->walljumpL, SkinMgr.defaultSkin->walljumpL);
 
-				addObject(GetIndex(Water), "water", "Water 1 (Refresh Jump, High)");
+				addObjectWithSkin(GetIndex(Water), SkinMgr.curSkin->water, SkinMgr.defaultSkin->water, "Water 1 (Refresh Jump, High)");
 				SameLine();
-				addObject(GetIndex(Water2), "water2", "Water 2 (No Refresh Jump)");
+				addObjectWithSkin(GetIndex(Water2), SkinMgr.curSkin->water2, SkinMgr.defaultSkin->water2, "Water 2 (No Refresh Jump)");
 				SameLine();
-				addObject(GetIndex(Water3), "water3", "Water 3 (Refresh Jump)");
+				addObjectWithSkin(GetIndex(Water3), SkinMgr.curSkin->water3, SkinMgr.defaultSkin->water3, "Water 3 (Refresh Jump)");
 			}
 			if (CollapsingHeader("Misc"))
 			{
-				addObject(GetIndex(GravityArrowUp), "gravity_up");
+				addObject(GetIndex(GravityArrowUp), ResMgr.sprites["gravity_up"]);
 				SameLine();
-				addObject(GetIndex(GravityArrowDown), "gravity_down");
+				addObject(GetIndex(GravityArrowDown), ResMgr.sprites["gravity_down"]);
 			}
 			End();
 		}
@@ -570,11 +599,13 @@ void Gui::skinWindow()
 			if (obj->valid)
 			{
 				obj->sprite->items[0]->sprite->setOrigin(0, 0);
+				obj->sprite->items[0]->sprite->setPosition(0, 0);
 				Image(*obj->sprite->items[0]->sprite);
 			}
 			else
 			{
 				def->sprite->items[0]->sprite->setOrigin(0, 0);
+				def->sprite->items[0]->sprite->setPosition(0, 0);
 				Image(*def->sprite->items[0]->sprite);
 			}
 		};
@@ -605,6 +636,7 @@ void Gui::skinWindow()
 		Columns();
 		if (Button("Apply"))
 		{
+			SkinMgr.apply(SkinMgr.previewSkin);
 			showSkin = false;
 		}
 		SameLine();

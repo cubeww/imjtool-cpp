@@ -1,3 +1,30 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  Editor.cpp
+  Game.cpp
   Gui.cpp
+  InGame.cpp
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(255,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(255,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(260,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(260,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(317,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(317,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(352,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(352,13): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(364,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(364,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(371,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(371,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  InputManager.cpp
+  Object.cpp
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(187,8): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  ObjectManager.cpp
+  PlayerManager.cpp
+  ResourceManager.cpp
+  SkinManager.cpp
+D:\Projects\CPP\imjtool\3rdparty\ini\ini.h(343,44): warning C4244: 'argument': conversion from 'std::streamoff' to 'const unsigned int', possible loss of data
+  Sprite.cpp
+  main.cpp
+  Generating Code...
+  LINK : ..\bin\imjtool.exe not found or not built by the last incremental link; performing full link
   imjtool.vcxproj -> D:\Projects\CPP\imjtool\bin\imjtool.exe

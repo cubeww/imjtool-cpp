@@ -12,7 +12,7 @@ public:
 	bool valid = false;
 	shared_ptr<sf::Texture> texture;
 	shared_ptr<Sprite> sprite;
-	float speed;
+	float speed = NAN;
 
 	SkinObject(string filename, int xnum = 1, int ynum = 1, float speed = 0);
 	SkinObject(shared_ptr<Sprite> sprite, float speed = 0);
@@ -62,6 +62,7 @@ public:
 	float vspeed;
 
 	SkinPackage();
+	~SkinPackage() { cout << "free skin pkg" << endl; };
 	SkinPackage(string name);
 };
 
@@ -72,6 +73,8 @@ public:
 	shared_ptr<SkinPackage> curSkin;
 	shared_ptr<SkinPackage> previewSkin;
 	shared_ptr<SkinPackage> defaultSkin;
+
+	void apply(shared_ptr<SkinPackage> package);
 
 	void loadConfig();
 	void loadDefault();

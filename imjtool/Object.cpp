@@ -257,3 +257,49 @@ void Object::calcBBox()
 		bboxBottom = FloorToInt(y + ccYmax - ssXmin);
 	}
 }
+
+#define APPLY_SKIN(index, inskin) \
+case Index::index: \
+if (SkinMgr.curSkin != nullptr && SkinMgr.curSkin->inskin->valid) \
+{ \
+	sprite = SkinMgr.curSkin->inskin->sprite; \
+	if (SkinMgr.curSkin->inskin->speed != NAN) \
+	{ \
+		imageSpeed = SkinMgr.curSkin->inskin->speed; \
+	} \
+} \
+else \
+{ \
+	sprite = SkinMgr.defaultSkin->inskin->sprite; \
+} \
+break;
+
+void Object::applySkin()
+{
+	switch (static_cast<Index>(index))
+	{
+		APPLY_SKIN(SpikeUp, spikeUp)
+		APPLY_SKIN(SpikeDown, spikeDown)
+		APPLY_SKIN(SpikeLeft, spikeLeft)
+		APPLY_SKIN(SpikeRight, spikeRight)
+		APPLY_SKIN(MiniSpikeUp, miniSpikeUp)
+		APPLY_SKIN(MiniSpikeDown, miniSpikeDown)
+		APPLY_SKIN(MiniSpikeLeft, miniSpikeLeft)
+		APPLY_SKIN(MiniSpikeRight, miniSpikeRight)
+		APPLY_SKIN(Apple, apple)
+		APPLY_SKIN(KillerBlock, killerBlock)
+		APPLY_SKIN(Block, block)
+		APPLY_SKIN(MiniBlock, miniBlock)
+		APPLY_SKIN(BulletBlocker, bulletBlocker)
+		APPLY_SKIN(Platform, platform)
+		APPLY_SKIN(WalljumpL, walljumpL)
+		APPLY_SKIN(WalljumpR, walljumpR)
+		APPLY_SKIN(Water, water)
+		APPLY_SKIN(Water2, water2)
+		APPLY_SKIN(Water3, water3)
+		APPLY_SKIN(Warp, warp)
+		APPLY_SKIN(PlayerStart, playerStart)
+		APPLY_SKIN(JumpRefresher, jumpRefresher)
+		APPLY_SKIN(Save, save)
+	}
+}

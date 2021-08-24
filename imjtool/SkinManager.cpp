@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include <filesystem>
 #include "Game.h"
+#include "InGame.h"
 
 using namespace mINI;
 
@@ -26,11 +27,12 @@ void SkinManager::loadConfig()
 void SkinManager::loadDefault()
 {
 	defaultSkin = make_shared<SkinPackage>();
+	curSkin = make_shared<SkinPackage>();
 }
 
 SkinPackage::SkinPackage()
 {
-	// setup default skin
+	// create default skin package
 	bgType = BgType::Stretch;
 
 	hspeed = 0;
@@ -175,4 +177,19 @@ SkinObject::SkinObject(shared_ptr<Sprite> sprite, float speed)
 	this->speed = speed;
 
 	valid = true;
+}
+
+void SkinManager::apply(shared_ptr<SkinPackage> package)
+{
+	curSkin = package;
+
+	for (auto i : ObjMgr.objects)
+	{
+		if (inPalette(i->index))
+		{
+			i->applySkin();
+		}
+	}
+
+	Gm.gui.paletteIcons.clear();
 }

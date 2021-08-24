@@ -43,7 +43,8 @@ void Apple::create()
 {
 	depth = 0;
 	imageSpeed = 1 / 15;
-	setSprite("apple");
+	setMask("apple");
+	applySkin();
 	addCollision(Index::Killer);
 }
 
@@ -55,7 +56,8 @@ void Apple::update()
 void Block::create()
 {
 	depth = 1;
-	setSprite("block");
+	setMask("block");
+	applySkin();
 	addCollision(Index::Block);
 }
 
@@ -67,7 +69,8 @@ void Block::update()
 void MiniBlock::create()
 {
 	depth = 1;
-	setSprite("mini_block");
+	setMask("mini_block");
+	applySkin();
 	addCollision(Index::Block);
 }
 
@@ -79,7 +82,8 @@ void MiniBlock::update()
 void JumpRefresher::create()
 {
 	depth = 0;
-	setSprite("jump_refresher");
+	setMask("jump_refresher");
+	applySkin();
 	addCollision(Index::JumpRefresher);
 }
 
@@ -91,7 +95,8 @@ void JumpRefresher::update()
 void KillerBlock::create()
 {
 	depth = 0;
-	setSprite("killer_block");
+	setMask("killer_block");
+	applySkin();
 	addCollision(Index::Killer);
 }
 
@@ -103,7 +108,8 @@ void KillerBlock::update()
 void MiniSpikeDown::create()
 {
 	depth = 0;
-	setSprite("mini_spike_down");
+	setMask("mini_spike_down");
+	applySkin();
 	addCollision(Index::Killer);
 }
 
@@ -115,7 +121,8 @@ void MiniSpikeDown::update()
 void MiniSpikeLeft::create()
 {
 	depth = 0;
-	setSprite("mini_spike_left");
+	setMask("mini_spike_left");
+	applySkin();
 	addCollision(Index::Killer);
 }
 
@@ -127,7 +134,8 @@ void MiniSpikeLeft::update()
 void MiniSpikeRight::create()
 {
 	depth = 0;
-	setSprite("mini_spike_right");
+	setMask("mini_spike_right");
+	applySkin();
 	addCollision(Index::Killer);
 }
 
@@ -139,7 +147,8 @@ void MiniSpikeRight::update()
 void MiniSpikeUp::create()
 {
 	depth = 0;
-	setSprite("mini_spike_up");
+	setMask("mini_spike_up");
+	applySkin();
 	addCollision(Index::Killer);
 }
 
@@ -151,7 +160,8 @@ void MiniSpikeUp::update()
 void Platform::create()
 {
 	depth = 10;
-	setSprite("platform");
+	setMask("platform");
+	applySkin();
 	addCollision(Index::Block);
 	addCollision(Index::Platform);
 }
@@ -526,7 +536,8 @@ void PlayerStart::create()
 	DestroyByName(Player);
 	Create(GetIndex(Player), x + 17, y + 23);
 	depth = 0;
-	setSprite("player_start");
+	setMask("player_start");
+	applySkin();
 	PlayerMgr.save();
 }
 
@@ -538,7 +549,8 @@ void PlayerStart::update()
 void Save::create()
 {
 	depth = 0;
-	setSprite("save");
+	setMask("save");
+	applySkin();
 	addCollision(Index::Save);
 }
 
@@ -583,7 +595,8 @@ void Save::save()
 void SpikeDown::create()
 {
 	depth = 0;
-	setSprite("spike_down");
+	setMask("spike_down");
+	applySkin();
 	addCollision(Index::Killer);
 }
 
@@ -595,7 +608,8 @@ void SpikeDown::update()
 void SpikeLeft::create()
 {
 	depth = 0;
-	setSprite("spike_left");
+	setMask("spike_left");
+	applySkin();
 	addCollision(Index::Killer);
 }
 
@@ -607,7 +621,8 @@ void SpikeLeft::update()
 void SpikeRight::create()
 {
 	depth = 0;
-	setSprite("spike_right");
+	setMask("spike_right");
+	applySkin();
 	addCollision(Index::Killer);
 }
 
@@ -619,7 +634,8 @@ void SpikeRight::update()
 void SpikeUp::create()
 {
 	depth = 0;
-	setSprite("spike_up");
+	setMask("spike_up");
+	applySkin();
 	addCollision(Index::Killer);
 }
 
@@ -631,7 +647,8 @@ void SpikeUp::update()
 void WalljumpL::create()
 {
 	depth = -1;
-	setSprite("walljump_l");
+	setMask("walljump_l");
+	applySkin();
 	addCollision(Index::WalljumpL);
 }
 
@@ -643,7 +660,8 @@ void WalljumpL::update()
 void WalljumpR::create()
 {
 	depth = -1;
-	setSprite("walljump_r");
+	setMask("walljump_r");
+	applySkin();
 	addCollision(Index::WalljumpR);
 }
 
@@ -655,7 +673,8 @@ void WalljumpR::update()
 void Warp::create()
 {
 	depth = 0;
-	setSprite("warp");
+	setMask("warp");
+	applySkin();
 	addCollision(Index::Warp);
 }
 
@@ -673,7 +692,8 @@ void Warp::update()
 void Water::create()
 {
 	depth = -50;
-	setSprite("water");
+	setMask("water");
+	applySkin();
 	addCollision(Index::Water);
 }
 
@@ -685,7 +705,8 @@ void Water::update()
 void Water2::create()
 {
 	depth = -50;
-	setSprite("water2");
+	setMask("water2");
+	applySkin();
 	addCollision(Index::Water2);
 }
 
@@ -698,7 +719,8 @@ void Water2::update()
 void Water3::create()
 {
 	depth = -50;
-	setSprite("water3");
+	setMask("water3");
+	applySkin();
 	addCollision(Index::Water3);
 }
 
@@ -823,7 +845,8 @@ void BulletBlocker::create()
 {
 	depth = 0;
 
-	setSprite("bullet_blocker");
+	setMask("bullet_blocker");
+	applySkin();
 	addCollision(Index::BulletBlocker);
 }
 

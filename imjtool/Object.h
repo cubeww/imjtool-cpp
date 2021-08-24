@@ -69,6 +69,8 @@ public:
 
 	void calcBBox();
 
+	void applySkin();
+
 	shared_ptr<Object> placeMeeting(float x, float y, Index layer);
 	void moveContact(float hspeed, float vspeed, Index layer);
 

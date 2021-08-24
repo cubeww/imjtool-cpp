@@ -19,7 +19,6 @@ class Gui
 public:
 	void update();
 
-private:
 	bool showGameWindow = true;
 	bool showPalette = true;
 	bool showDebug = true;
