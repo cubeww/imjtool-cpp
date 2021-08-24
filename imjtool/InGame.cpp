@@ -114,7 +114,6 @@ void Apple::create()
 	depth = 0;
 	imageSpeed = 1.0f / 15.0f;
 	setMask("apple");
-	setOrigin(10, 12);
 	applySkin();
 	addCollision(Index::Killer);
 }
@@ -238,7 +237,6 @@ void Platform::create()
 	depth = 10;
 	setMask("platform");
 	applySkin();
-	addCollision(Index::Block);
 	addCollision(Index::Platform);
 }
 
@@ -257,7 +255,6 @@ void Player::create()
 
 	setSprite("player_idle");
 	setMask("player_mask");
-	setOrigin(17, 23, true);
 	addCollision(Index::Player);
 
 	PlayerMgr.player = static_pointer_cast<Player>(weakPtr.lock());
@@ -272,12 +269,10 @@ void Player::update()
 	if (PlayerMgr.dotkid)
 	{
 		setSprite("dotkid");
-		setOrigin(16, 8);
 	}
 	else if (!PlayerMgr.dotkid)
 	{
 		setSprite("idle", false);
-		setOrigin(17, 23);
 
 		if (PlayerMgr.grav == 1)
 		{
@@ -286,20 +281,7 @@ void Player::update()
 		else
 		{
 			setMask("player_mask_flip");
-			setMaskOrigin(17, 8);
 		}
-	}
-
-	auto normalXorigin = 17.0f;
-	auto normalYorigin = 23.0f;
-	auto slideXorigin = 7.0f;
-	auto slideYorigin = 10.0f;
-	if (PlayerMgr.dotkid)
-	{
-		normalXorigin = 16.0f;
-		normalYorigin = 8.0f;
-		slideXorigin = 16.0f;
-		slideYorigin = 8.0f;
 	}
 
 	auto L = InputMgr.isKeyHold(sf::Keyboard::Left);
@@ -313,13 +295,11 @@ void Player::update()
 	{
 		PlayerMgr.face = h;
 		setSprite("player_running", false);
-		setOrigin(17, 23, false);
 		imageSpeed = 0.5;
 	}
 	else
 	{
 		setSprite("player_idle", false);
-		setOrigin(17, 23, false);
 		imageSpeed = 0.2f;
 	}
 	hspeed = maxHspeed * h;
@@ -328,12 +308,10 @@ void Player::update()
 		if (vspeed * PlayerMgr.grav < -0.05f)
 		{
 			setSprite("player_jump", false);
-			setOrigin(normalXorigin, normalYorigin, false);
 		}
 		else if (vspeed * PlayerMgr.grav > 0.05f)
 		{
 			setSprite("player_fall", false);
-			setOrigin(normalXorigin, normalYorigin, false);
 		}
 	}
 	if (!placeMeeting(x, y + 4 * PlayerMgr.grav, Index::Platform))
@@ -379,7 +357,8 @@ void Player::update()
 	// jump press
 	if (InputMgr.isKeyPress(sf::Keyboard::LShift) || InputMgr.isKeyPress(sf::Keyboard::RShift))
 	{
-		if (placeMeeting(x, y + 1 * PlayerMgr.grav, Index::Block) || onPlatform ||
+		if (placeMeeting(x, y + 1 * PlayerMgr.grav, Index::Block) || placeMeeting(
+				x, y + 1 * PlayerMgr.grav, Index::Platform) || onPlatform ||
 			water)
 		{
 			ResMgr.sounds["jump"]->play();
@@ -390,7 +369,6 @@ void Player::update()
 		{
 			ResMgr.sounds["djump"]->play();
 			setSprite("player_jump", false);
-			setOrigin(normalXorigin, normalYorigin, false);
 			vspeed = -jump2 * PlayerMgr.grav;
 			if (!water3)
 				djump = false;
@@ -425,10 +403,10 @@ void Player::update()
 		vspeed = 2 * PlayerMgr.grav;
 
 		setSprite("player_sliding", false);
-		setOrigin(slideXorigin, slideYorigin, false);
 		imageSpeed = 0.5;
 
-		if ((onVineL && InputMgr.isKeyPress(sf::Keyboard::Right)) || (onVineR && InputMgr.isKeyPress(sf::Keyboard::Left)))
+		if ((onVineL && InputMgr.isKeyPress(sf::Keyboard::Right)) || (onVineR && InputMgr.
+			isKeyPress(sf::Keyboard::Left)))
 		{
 			if (InputMgr.isKeyHold(sf::Keyboard::LShift) || InputMgr.isKeyHold(sf::Keyboard::RShift))
 			{
@@ -437,14 +415,12 @@ void Player::update()
 				else hspeed = 15;
 				vspeed = -9 * PlayerMgr.grav;
 				setSprite("player_jump", false);
-				setOrigin(normalXorigin, normalYorigin, false);
 			}
 			else
 			{
 				if (onVineR) hspeed = -3;
 				else hspeed = 3;
 				setSprite("player_fall", false);
-				setOrigin(normalXorigin, normalYorigin, false);
 			}
 		}
 	}
@@ -455,9 +431,8 @@ void Player::update()
 	y += vspeed;
 
 	// block
-	auto dir = 0;
 	auto block = placeMeeting(x, y, Index::Block);
-	if (block != nullptr && !block->collisionLayers[GetIndex(Platform)])
+	if (block != nullptr)
 	{
 		x = xprevious;
 		y = yprevious;
@@ -527,23 +502,10 @@ void Player::update()
 			if (PlayerMgr.grav == 1)
 			{
 				setMask("player_mask");
-				setMaskOrigin(17, 23);
 			}
 			else
 			{
 				setMask("player_mask_flip");
-				setMaskOrigin(17, 8);
-			}
-		}
-		else
-		{
-			if (PlayerMgr.grav == 1)
-			{
-				setMaskOrigin(16, 8);
-			}
-			else
-			{
-				setMaskOrigin(16, 24);
 			}
 		}
 		y += 4 * PlayerMgr.grav;
@@ -578,7 +540,8 @@ void Player::update()
 	{
 		if (PlayerMgr.showMask == ShowMask::OnlyPlayer)
 		{
-			sprite->draw(FloorToInt(imageIndex), x, y, xorigin, yorigin, PlayerMgr.face, PlayerMgr.grav, rotation, color);
+			sprite->draw(FloorToInt(imageIndex), x, y, sprite->xOrigin, sprite->yOrigin, PlayerMgr.face, PlayerMgr.grav,
+			             rotation, color);
 		}
 		else if (PlayerMgr.showMask == ShowMask::OnlyMask)
 		{
@@ -588,8 +551,10 @@ void Player::update()
 		{
 			auto col = sf::Color::White;
 			col.a = 120;
-			sprite->draw(FloorToInt(imageIndex), x, y, xorigin, yorigin, PlayerMgr.face, PlayerMgr.grav, rotation, col);
-			maskSprite->draw(FloorToInt(imageIndex), x, y, maskXorigin, maskYorigin, 1, 1, rotation, col);
+			sprite->draw(FloorToInt(imageIndex), x, y, sprite->xOrigin, sprite->yOrigin, PlayerMgr.face, PlayerMgr.grav,
+			             rotation, col);
+			maskSprite->draw(FloorToInt(imageIndex), x, y, maskSprite->xOrigin, maskSprite->yOrigin, 1, 1, rotation,
+			                 col);
 		}
 	}
 	else
@@ -604,7 +569,7 @@ void Player::update()
 
 void PlayerStart::create()
 {
-	for (auto const& o : ObjMgr.objects)
+	for (const auto& o : ObjMgr.objects)
 	{
 		if (o->index == index && o.get() != this)
 			Destroy(o);
@@ -851,7 +816,6 @@ void Blood::create()
 	xscale = 1.5;
 	yscale = xscale;
 	setSprite("blood");
-	setOrigin(2, 2);
 	addCollision(Index::Blood);
 }
 
@@ -892,7 +856,6 @@ void PlayerBullet::create()
 	timer = 40;
 	imageSpeed = 1;
 	setSprite("bullet");
-	setOrigin(1, 1);
 	addCollision(Index::PlayerBullet);
 }
 
@@ -912,7 +875,8 @@ void PlayerBullet::update()
 		return;
 	}
 
-	if (placeMeeting(x, y, Index::Block) != nullptr || placeMeeting(x, y, Index::BulletBlocker) != nullptr)
+	if (placeMeeting(x, y, Index::Block) != nullptr || placeMeeting(x, y, Index::Platform) != nullptr || placeMeeting(
+		x, y, Index::BulletBlocker) != nullptr)
 	{
 		DestroyThis();
 		return;
@@ -932,7 +896,6 @@ void BulletBlocker::create()
 
 void BulletBlocker::update()
 {
-
 	drawSelf();
 }
 
@@ -964,6 +927,11 @@ void Bg::update()
 {
 	auto tex = sprite->items[0]->sprite->getTexture();
 
+	auto cycleNum = [](int v, int vmin, int vmax)
+	{
+		return (v - vmin + (1 + abs(v)) * (vmax - vmin)) % (vmax - vmin) + vmin;
+	};
+
 	if (SkinMgr.curSkin != nullptr)
 	{
 		hspeed = SkinMgr.curSkin->hspeed;
@@ -972,8 +940,8 @@ void Bg::update()
 
 	if (SkinMgr.curSkin != nullptr && SkinMgr.curSkin->bgType == BgType::Stretch)
 	{
-		x = FloorToInt(x + hspeed) % 800;
-		y = FloorToInt(y + vspeed) % 608;
+		x = cycleNum(FloorToInt(x + hspeed), 0, 800);
+		y = cycleNum(FloorToInt(y + vspeed), 0, 608);
 
 		rects[0].setPosition(x - 800, y - 608);
 		rects[1].setPosition(x, y - 608);
@@ -992,15 +960,14 @@ void Bg::update()
 			rects[i].setTexture(tex);
 			Gm.gameTexture->draw(rects[i]);
 		}
-
 	}
 	else
 	{
 		rects[9].setTexture(tex);
 		auto size = tex->getSize();
 
-		x = FloorToInt(x + hspeed) % size.x;
-		y = FloorToInt(y + vspeed) % size.y;
+		x = cycleNum(FloorToInt(x + hspeed), 0, size.x);
+		y = cycleNum(FloorToInt(y + vspeed), 0, size.y);
 
 		rects[9].setTextureRect(sf::IntRect(0, 0, 800 + size.x, 608 + size.y));
 		rects[9].setSize(sf::Vector2f(800 + size.x, 608 + size.y));
@@ -1009,3 +976,22 @@ void Bg::update()
 	}
 }
 
+void Grid::create()
+{
+	depth = 99;
+}
+
+void Grid::update()
+{
+	if (Gm.gui.showGrid)
+	{
+		if (Gm.gui.gridTexture != nullptr)
+		{
+			auto col = sf::Color::White;
+			col.a = 50;
+			grid.setColor(col);
+			grid.setTexture(Gm.gui.gridTexture->getTexture());
+			Gm.gameTexture->draw(grid);
+		}
+	}
+}

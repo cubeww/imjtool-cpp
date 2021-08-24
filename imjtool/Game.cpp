@@ -18,7 +18,7 @@ void Game::run()
 	window->setFramerateLimit(50);
 	window->setKeyRepeatEnabled(false);
 
-	SFML::Init(*window);
+	ImGui::SFML::Init(*window);
 
 	resourceManager.loadTextures();
 	resourceManager.loadSounds();
@@ -27,6 +27,7 @@ void Game::run()
 	editor.selectIndex = GetIndex(Block);
 
 	Create(GetIndex(Bg), 0, 0);
+	Create(GetIndex(Grid), 0, 0);
 
 	while (window->isOpen())
 	{
@@ -40,7 +41,7 @@ void Game::handleEvent()
 	sf::Event event;
 	while (window->pollEvent(event))
 	{
-		SFML::ProcessEvent(event);
+		ImGui::SFML::ProcessEvent(event);
 
 		if (event.type == sf::Event::Closed)
 			window->close();
@@ -51,14 +52,14 @@ void Game::handleEvent()
 
 void Game::update()
 {
-	SFML::Update(*window, deltaClock.restart());
+	ImGui::SFML::Update(*window, deltaClock.restart());
 	window->clear();
 	gameTexture->clear(sf::Color::White);
 	playerManager.update();
 	objectManager.update();
 	gui.update();
 	inputManager.clearPressAndRelease();
-	SFML::Render(*window);
+	ImGui::SFML::Render(*window);
 	window->display();
 	fps = round(1.f / deltaClock.getElapsedTime().asSeconds());
 }

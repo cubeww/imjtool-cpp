@@ -90,7 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\3rdparty\json;..\3rdparty\imgui\include;..\3rdparty\random;..\3rdparty\ini;..\3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\3rdparty\filedialog;..\3rdparty\json;..\3rdparty\imgui\include;..\3rdparty\random;..\3rdparty\ini;..\3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -108,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\3rdparty\json;..\3rdparty\imgui\include;..\3rdparty\random;..\3rdparty\ini;..\3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\3rdparty\filedialog;..\3rdparty\json;..\3rdparty\imgui\include;..\3rdparty\random;..\3rdparty\ini;..\3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gui.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
@@ -170,12 +172,14 @@
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConfigManager.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gui.h" />
     <ClInclude Include="imgui_stdlib.h" />
     <ClInclude Include="InGame.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="MapManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="PlayerManager.h" />

@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Projects\CPP\imjtool\Release\imjtool.exe</FullPath>
+      <FullPath>D:\Projects\CPP\imjtool\bin\imjtool.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

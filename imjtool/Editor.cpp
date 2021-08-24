@@ -43,11 +43,13 @@ void Editor::update()
 
 	auto snappedPos = ImVec2(floor(mouseInPos.x / snap.x) * snap.x, floor(mouseInPos.y / snap.y) * snap.y);
 	auto focused = IsWindowFocused();
+	SetMouseCursor(ImGuiMouseCursor_Arrow);
 
 	if (cursorInArea)
 	{
 		if (dragHold && focused)
 		{
+			SetMouseCursor(ImGuiMouseCursor_Hand);
 			if (leftHold)
 			{
 				if (caughtObject == nullptr)
@@ -76,6 +78,7 @@ void Editor::update()
 		}
 		else if (pickerHold && focused)
 		{
+			SetMouseCursor(ImGuiMouseCursor_Arrow);
 			if (leftPress)
 			{
 				auto col = ObjMgr.collisionPointList(mouseInPos.x, mouseInPos.y, ALL);
@@ -87,7 +90,7 @@ void Editor::update()
 		}
 		else if (codeHold && focused)
 		{
-			// TODO: Code Edit
+			SetMouseCursor(ImGuiMouseCursor_TextInput);
 		}
 		else
 		{
@@ -146,10 +149,6 @@ void Editor::update()
 			finishMoveObject();
 		}
 	}
-	else
-	{
-		// TODO
-	}
 
 	if (leftRelease || rightRelease)
 	{
@@ -162,11 +161,11 @@ void Editor::update()
 	leftHoldLast = leftHold;
 	rightHoldLast = rightHold;
 
-	if (cursorInArea)
+	if (cursorInArea && !dragHold && !pickerHold && !codeHold)
 	{
 		// draw preview
-		SetCursorPos(ImVec2(snappedPos.x + cursorStartPos.x, snappedPos.y + cursorStartPos.y));
 		auto spr = SkinMgr.getCurrentSprite(spriteOf(selectIndex));
+		SetCursorPos(ImVec2(snappedPos.x + cursorStartPos.x - spr->xOrigin, snappedPos.y + cursorStartPos.y - spr->yOrigin));
 		Image(*spr->items[0]->sprite, sf::Color(255, 255, 255, 100));
 	}
 

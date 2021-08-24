@@ -64,63 +64,69 @@ SkinPackage::SkinPackage(string name)
 	int miniSpikeFrames = readInt("objects", "minispike_frames", 1);
 	float miniSpikeSpeed = readFloat("objects", "minispike_animspeed", 1);
 
-	auto bgtype = read("bg", "type", "tile");
+	auto bgtype = read("bg", "type", "stretch");
 
-	if (bgtype == "stretch") bgType = BgType::Stretch;
-	else bgType = BgType::Tile;
+	if (bgtype == "stretch")
+	{
+		bgType = BgType::Stretch;
+	}
+	else
+	{
+		bgType = BgType::Tile;
+	}
 
 	hspeed = readFloat("bg", "hspeed", 0);
 	vspeed = readFloat("bg", "vspeed", 0);
 
-	auto addObject = [&](int index, string filename, int xnum = 1, int ynum = 1, float speed = NAN, bool tile = true)
+	auto addObject = [&](int index, string filename, int xo, int yo, int xnum = 1, int ynum = 1, float speed = NAN, bool tile = true)
 	{
 		auto name = spriteOf(index);
 		if (filesystem::exists(filename))
 		{
-			objects[name] = make_shared<SkinObject>(filename, xnum, ynum, speed);
+			objects[name] = make_shared<SkinObject>(filename, xo, yo, xnum, ynum, speed);
 		}
 	};
 
-	addObject(GetIndex(SpikeUp), path + "spikeup.png", spikeFrames, 1, spikeSpeed);
-	addObject(GetIndex(SpikeDown), path + "spikedown.png", spikeFrames, 1, spikeSpeed);
-	addObject(GetIndex(SpikeLeft), path + "spikeleft.png", spikeFrames, 1, spikeSpeed);
-	addObject(GetIndex(SpikeRight), path + "spikeright.png", spikeFrames, 1, spikeSpeed);
+	addObject(GetIndex(SpikeUp), path + "spikeup.png", 0, 0, spikeFrames, 1, spikeSpeed);
+	addObject(GetIndex(SpikeDown), path + "spikedown.png", 0, 0, spikeFrames, 1, spikeSpeed);
+	addObject(GetIndex(SpikeLeft), path + "spikeleft.png", 0, 0, spikeFrames, 1, spikeSpeed);
+	addObject(GetIndex(SpikeRight), path + "spikeright.png", 0, 0, spikeFrames, 1, spikeSpeed);
 
-	addObject(GetIndex(MiniSpikeUp), path + "miniup.png", miniSpikeFrames, 1, miniSpikeSpeed);
-	addObject(GetIndex(MiniSpikeDown), path + "minidown.png", miniSpikeFrames, 1, miniSpikeSpeed);
-	addObject(GetIndex(MiniSpikeLeft), path + "minileft.png", miniSpikeFrames, 1, miniSpikeSpeed);
-	addObject(GetIndex(MiniSpikeRight), path + "miniright.png", miniSpikeFrames, 1, miniSpikeSpeed);
+	addObject(GetIndex(MiniSpikeUp), path + "miniup.png", 0, 0, miniSpikeFrames, 1, miniSpikeSpeed);
+	addObject(GetIndex(MiniSpikeDown), path + "minidown.png", 0, 0, miniSpikeFrames, 1, miniSpikeSpeed);
+	addObject(GetIndex(MiniSpikeLeft), path + "minileft.png", 0, 0, miniSpikeFrames, 1, miniSpikeSpeed);
+	addObject(GetIndex(MiniSpikeRight), path + "miniright.png", 0, 0, miniSpikeFrames, 1, miniSpikeSpeed);
 
-	addObject(GetIndex(Apple), path + "apple.png", 2, 1);
-	addObject(GetIndex(KillerBlock), path + "killerblock.png");
+	addObject(GetIndex(Apple), path + "apple.png", 10, 12, 2, 1);
+	addObject(GetIndex(KillerBlock), path + "killerblock.png", 0, 0);
 
-	addObject(GetIndex(Block), path + "block.png");
-	addObject(GetIndex(MiniBlock), path + "miniblock.png");
-	addObject(GetIndex(BulletBlocker), path + "bulletblocker.png");
-	addObject(GetIndex(Platform), path + "platform.png");
+	addObject(GetIndex(Block), path + "block.png", 0, 0);
+	addObject(GetIndex(MiniBlock), path + "miniblock.png", 0, 0);
+	addObject(GetIndex(BulletBlocker), path + "bulletblocker.png", 0, 0);
+	addObject(GetIndex(Platform), path + "platform.png", 0, 0);
 
-	addObject(GetIndex(WalljumpL), path + "walljumpL.png");
-	addObject(GetIndex(WalljumpR), path + "walljumpR.png");
-	addObject(GetIndex(Water), path + "water1.png");
-	addObject(GetIndex(Water2), path + "water2.png");
-	addObject(GetIndex(Water3), path + "water3.png");
+	addObject(GetIndex(WalljumpL), path + "walljumpL.png", 0, 0);
+	addObject(GetIndex(WalljumpR), path + "walljumpR.png", 0, 0);
+	addObject(GetIndex(Water), path + "water1.png", 0, 0);
+	addObject(GetIndex(Water2), path + "water2.png", 0, 0);
+	addObject(GetIndex(Water3), path + "water3.png", 0, 0);
 
-	addObject(GetIndex(Warp), path + "warp.png");
-	addObject(GetIndex(PlayerStart), path + "playerstart.png");
-	addObject(GetIndex(JumpRefresher), path + "jumprefresher.png");
+	addObject(GetIndex(Warp), path + "warp.png", 0, 0);
+	addObject(GetIndex(PlayerStart), path + "playerstart.png", 0, 0);
+	addObject(GetIndex(JumpRefresher), path + "jumprefresher.png", 15, 15);
 
-	addObject(GetIndex(Save), path + "save.png", 2, 1);
+	addObject(GetIndex(Save), path + "save.png", 0, 0, 2, 1);
 
-	addObject(GetIndex(Bg), path + "bg.png", 1, 1, 0, bgType == BgType::Tile);
+	addObject(GetIndex(Bg), path + "bg.png", 0, 0, 1, 1, 0, bgType == BgType::Tile);
 }
 
-SkinObject::SkinObject(string filename, int xnum, int ynum, float speed, bool tile)
+SkinObject::SkinObject(string filename, int xo, int yo, int xnum, int ynum, float speed, bool tile)
 {
 	auto tex = make_shared<sf::Texture>();
 	tex->loadFromFile(filename);
 	tex->setRepeated(tile);
 
-	auto spr = make_shared<Sprite>();
+	auto spr = make_shared<Sprite>(xo, yo);
 	spr->addSheet(tex, xnum, ynum, false);
 
 	texture = tex;
@@ -129,7 +135,7 @@ SkinObject::SkinObject(string filename, int xnum, int ynum, float speed, bool ti
 }
 void SkinManager::apply(shared_ptr<SkinPackage> package)
 {
-	curSkin = package;
+	curSkin = std::move(package);
 
 	for (auto i : ObjMgr.objects)
 	{

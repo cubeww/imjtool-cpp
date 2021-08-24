@@ -11,7 +11,11 @@ class SpriteItem;
 class Sprite
 {
 public:
+	Sprite(int xo, int yo);
+
 	vector<shared_ptr<SpriteItem>> items;
+	int xOrigin = 0;
+	int yOrigin = 0;
 
 	void addSheet(shared_ptr<sf::Texture> tex, int xnum = 1, int ynum = 1, bool getData = true);
 

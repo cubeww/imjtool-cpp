@@ -38,6 +38,7 @@ enum class Index
     PlayerStart,
     MiniBlock,
     Bg,
+    Grid,
 };
 
 string spriteOf(int index);
@@ -289,6 +290,16 @@ public:
     // 6 7 8
     // 9 - tile rect
     sf::RectangleShape rects[10];
+
+    void create() override;
+    void update() override;
+};
+
+class Grid :
+    public Object
+{
+public:
+    sf::Sprite grid;
 
     void create() override;
     void update() override;

@@ -14,7 +14,7 @@ public:
 	shared_ptr<Sprite> sprite;
 	float speed = NAN;
 
-	SkinObject(string filename, int xnum = 1, int ynum = 1, float speed = NAN, bool tile = true);
+	SkinObject(string filename, int xo, int yo, int xnum = 1, int ynum = 1, float speed = NAN, bool tile = true);
 };
 
 enum class BgType

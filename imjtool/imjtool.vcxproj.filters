@@ -66,6 +66,12 @@
     <ClCompile Include="imgui_stdlib.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="ConfigManager.cpp">
+      <Filter>ImJtool</Filter>
+    </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>ImJtool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h">
@@ -103,6 +109,12 @@
     </ClInclude>
     <ClInclude Include="imgui_stdlib.h">
       <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigManager.h">
+      <Filter>ImJtool</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.h">
+      <Filter>ImJtool</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ class Sprite;
 class Object;
 
 using namespace std;
-using namespace ImGui;
+namespace im = ImGui;
 
 struct SubEvent
 {

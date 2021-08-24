@@ -13,9 +13,9 @@ void ResourceManager::createTexture(string name, string filename)
 	textures[name] = tex;
 }
 
-Sprite& ResourceManager::createSprite(string name)
+Sprite& ResourceManager::createSprite(string name, int xo, int yo)
 {
-	auto spr = make_shared<Sprite>();
+	auto spr = make_shared<Sprite>(xo, yo);
 	sprites[name] = spr;
 	return *spr;
 }
@@ -42,13 +42,19 @@ void ResourceManager::loadTextures()
 
 		auto x = 1;
 		auto y = 1;
+		auto xo = 0;
+		auto yo = 0;
 		if (i["x"] != nullptr)
 			x = i["x"];
 		if (i["y"] != nullptr)
 			y = i["y"];
+		if (i["xo"] != nullptr)
+			xo = i["xo"];
+		if (i["yo"] != nullptr)
+			yo = i["yo"];
 
 		createTexture(name, "textures/" + filename);
-		createSprite(name).addSheet(textures[name], x, y);
+		createSprite(name, xo, yo).addSheet(textures[name], x, y);
 	}
 	f.close();
 }

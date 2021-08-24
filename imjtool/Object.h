@@ -35,12 +35,6 @@ public:
 	float x = 0;
 	float y = 0;
 
-	float xorigin = 0;
-	float yorigin = 0;
-
-	float maskXorigin = 0;
-	float maskYorigin = 0;
-
 	float xprevious = 0;
 	float yprevious = 0;
 
@@ -60,8 +54,6 @@ public:
 
 	void setSprite(string name, bool setMask = true);
 	void setMask(string name);
-	void setOrigin(float x, float y, bool setMask = true);
-	void setMaskOrigin(float x, float y);
 	void addCollision(Index layer);
 	void updateSprite();
 	void drawSelf();

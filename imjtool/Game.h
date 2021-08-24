@@ -1,10 +1,12 @@
 #pragma once
 
+#include "ConfigManager.h"
 #include "Editor.h"
 #include "ResourceManager.h"
 #include "ObjectManager.h"
 #include "Gui.h"
 #include "InputManager.h"
+#include "MapManager.h"
 #include "PlayerManager.h"
 #include "SkinManager.h"
 
@@ -15,6 +17,8 @@
 #define InputMgr Game::get().inputManager
 #define PlayerMgr Game::get().playerManager
 #define SkinMgr Game::get().skinManager
+#define MapMgr Game::get().mapManager
+#define ConfigMgr Game::get().configManager
 
 class Game
 {
@@ -30,6 +34,9 @@ public:
 	InputManager inputManager = InputManager();
 	PlayerManager playerManager = PlayerManager();
 	SkinManager skinManager = SkinManager();
+	MapManager mapManager = MapManager();
+	ConfigManager configManager = ConfigManager();
+
 	Gui gui = Gui();
 	Editor editor = Editor();
 

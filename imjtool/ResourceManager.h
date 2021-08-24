@@ -19,7 +19,7 @@ public:
 	void loadSounds();
 
 	void createTexture(string name, string filename);
-	Sprite& createSprite(string name);
+	Sprite& createSprite(string name, int xo, int yo);
 	void createSound(string name, string filename);
 	
 };

@@ -11,8 +11,8 @@ namespace sf
 	class RenderTexture;
 }
 
-using namespace ImGui;
 using namespace std;
+using namespace ImGui;
 
 class Gui
 {

@@ -5,6 +5,12 @@
 #include "Game.h"
 #include "ResourceManager.h"
 
+Sprite::Sprite(int xo, int yo)
+{
+	xOrigin = xo;
+	yOrigin = yo;
+}
+
 void Sprite::addSheet(shared_ptr<sf::Texture> tex, int xnum, int ynum, bool getData)
 {
 	auto size = tex->getSize();

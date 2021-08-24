@@ -48,6 +48,7 @@ shared_ptr<Object> ObjectManager::create(int index, float x, float y)
 			REGISTER(PlayerBullet)
 			REGISTER(BulletBlocker)
 			REGISTER(Bg)
+			REGISTER(Grid)
 
 	default:
 		break;
@@ -95,15 +96,15 @@ shared_ptr<Object> ObjectManager::collisionPoint(float x, float y, int index)
 
 			if (equalF(i->rotation, 0))
 			{
-				xx = FloorToInt((x1 - i->x) / i->xscale + i->xorigin);
-				yy = FloorToInt((y1 - i->y) / i->yscale + i->yorigin);
+				xx = FloorToInt((x1 - i->x) / i->xscale + i->maskSprite->xOrigin);
+				yy = FloorToInt((y1 - i->y) / i->yscale + i->maskSprite->yOrigin);
 			}
 			else
 			{
 				auto ss = sin(-i->rotation * PI / 180);
 				auto cc = cos(-i->rotation * PI / 180);
-				xx = FloorToInt((cc * (x1 - i->x) + ss * (y1 - i->y)) / i->xscale + i->xorigin);
-				yy = FloorToInt((cc * (y1 - i->y) - ss * (x1 - i->x)) / i->yscale + i->yorigin);
+				xx = FloorToInt((cc * (x1 - i->x) + ss * (y1 - i->y)) / i->xscale + i->maskSprite->xOrigin);
+				yy = FloorToInt((cc * (y1 - i->y) - ss * (x1 - i->x)) / i->yscale + i->maskSprite->yOrigin);
 			}
 
 			if (xx < 0 || xx >= item->w) continue;
@@ -131,15 +132,15 @@ vector<shared_ptr<Object>> ObjectManager::collisionPointList(float x, float y, i
 
 			if (equalF(i->rotation, 0))
 			{
-				xx = FloorToInt((x1 - i->x) / i->xscale + i->xorigin);
-				yy = FloorToInt((y1 - i->y) / i->yscale + i->yorigin);
+				xx = FloorToInt((x1 - i->x) / i->xscale + i->maskSprite->xOrigin);
+				yy = FloorToInt((y1 - i->y) / i->yscale + i->maskSprite->yOrigin);
 			}
 			else
 			{
 				auto ss = sin(-i->rotation * PI / 180);
 				auto cc = cos(-i->rotation * PI / 180);
-				xx = FloorToInt((cc * (x1 - i->x) + ss * (y1 - i->y)) / i->xscale + i->xorigin);
-				yy = FloorToInt((cc * (y1 - i->y) - ss * (x1 - i->x)) / i->yscale + i->yorigin);
+				xx = FloorToInt((cc * (x1 - i->x) + ss * (y1 - i->y)) / i->xscale + i->maskSprite->xOrigin);
+				yy = FloorToInt((cc * (y1 - i->y) - ss * (x1 - i->x)) / i->yscale + i->maskSprite->yOrigin);
 			}
 
 			if (xx < 0 || xx >= item->w) continue;
@@ -173,15 +174,15 @@ vector<shared_ptr<Object>> ObjectManager::collisionLineList(float x1, float y1, 
 				int xx, yy;
 				if (equalF(i->rotation, 0))
 				{
-					xx = FloorToInt((x2 - i->x) / i->xscale + i->xorigin);
-					yy = FloorToInt((y2 - i->y) / i->yscale + i->yorigin);
+					xx = FloorToInt((x2 - i->x) / i->xscale + i->maskSprite->xOrigin);
+					yy = FloorToInt((y2 - i->y) / i->yscale + i->maskSprite->yOrigin);
 				}
 				else
 				{
 					auto ss = sin(-i->rotation * PI / 180);
 					auto cc = cos(-i->rotation * PI / 180);
-					xx = FloorToInt((cc * (x2 - i->x) + ss * (y2 - i->y)) / i->xscale + i->xorigin);
-					yy = FloorToInt((cc * (y2 - i->y) - ss * (x2 - i->x)) / i->yscale + i->yorigin);
+					xx = FloorToInt((cc * (x2 - i->x) + ss * (y2 - i->y)) / i->xscale + i->maskSprite->xOrigin);
+					yy = FloorToInt((cc * (y2 - i->y) - ss * (x2 - i->x)) / i->yscale + i->maskSprite->yOrigin);
 				}
 
 				if ((xx < 0 || xx >= item->w) ||

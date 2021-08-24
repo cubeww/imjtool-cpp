@@ -30,30 +30,13 @@ void Object::updateSprite()
 void Object::drawSelf()
 {
 	if (sprite != nullptr)
-		sprite->draw(FloorToInt(imageIndex), x, y, xorigin, yorigin, xscale, yscale, rotation, color);
+		sprite->draw(FloorToInt(imageIndex), x, y, sprite->xOrigin, sprite->yOrigin, xscale, yscale, rotation, color);
 }
 
 void Object::drawMask()
 {
 	if (maskSprite != nullptr)
-		maskSprite->draw(FloorToInt(imageIndex), x, y, maskXorigin, maskYorigin, xscale, yscale, rotation, color);
-}
-
-void Object::setOrigin(float x, float y, bool setMask)
-{
-	xorigin = x;
-	yorigin = y;
-	if (setMask)
-	{
-		maskXorigin = x;
-		maskYorigin = y;
-	}
-}
-
-void Object::setMaskOrigin(float x, float y)
-{
-	maskXorigin = x;
-	maskYorigin = y;
+		maskSprite->draw(FloorToInt(imageIndex), x, y, maskSprite->xOrigin, maskSprite->yOrigin, xscale, yscale, rotation, color);
 }
 
 shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
@@ -95,15 +78,15 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 			{
 				for (auto i = l; i <= r; i++)
 				{
-					auto xx = RoundToInt(i - x + maskXorigin);
+					auto xx = RoundToInt(i - x + maskSprite->xOrigin);
 					if (xx < 0 || xx >= item1->w) continue;
-					auto yy = RoundToInt(j - y + maskYorigin);
+					auto yy = RoundToInt(j - y + maskSprite->yOrigin);
 					if (yy < 0 || yy >= item1->h) continue;
 					if (!item1->data[xx + yy * item1->w]) continue;
 
-					xx = RoundToInt(i - obj->x + obj->maskXorigin);
+					xx = RoundToInt(i - obj->x + obj->maskSprite->xOrigin);
 					if (xx < 0 || xx >= item2->w) continue;
-					yy = RoundToInt(j - obj->y + obj->maskYorigin);
+					yy = RoundToInt(j - obj->y + obj->maskSprite->yOrigin);
 					if (yy < 0 || yy >= item2->h) continue;
 					if (!item2->data[xx + yy * item2->w]) continue;
 
@@ -121,15 +104,15 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 			{
 				for (auto i = l; i <= r; i++)
 				{
-					auto xx = RoundToInt((i - x) * scale1x + maskXorigin);
+					auto xx = RoundToInt((i - x) * scale1x + maskSprite->xOrigin);
 					if (xx < 0 || xx >= item1->w) continue;
-					auto yy = RoundToInt((j - y) * scale1y + maskYorigin);
+					auto yy = RoundToInt((j - y) * scale1y + maskSprite->yOrigin);
 					if (yy < 0 || yy >= item1->h) continue;
 					if (!item1->data[xx + yy * item1->w]) continue;
 
-					xx = RoundToInt((i - obj->x) * scale2x + obj->maskXorigin);
+					xx = RoundToInt((i - obj->x) * scale2x + obj->maskSprite->xOrigin);
 					if (xx < 0 || xx >= item2->w) continue;
-					yy = RoundToInt((j - obj->y) * scale2y + obj->maskYorigin);
+					yy = RoundToInt((j - obj->y) * scale2y + obj->maskSprite->yOrigin);
 					if (yy < 0 || yy >= item2->h) continue;
 					if (!item2->data[xx + yy * item2->w]) continue;
 
@@ -152,15 +135,15 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 			{
 				for (auto i = l; i <= r; i++)
 				{
-					auto xx = RoundToInt((cc1 * (i - x) + ss1 * (j - y)) * scale1x + maskXorigin);
+					auto xx = RoundToInt((cc1 * (i - x) + ss1 * (j - y)) * scale1x + maskSprite->xOrigin);
 					if (xx < 0 || xx >= item1->w) continue;
-					auto yy = RoundToInt((cc1 * (j - y) - ss1 * (i - x)) * scale1y + maskYorigin);
+					auto yy = RoundToInt((cc1 * (j - y) - ss1 * (i - x)) * scale1y + maskSprite->yOrigin);
 					if (yy < 0 || yy >= item1->h) continue;
 					if (!item1->data[xx + yy * item1->w]) continue;
 
-					xx = RoundToInt((cc2 * (i - obj->x) + ss2 * (j - obj->y)) * scale2x + obj->maskXorigin);
+					xx = RoundToInt((cc2 * (i - obj->x) + ss2 * (j - obj->y)) * scale2x + obj->maskSprite->xOrigin);
 					if (xx < 0 || xx >= item2->w) continue;
-					yy = RoundToInt((cc2 * (j - obj->y) - ss2 * (i - obj->x)) * scale2y + obj->maskYorigin);
+					yy = RoundToInt((cc2 * (j - obj->y) - ss2 * (i - obj->x)) * scale2y + obj->maskSprite->yOrigin);
 					if (yy < 0 || yy >= item2->h) continue;
 					if (!item2->data[xx + yy * item2->w]) continue;
 
@@ -206,25 +189,25 @@ void Object::calcBBox()
 
 	if (equalF(rotation, 0))
 	{
-		bboxLeft = RoundToInt(x + xscale * (item->left - maskXorigin));
-		bboxRight = RoundToInt(x + xscale * (item->right - maskXorigin + 1) - 1);
+		bboxLeft = RoundToInt(x + xscale * (item->left - maskSprite->xOrigin));
+		bboxRight = RoundToInt(x + xscale * (item->right - maskSprite->xOrigin + 1) - 1);
 
 		if (bboxLeft > bboxRight)
 			swap(bboxLeft, bboxRight);
 
-		bboxTop = RoundToInt(y + yscale * (item->top - maskYorigin));
-		bboxBottom = RoundToInt(y + yscale * (item->bottom - maskYorigin + 1) - 1);
+		bboxTop = RoundToInt(y + yscale * (item->top - maskSprite->yOrigin));
+		bboxBottom = RoundToInt(y + yscale * (item->bottom - maskSprite->yOrigin + 1) - 1);
 
 		if (bboxTop > bboxBottom)
 			swap(bboxTop, bboxBottom);
 	}
 	else
 	{
-		auto xmin = xscale * (item->left - maskXorigin);
-		auto xmax = xscale * (item->right - maskXorigin + 1) - 1;
+		auto xmin = xscale * (item->left - maskSprite->xOrigin);
+		auto xmax = xscale * (item->right - maskSprite->xOrigin + 1) - 1;
 
-		auto ymin = yscale * (item->top - maskYorigin);
-		auto ymax = yscale * (item->bottom - maskYorigin + 1) - 1;
+		auto ymin = yscale * (item->top - maskSprite->yOrigin);
+		auto ymax = yscale * (item->bottom - maskSprite->yOrigin + 1) - 1;
 
 		auto cc = cos(rotation * PI / 180);
 		auto ss = sin(rotation * PI / 180);
