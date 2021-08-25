@@ -131,6 +131,98 @@ int indexToJmap(Index index)
 	}
 }
 
+Index rmjToIndex(int index)
+{
+	switch (index)
+	{
+	case 2:
+		return Index::Block;
+	case 12:
+		return Index::SpikeUp;
+	case 11:
+		return Index::SpikeRight;
+	case 10:
+		return Index::SpikeLeft;
+	case 9:
+		return Index::SpikeDown;
+	case 19:
+		return Index::MiniSpikeUp;
+	case 18:
+		return Index::MiniSpikeRight;
+	case 17:
+		return Index::MiniSpikeLeft;
+	case 16:
+		return Index::MiniSpikeDown;
+	case 20:
+		return Index::Apple;
+	case 32:
+		return Index::Save;
+	case 31:
+		return Index::Platform;
+	case 23:
+		return Index::Water;
+	case 30:
+		return Index::Water2;
+	case 29:
+		return Index::WalljumpL;
+	case 28:
+		return Index::WalljumpR;
+	case 27:
+		return Index::KillerBlock;
+	case 3:
+		return Index::PlayerStart;
+	default:
+		return Index::Undefined;
+	}
+}
+
+int indexToRMJ(Index index)
+{
+	switch (index)
+	{
+	case Index::Block:
+		return 2;
+	case Index::SpikeUp:
+		return 12;
+	case Index::SpikeRight:
+		return 11;
+	case Index::SpikeLeft:
+		return 10;
+	case Index::SpikeDown:
+		return 9;
+	case Index::MiniSpikeUp:
+		return 19;
+	case Index::MiniSpikeRight:
+		return 18;
+	case Index::MiniSpikeLeft:
+		return 17;
+	case Index::MiniSpikeDown:
+		return 16;
+	case Index::Apple:
+		return 20;
+	case Index::Save:
+		return 32;
+	case Index::Platform:
+		return 31;
+	case Index::Water:
+		return 23;
+	case Index::Water2:
+		return 30;
+	case Index::WalljumpL:
+		return 29;
+	case Index::WalljumpR:
+		return 28;
+	case Index::KillerBlock:
+		return 27;
+	case Index::PlayerStart:
+		return 3;
+	case Index::Warp:
+		return 21;
+	default:
+		return -1;
+	}
+}
+
 void MapManager::loadJmap(string filename)
 {
 	// helper functions
@@ -312,12 +404,59 @@ void MapManager::saveJmap(string filename)
 
 void MapManager::loadRMJ(string filename)
 {
-
+	ifstream file(filename);
+	string line;
+	string ver, mapName, auther;
+	for (auto i = 0; getline(file, line); i++) {
+		switch (i)
+		{
+		case 0:
+			ver = line;
+			break;
+		case 1:
+			mapName = line;
+			break;
+		case 2:
+			auther = line;
+			break;
+		case 3:
+			Gm.editor.clearUndo();
+			for (auto o : ObjMgr.objects)
+			{
+				if (inPalette(o->index))
+					DestroyInst(o);
+			}
+			istringstream ss(line);
+			int xx, yy, index;
+			while (ss >> xx)
+			{
+				ss >> yy;
+				ss >> index;
+				CreateInst(static_cast<int>(rmjToIndex(index)), xx, yy);
+			}
+			break;
+		}
+	}
+	file.close();
+	PlayerMgr.load();
 }
 
 void MapManager::saveRMJ(string filename)
 {
-
+	ostringstream objs;
+	for (auto i : ObjMgr.objects)
+	{
+		if (inPalette(i->index))
+		{
+			objs << i->x << " " << i->y << " " << indexToRMJ(static_cast<Index>(i->index)) << " ";
+		}
+	}
+	ofstream file(filename);
+	file << " 1.030000" << endl
+		<< "Imported from imjtool" << endl
+		<< "someone" << endl
+		<< objs.str();
+	file.close();
 }
 
 

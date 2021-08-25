@@ -23,6 +23,7 @@ void Game::run()
 	resourceManager.loadTextures();
 	resourceManager.loadSounds();
 	skinManager.loadConfig();
+	configManager.load();
 
 	editor.selectIndex = GetIndex(Block);
 
@@ -34,6 +35,7 @@ void Game::run()
 		handleEvent();
 		update();
 	}
+	ImGui::SFML::Shutdown();
 }
 
 void Game::handleEvent()
@@ -43,8 +45,11 @@ void Game::handleEvent()
 	{
 		ImGui::SFML::ProcessEvent(event);
 
-		if (event.type == sf::Event::Closed)
+		if (event.type == sf::Event::Closed) 
+		{
+			configManager.save();
 			window->close();
+		}
 
 		InputMgr.update(event);
 	}

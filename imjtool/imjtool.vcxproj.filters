@@ -116,5 +116,8 @@
     <ClInclude Include="MapManager.h">
       <Filter>ImJtool</Filter>
     </ClInclude>
+    <ClInclude Include="FileDialog.h">
+      <Filter>ImJtool</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

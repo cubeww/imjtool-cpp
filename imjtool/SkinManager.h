@@ -26,6 +26,7 @@ enum class BgType
 class SkinPackage
 {
 public:
+	string skinName;
 	map<string, shared_ptr<SkinObject>> objects;
 
 	BgType bgType;

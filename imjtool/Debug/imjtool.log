@@ -1,23 +1,58 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  ConfigManager.cpp
+  Editor.cpp
+  Game.cpp
+  Gui.cpp
+  InGame.cpp
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(543,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(543,53): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(554,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(554,53): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(556,82): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(556,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(943,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(944,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(969,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(970,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(973,51): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+D:\Projects\CPP\imjtool\imjtool\InGame.cpp(973,37): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  InputManager.cpp
   MapManager.cpp
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(142,22): warning C4018: '<': signed/unsigned mismatch
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(157,24): warning C4244: 'argument': conversion from 'double' to 'unsigned __int64', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(195,43): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(199,43): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(203,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(207,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(219,14): warning C4018: '<': signed/unsigned mismatch
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(224,24): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(229,44): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(231,7): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(221,12): warning C4101: 'c': unreferenced local variable
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(252,29): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(259,23): warning C4018: '<': signed/unsigned mismatch
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(271,24): warning C4244: 'argument': conversion from 'double' to 'unsigned __int64', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(272,21): warning C4244: '=': conversion from 'unsigned __int64' to 'double', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(296,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(305,42): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(306,42): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(234,22): warning C4018: '<': signed/unsigned mismatch
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(249,24): warning C4244: 'argument': conversion from 'double' to 'unsigned __int64', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(287,43): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(291,43): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(295,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(299,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(311,14): warning C4018: '<': signed/unsigned mismatch
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(316,24): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(321,44): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(323,7): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(313,12): warning C4101: 'c': unreferenced local variable
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(344,29): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(351,23): warning C4018: '<': signed/unsigned mismatch
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(363,24): warning C4244: 'argument': conversion from 'double' to 'unsigned __int64', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(364,21): warning C4244: '=': conversion from 'unsigned __int64' to 'double', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(388,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(397,42): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(398,42): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(435,5): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\tuple(170,47): warning C4244: 'initializing': conversion from '_Ty' to '_Ty', possible loss of data
           with
           [
@@ -79,6 +114,19 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
               _Tag=std::_Unpack_tuple_t,
               _Tpl=std::tuple<float,float,int>
           ]
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(281): message : see reference to function template instantiation 'std::tuple<int,int,int>::tuple<float,float,int,0>(std::tuple<float,float,int> &&) noexcept' being compiled
-D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(281): message : see reference to function template instantiation 'std::tuple<int,int,int>::tuple<float,float,int,0>(std::tuple<float,float,int> &&) noexcept' being compiled
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(373): message : see reference to function template instantiation 'std::tuple<int,int,int>::tuple<float,float,int,0>(std::tuple<float,float,int> &&) noexcept' being compiled
+D:\Projects\CPP\imjtool\imjtool\MapManager.cpp(373): message : see reference to function template instantiation 'std::tuple<int,int,int>::tuple<float,float,int,0>(std::tuple<float,float,int> &&) noexcept' being compiled
+  Object.cpp
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(33,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(33,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(39,81): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(39,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Object.cpp(170,8): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  ObjectManager.cpp
+  PlayerManager.cpp
+  SkinManager.cpp
+D:\Projects\CPP\imjtool\3rdparty\ini\ini.h(343,44): warning C4244: 'argument': conversion from 'std::streamoff' to 'const unsigned int', possible loss of data
+  Sprite.cpp
+  main.cpp
+  Generating Code...
   imjtool.vcxproj -> D:\Projects\CPP\imjtool\bin\imjtool.exe

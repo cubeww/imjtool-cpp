@@ -26,6 +26,7 @@ void SkinManager::loadConfig()
 
 SkinPackage::SkinPackage(string name)
 {
+	this->skinName = name;
 	auto path = "skins/" + name + "/";
 	INIFile inifile(path + "skin_config.ini");
 	INIStructure ini;

@@ -7,8 +7,8 @@
 #include "InGame.h"
 
 #include "imgui_stdlib.h"
-#include "portable-file-dialogs.h"
 #include <filesystem>
+#include "FileDialog.h"
 
 void Gui::mainMenu()
 {
@@ -23,38 +23,48 @@ void Gui::mainMenu()
 			ImGui::Separator();
 			if (ImGui::MenuItem("Open Map", "CTRL+O"))
 			{
-				auto f = pfd::open_file("Open Map", "", {
-					"All Map Files (*.jmap *.map)","*.jmap *.map",
-					"Jtool Map File (*.jmap)", "*.jmap",
-					"RMJ Map File (*.map)", "*.map",
-				});
-				if (!f.result().empty())
+				auto f = GetOpenFile(
+					"All Map Files (*.jmap;*.map)\0*.jmap;*.map\0"
+					"Jtool Map File (*.jmap)\0*.jmap\0"
+					"RMJ Map File (*.map)\0*.map\0"
+					, "Open Map");
+				if (f != "")
 				{
-					filesystem::path filename(f.result()[0]);
+					filesystem::path filename(f);
 					auto ext = filename.extension();
 					if (ext == ".jmap")
 						MapMgr.loadJmap(filename.string());
 					else if (ext == ".map")
 						MapMgr.loadRMJ(filename.string());
-					
 				}
 				showGameWindow = true;
 			}
 			if (ImGui::MenuItem("Save Map", "CTRL+S"))
 			{
-				auto f = pfd::save_file("Open Map", "", {
-					"Jtool Map File (*.jmap)", "*.jmap",
-					"RMJ Map File (*.map)", "*.map",
-					}, pfd::opt::force_overwrite);
-				if (!f.result().empty())
+				auto f = GetSaveFile(
+					"Jtool Map File (*.jmap)\0*.jmap\0"
+					"RMJ Map File (*.map)\0*.map\0"
+					, "Open Map");
+				if (f.filename != "")
 				{
-					filesystem::path filename(f.result());
+					filesystem::path filename(f.filename);
 					auto ext = filename.extension();
-					if (ext == ".jmap")
+					string ename;
+					switch (f.index)
+					{
+					case 1:
+						ename = ".jmap";
+						if (ext != ename)
+							filename += ename;
 						MapMgr.saveJmap(filename.string());
-					else if (ext == ".map")
+						break;
+					case 2:
+						ename = ".map";
+						if (ext != ename)
+							filename += ename;
 						MapMgr.saveRMJ(filename.string());
-
+						break;
+					}
 				}
 			}
 			ImGui::Separator();
@@ -213,7 +223,7 @@ void Gui::mainMenu()
 		{
 			if (ImGui::MenuItem("Github"))
 			{
-				//Win::ShellExecuteA(nullptr, "open", "https://github.com/cubeww/imjtool", nullptr, nullptr, 10);
+				ShellExecuteA(nullptr, "open", "https://github.com/cubeww/imjtool", nullptr, nullptr, 10);
 			}
 			ImGui::Separator();
 			if (ImGui::MenuItem("About"))
@@ -250,7 +260,8 @@ void Gui::gameWindow()
 			}
 			if (showMouseCoord)
 			{
-				auto pos = ImVec2(ImGui::GetMousePos().x - windowPos.x - cursorStartPos.x, ImGui::GetMousePos().y - windowPos.y - cursorStartPos.y);
+				auto pos = ImVec2(ImGui::GetMousePos().x - windowPos.x - cursorStartPos.x,
+				                  ImGui::GetMousePos().y - windowPos.y - cursorStartPos.y);
 				if (pos.x >= 0 && pos.x <= 800 && pos.y >= 0 && pos.y <= 608)
 				{
 					ImGui::BeginTooltip();
@@ -332,7 +343,6 @@ void Gui::gameWindow()
 				addObject(GetIndex(Platform));
 				ImGui::SameLine();
 				addObject(GetIndex(BulletBlocker));
-
 			}
 			if (ImGui::CollapsingHeader("Vine & Water"))
 			{
@@ -439,7 +449,7 @@ void Gui::shiftWindow()
 
 			if (ImGui::Button("U", ImVec2(32, 32)))
 			{
-				for (auto const& i : ObjMgr.objects)
+				for (const auto& i : ObjMgr.objects)
 				{
 					if (i->index == GetIndex(Player))
 						continue;
@@ -450,7 +460,7 @@ void Gui::shiftWindow()
 			}
 			if (ImGui::Button("L", ImVec2(32, 32)))
 			{
-				for (auto const& i : ObjMgr.objects)
+				for (const auto& i : ObjMgr.objects)
 				{
 					if (i->index == GetIndex(Player))
 						continue;
@@ -462,7 +472,7 @@ void Gui::shiftWindow()
 			ImGui::SameLine();
 			if (ImGui::Button("D", ImVec2(32, 32)))
 			{
-				for (auto const& i : ObjMgr.objects)
+				for (const auto& i : ObjMgr.objects)
 				{
 					if (i->index == GetIndex(Player))
 						continue;
@@ -474,7 +484,7 @@ void Gui::shiftWindow()
 			ImGui::SameLine();
 			if (ImGui::Button("R", ImVec2(32, 32)))
 			{
-				for (auto const& i : ObjMgr.objects)
+				for (const auto& i : ObjMgr.objects)
 				{
 					if (i->index == GetIndex(Player))
 						continue;
@@ -570,7 +580,7 @@ void Gui::skinWindow()
 		if (ImGui::BeginListBox("##Skins", ImVec2(200, 250)))
 		{
 			int index = 0;
-			for (auto const& name : SkinMgr.skinNames)
+			for (const auto& name : SkinMgr.skinNames)
 			{
 				if (find(skinSearchVec.begin(), skinSearchVec.end(), index) != skinSearchVec.end())
 				{
@@ -643,5 +653,4 @@ void Gui::skinWindow()
 		}
 		ImGui::EndPopup();
 	}
-
 }
