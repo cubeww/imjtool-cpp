@@ -18,6 +18,7 @@ enum class ThemeName
 	Default,
 	Dark,
 	Light,
+	Diana,
 };
 
 class Gui
