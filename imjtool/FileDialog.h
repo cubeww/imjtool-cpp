@@ -29,7 +29,7 @@ static SaveFileResult GetSaveFile(const char* filter, const char* title)
 	ofn.lpstrTitle = title;
 	ofn.nMaxFileTitle = 0;
 	ofn.lpstrInitialDir = nullptr;
-	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
 	SaveFileResult result;
 
@@ -69,7 +69,7 @@ static const char* GetOpenFile(const char* filter, const char* title)
 	ofn.lpstrTitle = title;
 	ofn.nMaxFileTitle = 0;
 	ofn.lpstrInitialDir = nullptr;
-	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
 	// Display the Open dialog box. 
 

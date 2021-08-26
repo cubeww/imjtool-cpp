@@ -1,3 +1,7 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  Editor.cpp
   Gui.cpp
+D:\Projects\CPP\imjtool\imjtool\Gui.cpp(754,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Projects\CPP\imjtool\imjtool\Gui.cpp(754,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   imjtool.vcxproj -> D:\Projects\CPP\imjtool\bin\imjtool.exe

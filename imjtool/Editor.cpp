@@ -94,9 +94,13 @@ void Editor::update()
 		}
 		else
 		{
-			if (leftHold && focused)
+			if (leftHold && !ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId))
 			{
-				if (leftHoldLast)
+				if (leftPress) 
+				{
+					finishCreateObject(snappedPos.x, snappedPos.y);
+				}
+				else if (leftHoldLast)
 				{
 					auto dir = pointdir(mouseLastPos.x, mouseLastPos.y, mouseInPos.x, mouseInPos.y);
 					auto n = floor(pointdist(mouseLastPos.x, mouseLastPos.y, mouseInPos.x, mouseInPos.y));
@@ -111,7 +115,7 @@ void Editor::update()
 					{
 						auto xxn = floor(xx / snap.x) * snap.x;
 						auto yyn = floor(yy / snap.y) * snap.y;
-						if (!equalF(xxn, xxnLast) || !equalF(yyn,yynLast)) {
+						if (!equalF(xxn, xxnLast) || !equalF(yyn, yynLast)) {
 							xxnLast = xxn;
 							yynLast = yyn;
 							finishCreateObject(xxn, yyn);
@@ -120,7 +124,6 @@ void Editor::update()
 						yy += dy;
 					}
 				}
-				finishCreateObject(snappedPos.x, snappedPos.y);
 			}
 			else if (rightHold)
 			{

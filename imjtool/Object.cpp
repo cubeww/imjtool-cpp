@@ -8,6 +8,11 @@ void Object::addCollision(Index layer)
 	collisionLayers[static_cast<int>(layer)] = true;
 }
 
+void Object::removeCollision(Index layer)
+{
+	collisionLayers[static_cast<int>(layer)] = false;
+}
+
 void Object::setSprite(string name, bool setMask)
 {
 	sprite = ResMgr.sprites[name];
@@ -29,8 +34,24 @@ void Object::updateSprite()
 
 void Object::drawSelf()
 {
+	if (highlight)
+	{
+		color = sf::Color(255, 204, 204);
+		if (highlightTimer-- == 0)
+		{
+			color = sf::Color::White;
+			highlight = false;
+		}
+	}
+
 	if (sprite != nullptr)
 		sprite->draw(FloorToInt(imageIndex), x, y, sprite->xOrigin, sprite->yOrigin, xscale, yscale, rotation, color);
+}
+
+void Object::setHighlight()
+{
+	highlight = true;
+	highlightTimer = 10;
 }
 
 void Object::drawMask()
@@ -51,8 +72,8 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 
 	auto& item1 = maskSprite->items[static_cast<int>(imageIndex) % maskSprite->items.size()];
 
-	auto scale1x = 1 / xscale;
-	auto scale1y = 1 / yscale;
+	auto scale1x = 1.0f / xscale;
+	auto scale1y = 1.0f / yscale;
 
 	for (const auto& obj : ObjMgr.objects)
 	{
@@ -61,8 +82,8 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 
 		obj->calcBBox();
 
-		auto scale2x = 1 / obj->xscale;
-		auto scale2y = 1 / obj->yscale;
+		auto scale2x = 1.0f / obj->xscale;
+		auto scale2y = 1.0f / obj->yscale;
 
 		auto& item2 = obj->maskSprite->items[static_cast<int>(obj->imageIndex) % obj->maskSprite->items.size()];
 
@@ -104,15 +125,15 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 			{
 				for (auto i = l; i <= r; i++)
 				{
-					auto xx = RoundToInt((i - x) * scale1x + maskSprite->xOrigin);
+					auto xx = FloorToInt((i - x) * scale1x + maskSprite->xOrigin);
 					if (xx < 0 || xx >= item1->w) continue;
-					auto yy = RoundToInt((j - y) * scale1y + maskSprite->yOrigin);
+					auto yy = FloorToInt((j - y) * scale1y + maskSprite->yOrigin);
 					if (yy < 0 || yy >= item1->h) continue;
 					if (!item1->data[xx + yy * item1->w]) continue;
 
-					xx = RoundToInt((i - obj->x) * scale2x + obj->maskSprite->xOrigin);
+					xx = FloorToInt((i - obj->x) * scale2x + obj->maskSprite->xOrigin);
 					if (xx < 0 || xx >= item2->w) continue;
-					yy = RoundToInt((j - obj->y) * scale2y + obj->maskSprite->yOrigin);
+					yy = FloorToInt((j - obj->y) * scale2y + obj->maskSprite->yOrigin);
 					if (yy < 0 || yy >= item2->h) continue;
 					if (!item2->data[xx + yy * item2->w]) continue;
 
@@ -135,15 +156,15 @@ shared_ptr<Object> Object::placeMeeting(float x, float y, Index layer)
 			{
 				for (auto i = l; i <= r; i++)
 				{
-					auto xx = RoundToInt((cc1 * (i - x) + ss1 * (j - y)) * scale1x + maskSprite->xOrigin);
+					auto xx = FloorToInt((cc1 * (i - x) + ss1 * (j - y)) * scale1x + maskSprite->xOrigin);
 					if (xx < 0 || xx >= item1->w) continue;
-					auto yy = RoundToInt((cc1 * (j - y) - ss1 * (i - x)) * scale1y + maskSprite->yOrigin);
+					auto yy = FloorToInt((cc1 * (j - y) - ss1 * (i - x)) * scale1y + maskSprite->yOrigin);
 					if (yy < 0 || yy >= item1->h) continue;
 					if (!item1->data[xx + yy * item1->w]) continue;
 
-					xx = RoundToInt((cc2 * (i - obj->x) + ss2 * (j - obj->y)) * scale2x + obj->maskSprite->xOrigin);
+					xx = FloorToInt((cc2 * (i - obj->x) + ss2 * (j - obj->y)) * scale2x + obj->maskSprite->xOrigin);
 					if (xx < 0 || xx >= item2->w) continue;
-					yy = RoundToInt((cc2 * (j - obj->y) - ss2 * (i - obj->x)) * scale2y + obj->maskSprite->yOrigin);
+					yy = FloorToInt((cc2 * (j - obj->y) - ss2 * (i - obj->x)) * scale2y + obj->maskSprite->yOrigin);
 					if (yy < 0 || yy >= item2->h) continue;
 					if (!item2->data[xx + yy * item2->w]) continue;
 

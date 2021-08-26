@@ -19,16 +19,23 @@ void Game::run()
 	window->setKeyRepeatEnabled(false);
 
 	ImGui::SFML::Init(*window);
-
 	resourceManager.loadTextures();
 	resourceManager.loadSounds();
 	skinManager.loadConfig();
+	skinManager.apply("<default>");
 	configManager.load();
+
+	sf::Image icon = resourceManager.textures["icon"]->copyToImage();
+	window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 	editor.selectIndex = GetIndex(Block);
 
 	CreateInst(GetIndex(Bg), 0, 0);
 	CreateInst(GetIndex(Grid), 0, 0);
+	CreateInst(GetIndex(BorderBlock), 0, -32)->xscale = 25;
+	CreateInst(GetIndex(BorderBlock), 0, 608)->xscale = 25;
+	CreateInst(GetIndex(BorderBlock), -32, 0)->yscale = 19;
+	CreateInst(GetIndex(BorderBlock), 800, 0)->yscale = 19;
 
 	while (window->isOpen())
 	{
@@ -45,7 +52,7 @@ void Game::handleEvent()
 	{
 		ImGui::SFML::ProcessEvent(event);
 
-		if (event.type == sf::Event::Closed) 
+		if (event.type == sf::Event::Closed)
 		{
 			configManager.save();
 			window->close();

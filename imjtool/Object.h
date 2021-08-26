@@ -52,9 +52,15 @@ public:
 
 	bool collisionLayers[256];
 
+	int highlightTimer = 0;
+	bool highlight = false;
+
+	void setHighlight();
+
 	void setSprite(string name, bool setMask = true);
 	void setMask(string name);
 	void addCollision(Index layer);
+	void removeCollision(Index layer);
 	void updateSprite();
 	void drawSelf();
 	void drawMask();

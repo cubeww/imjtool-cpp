@@ -186,14 +186,20 @@ void Gui::setGuiTheme(ThemeName name)
 	}
 }
 
-void Gui::mainMenu()
+void Gui::update()
 {
+	// main menu
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("New Map", "F2"))
 			{
+				for (auto o : ObjMgr.objects)
+				{
+					if (inPalette(o->index) || o->index == GetIndex(Blood) || o->index == GetIndex(Player))
+						DestroyInst(o);
+				}
 				showGameWindow = true;
 			}
 			ImGui::Separator();
@@ -261,6 +267,10 @@ void Gui::mainMenu()
 				Gm.editor.redo();
 			}
 			ImGui::Separator();
+			if (ImGui::MenuItem("Snap"))
+			{
+				showSnap = true;
+			}
 			if (ImGui::MenuItem("Shift"))
 			{
 				showShift = true;
@@ -296,42 +306,33 @@ void Gui::mainMenu()
 			{
 				if (ImGui::MenuItem("Next"))
 				{
-					int index = -1;
-
-					if (SkinMgr.curSkin != nullptr)
-						index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) - SkinMgr.skinNames.begin();
+					auto index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) - SkinMgr.skinNames.begin();
 					if (++index == SkinMgr.skinNames.size())
 					{
 						index = 0;
 					}
-					SkinMgr.apply(make_shared<SkinPackage>(SkinMgr.skinNames[index]));
+					SkinMgr.apply(SkinMgr.skinNames[index]);
 				}
 				if (ImGui::MenuItem("Previous"))
 				{
-					int index = 1;
-
-					if (SkinMgr.curSkin != nullptr)
-						index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) - SkinMgr.skinNames.begin();
+					auto index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) - SkinMgr.skinNames.begin();
 
 					if (--index == -1)
 					{
 						index = SkinMgr.skinNames.size() - 1;
 					}
-					SkinMgr.apply(make_shared<SkinPackage>(SkinMgr.skinNames[index]));
+					SkinMgr.apply(SkinMgr.skinNames[index]);
 				}
 				if (ImGui::MenuItem("Random"))
 				{
-					int index = -1;
-
-					if (SkinMgr.curSkin != nullptr)
-						index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) - SkinMgr.skinNames.begin();
+					auto index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) - SkinMgr.skinNames.begin();
 
 					int newIndex = Random::get(0, static_cast<int>(SkinMgr.skinNames.size()) - 1);
 					while (index == newIndex)
 					{
 						newIndex = Random::get(0, static_cast<int>(SkinMgr.skinNames.size()) - 1);
 					}
-					SkinMgr.apply(make_shared<SkinPackage>(SkinMgr.skinNames[newIndex]));
+					SkinMgr.apply(SkinMgr.skinNames[newIndex]);
 				}
 				ImGui::Separator();
 				if (ImGui::MenuItem("Choose"))
@@ -457,10 +458,8 @@ void Gui::mainMenu()
 		}
 		ImGui::EndMainMenuBar();
 	}
-}
 
-void Gui::gameWindow()
-{
+	// game window
 	if (showGameWindow)
 	{
 		ImGui::SetNextWindowSize(ImVec2(816, 650), ImGuiCond_Once);
@@ -496,6 +495,8 @@ void Gui::gameWindow()
 		}
 		ImGui::End();
 	}
+
+	// palette
 	if (showPalette)
 	{
 		ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Once);
@@ -586,10 +587,8 @@ void Gui::gameWindow()
 		}
 		ImGui::End();
 	}
-}
 
-void Gui::debugWindow()
-{
+	// debug window
 	if (showDebug)
 	{
 		auto debugValue = [&](string name, double value)
@@ -614,27 +613,12 @@ void Gui::debugWindow()
 		}
 		ImGui::End();
 	}
-}
 
-
-void Gui::update()
-{
-	mainMenu();
-	gameWindow();
-	debugWindow();
-	aboutWindow();
-	shiftWindow();
-	gridWindow();
-	skinWindow();
-}
-
-void Gui::aboutWindow()
-{
+	// about window
 	if (showAbout)
 	{
 		ImGui::OpenPopup("About");
 	}
-
 	ImGui::SetNextWindowSize(ImVec2(420, 420), ImGuiCond_Once);
 	if (ImGui::BeginPopupModal("About", &showAbout))
 	{
@@ -652,10 +636,8 @@ void Gui::aboutWindow()
 		}
 		ImGui::EndPopup();
 	}
-}
 
-void Gui::shiftWindow()
-{
+	// shift window
 	if (showShift)
 	{
 		ImGui::Begin("Shift Objects", &showShift);
@@ -713,18 +695,23 @@ void Gui::shiftWindow()
 
 		ImGui::End();
 	}
-}
 
-void Gui::gridWindow()
-{
+	// grid window
 	if (showGridWindow)
 	{
 		ImGui::OpenPopup("Set Grid");
 	}
-
-	ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiCond_Once);
+	ImGui::SetNextWindowSize(ImVec2(200, 130), ImGuiCond_Once);
 	if (ImGui::BeginPopupModal("Set Grid", &showGridWindow))
 	{
+		if (ImGui::Button("32")) { gridW = 32; gridH = 32; }
+		ImGui::SameLine();
+		if (ImGui::Button("16")) { gridW = 16; gridH = 16; }
+		ImGui::SameLine();
+		if (ImGui::Button("8")) { gridW = 8; gridH = 8; }
+		ImGui::SameLine();
+		if (ImGui::Button("1")) { gridW = 1; gridH = 1; }
+
 		ImGui::InputInt("Grid W", &gridW);
 		ImGui::InputInt("Grid H", &gridH);
 
@@ -739,41 +726,43 @@ void Gui::gridWindow()
 		}
 		ImGui::EndPopup();
 	}
-}
 
-void Gui::updateGrid()
-{
-	if (gridTexture == nullptr)
+	// snap window
+	if (showSnap)
 	{
-		gridTexture = make_shared<sf::RenderTexture>();
-		gridTexture->create(800, 608);
+		ImGui::OpenPopup("Set Snap");
 	}
-	gridTexture->clear(sf::Color::Transparent);
-	for (auto yy = 0; yy <= 608; yy += gridH)
+	ImGui::SetNextWindowSize(ImVec2(200, 130), ImGuiCond_Once);
+	if (ImGui::BeginPopupModal("Set Snap", &showSnap))
 	{
-		sf::RectangleShape rect;
-		rect.setFillColor(sf::Color::Black);
-		rect.setPosition(0, static_cast<float>(yy));
-		rect.setSize(sf::Vector2f(800, 1));
-		gridTexture->draw(rect);
-	}
-	for (auto xx = 0; xx <= 800; xx += gridW)
-	{
-		sf::RectangleShape rect;
-		rect.setFillColor(sf::Color::Black);
-		rect.setPosition(static_cast<float>(xx), 0);
-		rect.setSize(sf::Vector2f(1, 608));
-		gridTexture->draw(rect);
-	}
-}
+		if (ImGui::Button("32")) { snapW = 32; snapH = 32; }
+		ImGui::SameLine();
+		if (ImGui::Button("16")) { snapW = 16; snapH = 16; }
+		ImGui::SameLine();
+		if (ImGui::Button("8")) { snapW = 8; snapH = 8; }
+		ImGui::SameLine();
+		if (ImGui::Button("1")) { snapW = 1; snapH = 1; }
 
-void Gui::skinWindow()
-{
+		ImGui::InputInt("Snap W", &snapW);
+		ImGui::InputInt("Snap H", &snapH);
+
+		snapW = clamp(snapW, 1, 800);
+		snapH = clamp(snapH, 1, 608);
+
+		if (ImGui::Button("OK"))
+		{
+			Gm.editor.snap = ImVec2(snapW, snapH);
+			showSnap = false;
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
+
+	// skin window
 	if (showSkin)
 	{
 		ImGui::OpenPopup("Skin");
 	}
-
 	ImGui::SetNextWindowSize(ImVec2(430, 330), ImGuiCond_Once);
 	if (ImGui::BeginPopupModal("Skin", &showSkin))
 	{
@@ -868,5 +857,31 @@ void Gui::skinWindow()
 			showSkin = false;
 		}
 		ImGui::EndPopup();
+	}
+}
+
+void Gui::updateGrid()
+{
+	if (gridTexture == nullptr)
+	{
+		gridTexture = make_shared<sf::RenderTexture>();
+		gridTexture->create(800, 608);
+	}
+	gridTexture->clear(sf::Color::Transparent);
+	for (auto yy = 0; yy <= 608; yy += gridH)
+	{
+		sf::RectangleShape rect;
+		rect.setFillColor(sf::Color::Black);
+		rect.setPosition(0, static_cast<float>(yy));
+		rect.setSize(sf::Vector2f(800, 1));
+		gridTexture->draw(rect);
+	}
+	for (auto xx = 0; xx <= 800; xx += gridW)
+	{
+		sf::RectangleShape rect;
+		rect.setFillColor(sf::Color::Black);
+		rect.setPosition(static_cast<float>(xx), 0);
+		rect.setSize(sf::Vector2f(1, 608));
+		gridTexture->draw(rect);
 	}
 }

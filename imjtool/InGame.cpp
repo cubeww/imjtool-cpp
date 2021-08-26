@@ -245,8 +245,6 @@ void Platform::update()
 	drawSelf();
 }
 
-#define sign(x) ((x > 0) ? 1 : ((x < 0) ? -1 : 0))
-
 void Player::create()
 {
 	depth = -10;
@@ -523,15 +521,21 @@ void Player::update()
 	}
 
 	// killer
-	if (placeMeeting(x, y, Index::Killer))
+	auto killer = placeMeeting(x, y, Index::Killer);
+	if (killer != nullptr)
 	{
-		for (auto i = 0; i < 200; i++)
+		killer->setHighlight();
+		if (PlayerMgr.deathEnable) 
 		{
-			CreateInst(GetIndex(Blood), x, y);
+			kill();
+			return;
 		}
-		ResMgr.sounds["death"]->play();
-		DestroyByName(Player);
-		return;
+	}
+
+	// border
+	if (x < 0 || x > 800 || y < 0 || y > 608)
+	{
+		kill();
 	}
 
 	updateSprite();
@@ -567,6 +571,17 @@ void Player::update()
 	}
 }
 
+void Player::kill()
+{
+	for (auto i = 0; i < 200; i++)
+	{
+		CreateInst(GetIndex(Blood), x, y);
+	}
+	ResMgr.sounds["death"]->play();
+	DestroyByName(Player);
+}
+
+
 void PlayerStart::create()
 {
 	for (const auto& o : ObjMgr.objects)
@@ -575,6 +590,7 @@ void PlayerStart::create()
 			DestroyInst(o);
 	}
 	DestroyByName(Player);
+	DestroyByName(Blood);
 	CreateInst(GetIndex(Player), x + 17, y + 23);
 	depth = 0;
 	setMask("player_start");
@@ -932,13 +948,10 @@ void Bg::update()
 		return (v - vmin + (1 + abs(v)) * (vmax - vmin)) % (vmax - vmin) + vmin;
 	};
 
-	if (SkinMgr.curSkin != nullptr)
-	{
-		hspeed = SkinMgr.curSkin->hspeed;
-		vspeed = SkinMgr.curSkin->vspeed;
-	}
+	hspeed = SkinMgr.curSkin->hspeed;
+	vspeed = SkinMgr.curSkin->vspeed;
 
-	if (SkinMgr.curSkin != nullptr && SkinMgr.curSkin->bgType == BgType::Stretch)
+	if (SkinMgr.curSkin->bgType == BgType::Stretch)
 	{
 		x = cycleNum(FloorToInt(x + hspeed), 0, 800);
 		y = cycleNum(FloorToInt(y + vspeed), 0, 608);
@@ -995,3 +1008,22 @@ void Grid::update()
 		}
 	}
 }
+
+void BorderBlock::create()
+{
+	setMask(spriteOf(GetIndex(Block)));
+	addCollision(Index::Block);
+}
+
+void BorderBlock::update()
+{
+	if (PlayerMgr.deathBorder == DeathBorder::Solid)
+	{
+		addCollision(Index::Block);
+	}
+	else
+	{
+		removeCollision(Index::Block);
+	}
+}
+

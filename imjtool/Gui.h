@@ -27,10 +27,16 @@ public:
 
 	bool showGameWindow = true;
 	bool showPalette = true;
-	bool showDebug = true;
+
+	bool showDebug = false;
 	int debugSpriteCount = 0;
+
 	bool showAbout = false;
 	bool showShift = false;
+
+	bool showSnap = false;
+	int snapW = 32;
+	int snapH = 32;
 
 	ThemeName curTheme = ThemeName::Default;
 	void setGuiTheme(ThemeName name);
@@ -51,14 +57,6 @@ public:
 	int shiftY = 32;
 
 	std::map<int, std::shared_ptr<sf::RenderTexture>> paletteIcons;
-
-	void mainMenu();
-	void gameWindow();
-	void debugWindow();
-	void aboutWindow();
-	void shiftWindow();
-	void gridWindow();
-	void skinWindow();
 
 	void updateGrid();
 };

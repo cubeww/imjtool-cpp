@@ -42,9 +42,9 @@ public:
 	vector<string> skinNames;
 	shared_ptr<SkinPackage> curSkin;
 	shared_ptr<SkinPackage> previewSkin;
-	shared_ptr<SkinPackage> defaultSkin;
 
 	void apply(shared_ptr<SkinPackage> package);
+	void apply(string name);
 
 	void loadConfig();
 

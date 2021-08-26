@@ -2,6 +2,7 @@
 #include "Object.h"
 
 #define PI 3.1415926535897932f
+#define sign(x) ((x > 0) ? 1 : ((x < 0) ? -1 : 0))
 
 enum class Index
 {
@@ -39,6 +40,7 @@ enum class Index
     MiniBlock,
     Bg,
     Grid,
+    BorderBlock,
 
     Undefined,
 };
@@ -139,6 +141,7 @@ public:
 
     void create() override;
     void update() override;
+    void kill();
 };
 
 class PlayerStart :
@@ -303,6 +306,14 @@ class Grid :
 public:
     sf::Sprite grid;
 
+    void create() override;
+    void update() override;
+};
+
+class BorderBlock :
+    public Object
+{
+public:
     void create() override;
     void update() override;
 };
