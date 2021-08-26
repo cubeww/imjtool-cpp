@@ -31,7 +31,7 @@ SkinPackage::SkinPackage(string name)
 	INIFile inifile(path + "skin_config.ini");
 	INIStructure ini;
 	inifile.read(ini);
-
+	cout << name << endl;
 	auto readInt = [&](string section, string key, int def)
 	{
 		if (ini.has(section) && ini[section].has(key))

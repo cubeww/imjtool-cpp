@@ -12,6 +12,7 @@ class Sprite
 {
 public:
 	Sprite(int xo, int yo);
+	~Sprite();
 
 	vector<shared_ptr<SpriteItem>> items;
 	int xOrigin = 0;

@@ -58,7 +58,7 @@ void Game::handleEvent()
 void Game::update()
 {
 	ImGui::SFML::Update(*window, deltaClock.restart());
-	window->clear();
+	window->clear(windowBgColor);
 	gameTexture->clear(sf::Color::White);
 	playerManager.update();
 	objectManager.update();

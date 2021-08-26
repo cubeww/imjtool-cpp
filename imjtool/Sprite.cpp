@@ -9,6 +9,13 @@ Sprite::Sprite(int xo, int yo)
 {
 	xOrigin = xo;
 	yOrigin = yo;
+
+	Gm.gui.debugSpriteCount++;
+}
+
+Sprite::~Sprite()
+{
+	Gm.gui.debugSpriteCount--;
 }
 
 void Sprite::addSheet(shared_ptr<sf::Texture> tex, int xnum, int ynum, bool getData)

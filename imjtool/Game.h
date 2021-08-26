@@ -42,6 +42,7 @@ public:
 
 	unique_ptr<sf::RenderWindow> window;
 	unique_ptr<sf::RenderTexture> gameTexture;
+	sf::Color windowBgColor = sf::Color::Black;
 
 	sf::Clock deltaClock;
 	float fps = 0;

@@ -13,6 +13,13 @@ namespace sf
 
 using namespace std;
 
+enum class ThemeName
+{
+	Default,
+	Dark,
+	Light,
+};
+
 class Gui
 {
 public:
@@ -21,8 +28,12 @@ public:
 	bool showGameWindow = true;
 	bool showPalette = true;
 	bool showDebug = true;
+	int debugSpriteCount = 0;
 	bool showAbout = false;
 	bool showShift = false;
+
+	ThemeName curTheme = ThemeName::Default;
+	void setGuiTheme(ThemeName name);
 
 	bool showSkin = false;
 	int skinSelect = 0;
