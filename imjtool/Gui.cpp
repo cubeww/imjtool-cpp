@@ -473,13 +473,6 @@ void Gui::update()
 			ImGui::Image(*Gm.gameTexture);
 			Gm.editor.update();
 
-			if (showGrid)
-			{
-				ImGui::SetCursorPos(ImGui::GetCursorStartPos());
-				auto col = sf::Color::Black;
-				col.a = 66;
-				ImGui::Image(*gridTexture, col);
-			}
 			if (showMouseCoord)
 			{
 				auto pos = ImVec2(ImGui::GetMousePos().x - windowPos.x - cursorStartPos.x,
