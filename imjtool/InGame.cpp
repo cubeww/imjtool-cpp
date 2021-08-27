@@ -68,6 +68,7 @@ bool isSkinable(int index)
 	case Index::JumpRefresher:
 	case Index::BulletBlocker:
 	case Index::Bg:
+	case Index::SaveEffect:
 		return true;
 	default:
 		return false;
@@ -104,6 +105,7 @@ string spriteOf(int index)
 	case Index::GravityArrowDown: return "gravity_down";
 	case Index::BulletBlocker: return "bullet_blocker";
 	case Index::Bg: return "bg";
+	case Index::SaveEffect: return "save";
 	}
 	return "undefined";
 }
@@ -421,6 +423,27 @@ void Player::update()
 				setSprite("player_fall", false);
 			}
 		}
+	}
+
+	// A / D adjust
+	if (placeMeeting(x, y + PlayerMgr.grav, Index::Block))
+	{
+		if (InputMgr.isKeyPress(sf::Keyboard::A))
+		{
+			hspeed = -1;
+		}
+		if (InputMgr.isKeyPress(sf::Keyboard::D))
+		{
+			hspeed = 1;
+		}
+	}
+
+	// press S save
+	if (InputMgr.isKeyPress(sf::Keyboard::S))
+	{
+		ResMgr.sounds["shoot"]->play();
+		CreateInst(GetIndex(SaveEffect), x - 17, y - 23);
+		PlayerMgr.save();
 	}
 
 	// movement
@@ -1025,5 +1048,24 @@ void BorderBlock::update()
 	{
 		removeCollision(Index::Block);
 	}
+}
+
+void SaveEffect::create()
+{
+	depth = -1;
+	applySkin();
+}
+
+void SaveEffect::update()
+{
+	imageIndex = 1;
+	color.a -= 26;
+	if (color.a <= 26)
+	{
+		DestroyThis();
+		return;
+	}
+
+	drawSelf();
 }
 

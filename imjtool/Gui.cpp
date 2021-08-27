@@ -14,6 +14,47 @@
 
 using Random = effolkronium::random_static;
 
+Gui::Gui()
+{
+	groupIndex = {
+		{
+			GetIndex(PlayerStart),
+			GetIndex(Save),
+			GetIndex(Warp),
+		},
+		{
+			GetIndex(SpikeUp),
+			GetIndex(SpikeDown),
+			GetIndex(SpikeLeft),
+			GetIndex(SpikeRight),
+			GetIndex(MiniSpikeUp),
+			GetIndex(MiniSpikeDown),
+			GetIndex(MiniSpikeLeft),
+			GetIndex(MiniSpikeRight),
+			GetIndex(Apple),
+			GetIndex(KillerBlock),
+		},
+		{
+			GetIndex(Block),
+			GetIndex(MiniBlock),
+			GetIndex(Platform),
+			GetIndex(BulletBlocker),
+		},
+		{
+			GetIndex(WalljumpR),
+			GetIndex(WalljumpL),
+			GetIndex(Water),
+			GetIndex(Water2),
+			GetIndex(Water3),
+		},
+		{
+			GetIndex(GravityArrowUp),
+			GetIndex(GravityArrowDown),
+		}
+	};
+}
+
+
 void Gui::setGuiTheme(ThemeName name)
 {
 	curTheme = name;
@@ -362,7 +403,8 @@ void Gui::update()
 			{
 				if (ImGui::MenuItem("Next"))
 				{
-					auto index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) - SkinMgr.skinNames.begin();
+					auto index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) -
+						SkinMgr.skinNames.begin();
 					if (++index == SkinMgr.skinNames.size())
 					{
 						index = 0;
@@ -371,7 +413,8 @@ void Gui::update()
 				}
 				if (ImGui::MenuItem("Previous"))
 				{
-					auto index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) - SkinMgr.skinNames.begin();
+					auto index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) -
+						SkinMgr.skinNames.begin();
 
 					if (--index == -1)
 					{
@@ -381,7 +424,8 @@ void Gui::update()
 				}
 				if (ImGui::MenuItem("Random"))
 				{
-					auto index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) - SkinMgr.skinNames.begin();
+					auto index = find(SkinMgr.skinNames.begin(), SkinMgr.skinNames.end(), SkinMgr.curSkin->skinName) -
+						SkinMgr.skinNames.begin();
 
 					int newIndex = Random::get(0, static_cast<int>(SkinMgr.skinNames.size()) - 1);
 					while (index == newIndex)
@@ -554,7 +598,7 @@ void Gui::update()
 	{
 		ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Once);
 		ImGui::Begin("Palette", &showPalette);
-		auto addObject = [&](int index, string hint = "")
+		auto addObject = [&](int index, int group, string hint = "")
 		{
 			auto name = spriteOf(index);
 			if (paletteIcons[index] == nullptr)
@@ -572,6 +616,7 @@ void Gui::update()
 			if (ImGui::ImageButton(*paletteIcons[index]))
 			{
 				Gm.editor.selectIndex = index;
+				curGroup = group;
 			}
 			if (hint != "" && ImGui::IsItemHovered())
 			{
@@ -582,64 +627,92 @@ void Gui::update()
 		};
 		if (ImGui::CollapsingHeader("Player"))
 		{
-			addObject(GetIndex(PlayerStart));
+			addObject(GetIndex(PlayerStart), 0);
 			ImGui::SameLine();
-			addObject(GetIndex(Save));
+			addObject(GetIndex(Save), 0);
 			ImGui::SameLine();
-			addObject(GetIndex(Warp));
+			addObject(GetIndex(Warp), 0);
 		}
 		if (ImGui::CollapsingHeader("Killer"))
 		{
-			addObject(GetIndex(SpikeUp));
+			addObject(GetIndex(SpikeUp), 1);
 			ImGui::SameLine();
-			addObject(GetIndex(SpikeDown));
+			addObject(GetIndex(SpikeDown), 1);
 			ImGui::SameLine();
-			addObject(GetIndex(SpikeLeft));
+			addObject(GetIndex(SpikeLeft), 1);
 			ImGui::SameLine();
-			addObject(GetIndex(SpikeRight));
+			addObject(GetIndex(SpikeRight), 1);
 
-			addObject(GetIndex(MiniSpikeUp));
+			addObject(GetIndex(MiniSpikeUp), 1);
 			ImGui::SameLine();
-			addObject(GetIndex(MiniSpikeDown));
+			addObject(GetIndex(MiniSpikeDown), 1);
 			ImGui::SameLine();
-			addObject(GetIndex(MiniSpikeLeft));
+			addObject(GetIndex(MiniSpikeLeft), 1);
 			ImGui::SameLine();
-			addObject(GetIndex(MiniSpikeRight));
+			addObject(GetIndex(MiniSpikeRight), 1);
 
-			addObject(GetIndex(Apple));
+			addObject(GetIndex(Apple), 1);
 			ImGui::SameLine();
-			addObject(GetIndex(KillerBlock));
+			addObject(GetIndex(KillerBlock), 1);
 		}
 		if (ImGui::CollapsingHeader("Block & Platform"))
 		{
-			addObject(GetIndex(Block));
+			addObject(GetIndex(Block), 2);
 			ImGui::SameLine();
-			addObject(GetIndex(MiniBlock));
+			addObject(GetIndex(MiniBlock), 2);
 			ImGui::SameLine();
-			addObject(GetIndex(Platform));
+			addObject(GetIndex(Platform), 2);
 			ImGui::SameLine();
-			addObject(GetIndex(BulletBlocker));
+			addObject(GetIndex(BulletBlocker), 2);
 		}
 		if (ImGui::CollapsingHeader("Vine & Water"))
 		{
-			addObject(GetIndex(WalljumpR));
+			addObject(GetIndex(WalljumpR), 3);
 			ImGui::SameLine();
-			addObject(GetIndex(WalljumpL));
+			addObject(GetIndex(WalljumpL), 3);
 
-			addObject(GetIndex(Water), "Water 1 (Refresh Jump, High)");
+			addObject(GetIndex(Water), 3, "Water 1 (Refresh Jump, High)");
 			ImGui::SameLine();
-			addObject(GetIndex(Water2), "Water 2 (No Refresh Jump)");
+			addObject(GetIndex(Water2), 3, "Water 2 (No Refresh Jump)");
 			ImGui::SameLine();
-			addObject(GetIndex(Water3), "Water 3 (Refresh Jump)");
+			addObject(GetIndex(Water3), 3, "Water 3 (Refresh Jump)");
 		}
 		if (ImGui::CollapsingHeader("Misc"))
 		{
-			addObject(GetIndex(GravityArrowUp));
+			addObject(GetIndex(GravityArrowUp), 4);
 			ImGui::SameLine();
-			addObject(GetIndex(GravityArrowDown));
+			addObject(GetIndex(GravityArrowDown), 4);
 		}
 		ImGui::End();
 	}
+
+	// palette shortcuts
+	if (InputMgr.mouseWheelDown)
+	{
+		auto index = find(groupIndex[curGroup].begin(), groupIndex[curGroup].end(), Gm.editor.selectIndex) - groupIndex[curGroup].begin();
+		auto size = groupIndex[curGroup].size();
+		if (++index == size)
+			index = 0;
+		Gm.editor.selectIndex = groupIndex[curGroup][index];
+	}
+	if (InputMgr.mouseWheelUp)
+	{
+		auto index = find(groupIndex[curGroup].begin(), groupIndex[curGroup].end(), Gm.editor.selectIndex) - groupIndex[curGroup].begin();
+		auto size = groupIndex[curGroup].size();
+		if (--index == -1)
+			index = size - 1;
+		Gm.editor.selectIndex = groupIndex[curGroup][index];
+	}
+	for (int i = sf::Keyboard::Num1; i <= sf::Keyboard::Num1 + groupIndex.size() - 1; i++)
+	{
+		if (InputMgr.isKeyPress(i))
+		{
+			curGroup = i - sf::Keyboard::Num1;
+			Gm.editor.selectIndex = groupIndex[curGroup][0];
+		}
+	}
+	
+
 
 	// debug window
 	if (showDebug)
@@ -660,10 +733,6 @@ void Gui::update()
 		debugValue("Sprite Count", debugSpriteCount);
 		debugValue("Undo Stack Size", Gm.editor.undoEvents.size());
 		debugValue("Undo Pos", Gm.editor.undoPos);
-		if (ImGui::Button("DEL Instances"))
-		{
-			DestroyAll();
-		}
 		ImGui::End();
 	}
 
@@ -757,13 +826,29 @@ void Gui::update()
 	ImGui::SetNextWindowSize(ImVec2(200, 130), ImGuiCond_Once);
 	if (ImGui::BeginPopupModal("Set Grid", &showGridWindow))
 	{
-		if (ImGui::Button("32")) { gridW = 32; gridH = 32; }
+		if (ImGui::Button("32"))
+		{
+			gridW = 32;
+			gridH = 32;
+		}
 		ImGui::SameLine();
-		if (ImGui::Button("16")) { gridW = 16; gridH = 16; }
+		if (ImGui::Button("16"))
+		{
+			gridW = 16;
+			gridH = 16;
+		}
 		ImGui::SameLine();
-		if (ImGui::Button("8")) { gridW = 8; gridH = 8; }
+		if (ImGui::Button("8"))
+		{
+			gridW = 8;
+			gridH = 8;
+		}
 		ImGui::SameLine();
-		if (ImGui::Button("1")) { gridW = 1; gridH = 1; }
+		if (ImGui::Button("1"))
+		{
+			gridW = 1;
+			gridH = 1;
+		}
 
 		ImGui::InputInt("Grid W", &gridW);
 		ImGui::InputInt("Grid H", &gridH);
@@ -788,13 +873,29 @@ void Gui::update()
 	ImGui::SetNextWindowSize(ImVec2(200, 130), ImGuiCond_Once);
 	if (ImGui::BeginPopupModal("Set Snap", &showSnap))
 	{
-		if (ImGui::Button("32")) { snapW = 32; snapH = 32; }
+		if (ImGui::Button("32"))
+		{
+			snapW = 32;
+			snapH = 32;
+		}
 		ImGui::SameLine();
-		if (ImGui::Button("16")) { snapW = 16; snapH = 16; }
+		if (ImGui::Button("16"))
+		{
+			snapW = 16;
+			snapH = 16;
+		}
 		ImGui::SameLine();
-		if (ImGui::Button("8")) { snapW = 8; snapH = 8; }
+		if (ImGui::Button("8"))
+		{
+			snapW = 8;
+			snapH = 8;
+		}
 		ImGui::SameLine();
-		if (ImGui::Button("1")) { snapW = 1; snapH = 1; }
+		if (ImGui::Button("1"))
+		{
+			snapW = 1;
+			snapH = 1;
+		}
 
 		ImGui::InputInt("Snap W", &snapW);
 		ImGui::InputInt("Snap H", &snapH);

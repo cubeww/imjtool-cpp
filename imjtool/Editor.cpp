@@ -151,13 +151,20 @@ void Editor::update()
 		{
 			finishMoveObject();
 		}
+
+		// press W to spawn kid
+		if (InputMgr.isKeyPress(sf::Keyboard::W))
+		{
+			DestroyByName(Player);
+			DestroyByName(Blood);
+			CreateInst(GetIndex(Player), mouseInPos.x, mouseInPos.y);
+		}
 	}
 
 	if (leftRelease || rightRelease)
 	{
 		finishEvent();
 	}
-
 
 	mouseLastPos.x = mouseInPos.x;
 	mouseLastPos.y = mouseInPos.y;

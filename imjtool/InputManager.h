@@ -12,8 +12,10 @@ class InputManager
 	bool keyPress[MAX_KEY];
 	bool keyHold[MAX_KEY];
 	bool keyRelease[MAX_KEY];
-
 public:
+	bool mouseWheelUp = false;
+	bool mouseWheelDown = false;
+
 	void update(sf::Event& event);
 	void clearPressAndRelease();
 	bool isKeyPress(int key);

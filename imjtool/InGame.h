@@ -41,6 +41,7 @@ enum class Index
     Bg,
     Grid,
     BorderBlock,
+    SaveEffect,
 
     Undefined,
 };
@@ -311,6 +312,14 @@ public:
 };
 
 class BorderBlock :
+    public Object
+{
+public:
+    void create() override;
+    void update() override;
+};
+
+class SaveEffect :
     public Object
 {
 public:

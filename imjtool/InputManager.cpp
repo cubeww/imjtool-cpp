@@ -13,6 +13,19 @@ void InputManager::update(sf::Event& event)
 		keyHold[event.key.code] = false;
 		keyRelease[event.key.code] = true;
 	}
+	if (event.type == sf::Event::MouseWheelScrolled)
+	{
+		// -down +up
+		auto dt = event.mouseWheelScroll.delta;
+		if (dt < 0)
+		{
+			mouseWheelDown = true;
+		}
+		else if (dt > 0)
+		{
+			mouseWheelUp = true;
+		}
+	}
 }
 
 void InputManager::clearPressAndRelease()
@@ -22,6 +35,8 @@ void InputManager::clearPressAndRelease()
 		keyPress[i] = false;
 		keyRelease[i] = false;
 	}
+	mouseWheelUp = false;
+	mouseWheelDown = false;
 }
 
 bool InputManager::isKeyPress(int key)

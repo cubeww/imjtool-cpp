@@ -24,10 +24,14 @@ enum class ThemeName
 class Gui
 {
 public:
+	Gui();
 	void update();
 
 	bool showGameWindow = true;
+
 	bool showPalette = true;
+	int curGroup = 0;
+	vector<vector<int>> groupIndex;
 
 	bool showDebug = false;
 	int debugSpriteCount = 0;
