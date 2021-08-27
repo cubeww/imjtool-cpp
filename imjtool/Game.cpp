@@ -29,7 +29,7 @@ void Game::run()
 	window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 	editor.selectIndex = GetIndex(Block);
-	gui.curGroup = 2;
+	gui.curGroup = 4;
 
 	CreateInst(GetIndex(Bg), 0, 0);
 	CreateInst(GetIndex(Grid), 0, 0);

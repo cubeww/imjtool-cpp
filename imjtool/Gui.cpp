@@ -27,10 +27,14 @@ Gui::Gui()
 			GetIndex(SpikeDown),
 			GetIndex(SpikeLeft),
 			GetIndex(SpikeRight),
+		},
+		{
 			GetIndex(MiniSpikeUp),
 			GetIndex(MiniSpikeDown),
 			GetIndex(MiniSpikeLeft),
 			GetIndex(MiniSpikeRight),
+		},
+		{
 			GetIndex(Apple),
 			GetIndex(KillerBlock),
 		},
@@ -43,6 +47,8 @@ Gui::Gui()
 		{
 			GetIndex(WalljumpR),
 			GetIndex(WalljumpL),
+		},
+		{
 			GetIndex(Water),
 			GetIndex(Water2),
 			GetIndex(Water3),
@@ -545,6 +551,10 @@ void Gui::update()
 			{
 				showShift = !showShift;
 			}
+			if (ImGui::MenuItem("Player Analysis", nullptr, showAnalysis))
+			{
+				showAnalysis = !showAnalysis;
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
@@ -689,19 +699,21 @@ void Gui::update()
 	// palette shortcuts
 	if (InputMgr.mouseWheelDown)
 	{
-		auto index = find(groupIndex[curGroup].begin(), groupIndex[curGroup].end(), Gm.editor.selectIndex) - groupIndex[curGroup].begin();
-		auto size = groupIndex[curGroup].size();
-		if (++index == size)
-			index = 0;
-		Gm.editor.selectIndex = groupIndex[curGroup][index];
+		auto index = find(groupIndex[curGroup].begin(), groupIndex[curGroup].end(), Gm.editor.selectIndex) - groupIndex[
+			curGroup].begin();
+			auto size = groupIndex[curGroup].size();
+			if (++index == size)
+				index = 0;
+			Gm.editor.selectIndex = groupIndex[curGroup][index];
 	}
 	if (InputMgr.mouseWheelUp)
 	{
-		auto index = find(groupIndex[curGroup].begin(), groupIndex[curGroup].end(), Gm.editor.selectIndex) - groupIndex[curGroup].begin();
-		auto size = groupIndex[curGroup].size();
-		if (--index == -1)
-			index = size - 1;
-		Gm.editor.selectIndex = groupIndex[curGroup][index];
+		auto index = find(groupIndex[curGroup].begin(), groupIndex[curGroup].end(), Gm.editor.selectIndex) - groupIndex[
+			curGroup].begin();
+			auto size = groupIndex[curGroup].size();
+			if (--index == -1)
+				index = size - 1;
+			Gm.editor.selectIndex = groupIndex[curGroup][index];
 	}
 	for (int i = sf::Keyboard::Num1; i <= sf::Keyboard::Num1 + groupIndex.size() - 1; i++)
 	{
@@ -711,28 +723,26 @@ void Gui::update()
 			Gm.editor.selectIndex = groupIndex[curGroup][0];
 		}
 	}
-	
 
+	auto textDouble = [&](string name, double value)
+	{
+		name += ": ";
+		string s = to_string(value);
+		s.erase(s.find_last_not_of('0') + 1, std::string::npos);
+		s.erase(s.find_last_not_of('.') + 1, std::string::npos);
+		ImGui::Text((name + s).data());
+	};
 
 	// debug window
 	if (showDebug)
 	{
-		auto debugValue = [&](string name, double value)
-		{
-			name += ": ";
-			string s = to_string(value);
-			s.erase(s.find_last_not_of('0') + 1, std::string::npos);
-			s.erase(s.find_last_not_of('.') + 1, std::string::npos);
-			ImGui::Text((name + s).data());
-		};
-
 		ImGui::SetNextWindowSize(ImVec2(250, 250), ImGuiCond_Once);
 		ImGui::Begin("Debug Window", &showDebug);
-		debugValue("FPS", Gm.fps);
-		debugValue("Inst", ObjMgr.objects.size());
-		debugValue("Sprite Count", debugSpriteCount);
-		debugValue("Undo Stack Size", Gm.editor.undoEvents.size());
-		debugValue("Undo Pos", Gm.editor.undoPos);
+		textDouble("FPS", Gm.fps);
+		textDouble("Inst", ObjMgr.objects.size());
+		textDouble("Sprite Count", debugSpriteCount);
+		textDouble("Undo Stack Size", Gm.editor.undoEvents.size());
+		textDouble("Undo Pos", Gm.editor.undoPos);
 		ImGui::End();
 	}
 
@@ -1011,6 +1021,58 @@ void Gui::update()
 			showSkin = false;
 		}
 		ImGui::EndPopup();
+	}
+
+	// analysis window
+	auto textFrames = [&](string name, int count)
+	{
+		name += ": ";
+		string s = to_string(count) + " frame";
+		if (count != 1)
+		{
+			s += "s";
+		}
+		ImGui::Text((name + s).data());
+	};
+	auto textDuration = [&](string name, int dt)
+	{
+		name += ": ";
+		string s;
+		if (dt == 0)
+		{
+			s = "Good";
+		}
+		else
+		{
+			s = to_string(abs(dt)) + " frame";
+			if (dt != 1)
+				s += "s";
+			if (dt < 0)
+				s += " late";
+			else
+				s += " early";
+		}
+		
+		ImGui::Text((name + s).data());
+	};
+	if (showAnalysis)
+	{
+		ImGui::SetNextWindowSize(ImVec2(250, 300), ImGuiCond_Once);
+		ImGui::Begin("Player Analysis", &showAnalysis);
+		textDouble("Align", FloorToInt(PlayerMgr.x) % 3);
+		textDouble("X", PlayerMgr.x);
+		textDouble("Y", PlayerMgr.y);
+		ImGui::Separator();
+		textFrames("Jump", PlayerMgr.frameCountJump1);
+		textFrames("Pause", PlayerMgr.frameCountPause);
+		textFrames("Djump", PlayerMgr.frameCountJump2);
+		textFrames("Pause", PlayerMgr.frameCountPause2);
+		ImGui::Separator();
+		if (PlayerMgr.jcShow) 
+			textDuration("Cancel", PlayerMgr.jcDuration);
+		else
+			ImGui::Text("Cancel: Not");
+		ImGui::End();
 	}
 }
 

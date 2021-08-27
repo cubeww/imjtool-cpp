@@ -265,6 +265,10 @@ void Player::update()
 	xprevious = x;
 	yprevious = y;
 
+	PlayerMgr.frameActionJump = false;
+	PlayerMgr.frameActionDjump = false;
+	PlayerMgr.frameActionJumpSlow = false;
+
 	// dotkid check
 	if (PlayerMgr.dotkid)
 	{
@@ -364,6 +368,7 @@ void Player::update()
 			ResMgr.sounds["jump"]->play();
 			vspeed = -jump * PlayerMgr.grav;
 			djump = true;
+			PlayerMgr.frameActionJump = true;
 		}
 		else if (djump || water2 || PlayerMgr.infjump)
 		{
@@ -373,6 +378,7 @@ void Player::update()
 			if (!water3)
 				djump = false;
 			else djump = true;
+			PlayerMgr.frameActionDjump = true;
 		}
 	}
 
@@ -382,6 +388,7 @@ void Player::update()
 		if (vspeed * PlayerMgr.grav < 0)
 		{
 			vspeed *= 0.45f;
+			PlayerMgr.frameActionJumpSlow = true;
 		}
 	}
 
@@ -559,7 +566,11 @@ void Player::update()
 	if (x < 0 || x > 800 || y < 0 || y > 608)
 	{
 		kill();
+		return;
 	}
+
+	// analysis
+	PlayerMgr.doAnalysis();
 
 	updateSprite();
 

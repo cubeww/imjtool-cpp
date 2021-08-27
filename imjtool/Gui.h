@@ -43,6 +43,8 @@ public:
 	int snapW = 32;
 	int snapH = 32;
 
+	bool showAnalysis = false;
+
 	ThemeName curTheme = ThemeName::Default;
 	void setGuiTheme(ThemeName name);
 
