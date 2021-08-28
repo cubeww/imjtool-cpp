@@ -67,9 +67,11 @@ void Game::update()
 {
 	ImGui::SFML::Update(*window, deltaClock.restart());
 	window->clear(windowBgColor);
-	gameTexture->clear(sf::Color::White);
 	playerManager.update();
-	objectManager.update();
+	if (!recordManager.tasPause)
+	{
+		objectManager.update();
+	}
 	gui.update();
 	inputManager.clearPressAndRelease();
 	ImGui::SFML::Render(*window);

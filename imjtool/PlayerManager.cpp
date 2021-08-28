@@ -31,6 +31,32 @@ void PlayerManager::load()
 	player.lock()->y = currentSave.y;
 	grav = currentSave.grav;
 	face = currentSave.face;
+
+	if (RecMgr.tasPause)
+	{
+		updatePlayerImage();
+	}
+}
+
+void PlayerManager::updatePlayerImage()
+{
+	Gm.gameTexture->clear();
+	ObjMgr.sortDepth();
+	for (auto const& i : ObjMgr.objects)
+	{
+		if (i->needDestroy)
+			continue;
+
+		if (i->index == GetIndex(Player))
+		{
+			auto p = static_pointer_cast<Player>(i);
+			p->drawPlayer();
+		}
+		else
+		{
+			i->update();
+		}
+	}
 }
 
 void PlayerManager::doAnalysis()
@@ -116,8 +142,8 @@ void PlayerManager::doAnalysis()
 		// analysis: jump cancel
 		jcCount++;
 
-		auto leftShift = InputMgr.isKeyHold(sf::Keyboard::LShift);
-		auto rightShift = InputMgr.isKeyHold(sf::Keyboard::RShift);
+		auto leftShift = InputMgr.isKeyHoldG(sf::Keyboard::LShift);
+		auto rightShift = InputMgr.isKeyHoldG(sf::Keyboard::RShift);
 		auto leftShiftPressed = leftShift && !jcLeftShiftLast;
 		auto rightShiftPressed = rightShift && !jcRightShiftLast;
 		auto leftShiftReleased = !leftShift && jcLeftShiftLast;
@@ -197,5 +223,105 @@ void PlayerManager::doAnalysis()
 
 		jcLeftShiftLast = leftShift;
 		jcRightShiftLast = rightShift;
+
+		// analysis: bhop
+
+		bhopCount += 1;
+		if (frameActionJump)
+		{
+			bhopShow = false;
+		}
+
+		if (InputMgr.isKeyPressG(sf::Keyboard::LShift) && !frameActionJump)
+		{
+			auto oldY = p->y;
+			auto oldVspeed = p->vspeed;
+
+			p->y = p->yprevious;
+			p->vspeed = bhopVspeedPrevious;
+
+			auto numsteps = 0;
+			auto onGround = false;
+			while (!onGround && numsteps < 10)
+			{
+				numsteps += 1;
+				p->vspeed += p->gravity;
+				y += p->vspeed;
+				if (p->vspeed > p->maxVspeed)
+					p->vspeed = p->maxVspeed;
+				onGround = p->placeMeeting(x, y + grav, Index::Block) != nullptr;
+			}
+
+			p->y = oldY;
+			p->vspeed = oldVspeed;
+
+			if (numsteps <= bhopHintCutOff)
+			{
+				bhopShow = true;
+				bhopOffset = -numsteps;
+			}
+		}
+
+		if (playerOnGround && !bhopWaitingLate)
+		{
+			bhopWaitingLate = true;
+			bhopCount = -1;
+		}
+		if (bhopWaitingLate && frameActionJump)
+		{
+			if (bhopCount <= bhopHintCutOff)
+			{
+				bhopShow = true;
+				bhopOffset = bhopCount;
+			}
+			bhopWaitingLate = false;
+		}
+		if (!playerOnGround)
+		{
+			bhopWaitingLate = false;
+		}
+
+		bhopVspeedPrevious = p->vspeed;
 	}
 }
+
+shared_ptr<PlayerState> PlayerManager::saveState()
+{
+	if (!player.expired())
+	{
+		auto p = player.lock();
+		auto state = make_shared<PlayerState>();
+		state->x = p->x;
+		state->y = p->y;
+		state->hspeed = p->hspeed;
+		state->vspeed = p->vspeed;
+		state->gravity = p->gravity;
+		state->grav = grav;
+		state->face = face;
+		state->imageIndex = p->imageIndex;
+		state->imageSpeed = p->imageSpeed;
+		return state;
+	}
+	return nullptr;
+}
+
+void PlayerManager::loadState(shared_ptr<PlayerState> state)
+{
+	load();
+	auto p = player.lock();
+	p->x = state->x;
+	p->y = state->y;
+	p->hspeed = state->hspeed;
+	p->vspeed = state->vspeed;
+	p->gravity = state->gravity;
+	grav = state->grav;
+	face = state->face;
+	p->imageIndex = state->imageIndex;
+	p->imageSpeed = state->imageSpeed;
+
+	if (RecMgr.tasPause)
+	{
+		updatePlayerImage();
+	}
+}
+

@@ -1,0 +1,157 @@
+[
+    {
+        "file": "apple.png",
+        "x": 2,
+        "xo": 10,
+        "yo": 12
+    },
+    {
+        "file": "block.png"
+    },
+    {
+        "file": "blood.png",
+        "x": 3,
+        "xo": 2,
+        "yo": 2
+    },
+    {
+        "file": "bullet.png",
+        "x": 2,
+        "xo": 1,
+        "yo": 1
+    },
+    {
+        "file": "gravity_down.png"
+    },
+    {
+        "file": "gravity_up.png"
+    },
+    {
+        "file": "imgui.png"
+    },
+    {
+        "file": "jump_refresher.png",
+        "xo": 15,
+        "yo": 15
+    },
+    {
+        "file": "killer_block.png"
+    },
+    {
+        "file": "mini_block.png"
+    },
+    {
+        "file": "mini_spike_up.png"
+    },
+    {
+        "file": "mini_spike_down.png"
+    },
+    {
+        "file": "mini_spike_left.png"
+    },
+    {
+        "file": "mini_spike_right.png"
+    },
+    {
+        "file": "spike_up.png"
+    },
+    {
+        "file": "spike_down.png"
+    },
+    {
+        "file": "spike_left.png"
+    },
+    {
+        "file": "spike_right.png"
+    },
+    {
+        "file": "platform.png"
+    },
+    {
+        "file": "player_idle.png",
+        "x": 4,
+        "xo": 17,
+        "yo": 23
+    },
+    {
+        "file": "player_running.png",
+        "x": 4,
+        "xo": 17,
+        "yo": 23
+    },
+    {
+        "file": "player_jump.png",
+        "x": 2,
+        "xo": 17,
+        "yo": 23
+    },
+    {
+        "file": "player_fall.png",
+        "x": 2,
+        "xo": 17,
+        "yo": 23
+    },
+    {
+        "file": "player_sliding.png",
+        "x": 2,
+        "xo": 7,
+        "yo": 10
+    },
+    {
+        "file": "player_mask.png",
+        "xo": 17,
+        "yo": 23
+    },
+    {
+        "file": "player_mask_flip.png",
+        "xo": 17,
+        "yo": 8
+    },
+    {
+        "file": "player_start.png"
+    },
+    {
+        "file": "save.png",
+        "x": 2
+    },
+    {
+        "file": "sfml.png"
+    },
+    {
+        "file": "walljump_l.png"
+    },
+    {
+        "file": "walljump_r.png"
+    },
+    {
+        "file": "warp.png"
+    },
+    {
+        "file": "water.png"
+    },
+    {
+        "file": "water2.png"
+    },
+    {
+        "file": "water3.png"
+    },
+    {
+        "file": "dotkid.png",
+        "xo": 16,
+        "yo": 8
+    },
+    {
+        "file": "dotkid_outline.png",
+        "xo": 24,
+        "yo": 24
+    },
+    {
+        "file": "bullet_blocker.png"
+    },
+    {
+        "file": "bg.png"
+    },
+    {
+        "file": "icon.png"
+    }
+]

@@ -28,6 +28,8 @@ inline bool equalF(float x, float y) { return fabs(x - y) < 0.0001; }
 class ObjectManager
 {
 public:
+	void sortDepth();
+
 	shared_ptr<Object> create(int index, float x, float y);
 
 	vector<shared_ptr<Object>> objects;

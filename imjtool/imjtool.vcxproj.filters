@@ -72,6 +72,9 @@
     <ClCompile Include="MapManager.cpp">
       <Filter>ImJtool</Filter>
     </ClCompile>
+    <ClCompile Include="RecordManager.cpp">
+      <Filter>ImJtool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h">
@@ -120,6 +123,9 @@
       <Filter>ImJtool</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="RecordManager.h">
+      <Filter>ImJtool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="imjtool.rc" />

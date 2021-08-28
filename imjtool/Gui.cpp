@@ -291,6 +291,79 @@ void Gui::setGuiTheme(ThemeName name)
 
 void Gui::update()
 {
+	// functions
+	auto newMap = [&]()
+	{
+		for (auto o : ObjMgr.objects)
+		{
+			if (inPalette(o->index) || o->index == GetIndex(Blood) || o->index == GetIndex(Player))
+				DestroyInst(o);
+		}
+		showGameWindow = true;
+	};
+	auto openMap = [&]()
+	{
+		auto f = GetOpenFile(
+			"All Map Files (*.jmap;*.map)\0*.jmap;*.map\0"
+			"Jtool Map File (*.jmap)\0*.jmap\0"
+			"RMJ Map File (*.map)\0*.map\0"
+			, "Open Map");
+		if (f != "")
+		{
+			filesystem::path filename(f);
+			auto ext = filename.extension();
+			if (ext == ".jmap")
+				MapMgr.loadJmap(filename.string());
+			else if (ext == ".map")
+				MapMgr.loadRMJ(filename.string());
+		}
+		showGameWindow = true;
+	};
+	auto saveMap = [&]()
+	{
+		auto f = GetSaveFile(
+			"Jtool Map File (*.jmap)\0*.jmap\0"
+			"RMJ Map File (*.map)\0*.map\0"
+			, "Open Map");
+		if (f.filename != "")
+		{
+			filesystem::path filename(f.filename);
+			auto ext = filename.extension();
+			string ename;
+			switch (f.index)
+			{
+			case 1:
+				ename = ".jmap";
+				if (ext != ename)
+					filename += ename;
+				MapMgr.saveJmap(filename.string());
+				break;
+			case 2:
+				ename = ".map";
+				if (ext != ename)
+					filename += ename;
+				MapMgr.saveRMJ(filename.string());
+				break;
+			}
+		}
+	};
+
+	// shortcut keys
+	if (InputMgr.isKeyPress(sf::Keyboard::F2))
+		newMap();
+	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && InputMgr.isKeyPress(sf::Keyboard::O))
+		openMap();
+	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && InputMgr.isKeyPress(sf::Keyboard::S))
+		saveMap();
+	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && InputMgr.isKeyPress(sf::Keyboard::Z) && !RecMgr.tasPause)
+		Gm.editor.undo();
+	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && InputMgr.isKeyPress(sf::Keyboard::Y) && !RecMgr.tasPause)
+		Gm.editor.redo();
+	if (InputMgr.isKeyHold(sf::Keyboard::F8))
+		showSkin = true;
+	if (InputMgr.isKeyHold(sf::Keyboard::G))
+		showSnap = true;
+
 	// main menu
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -298,59 +371,16 @@ void Gui::update()
 		{
 			if (ImGui::MenuItem("New Map", "F2"))
 			{
-				for (auto o : ObjMgr.objects)
-				{
-					if (inPalette(o->index) || o->index == GetIndex(Blood) || o->index == GetIndex(Player))
-						DestroyInst(o);
-				}
-				showGameWindow = true;
+				newMap();
 			}
 			ImGui::Separator();
 			if (ImGui::MenuItem("Open Map", "CTRL+O"))
 			{
-				auto f = GetOpenFile(
-					"All Map Files (*.jmap;*.map)\0*.jmap;*.map\0"
-					"Jtool Map File (*.jmap)\0*.jmap\0"
-					"RMJ Map File (*.map)\0*.map\0"
-					, "Open Map");
-				if (f != "")
-				{
-					filesystem::path filename(f);
-					auto ext = filename.extension();
-					if (ext == ".jmap")
-						MapMgr.loadJmap(filename.string());
-					else if (ext == ".map")
-						MapMgr.loadRMJ(filename.string());
-				}
-				showGameWindow = true;
+				openMap();
 			}
 			if (ImGui::MenuItem("Save Map", "CTRL+S"))
 			{
-				auto f = GetSaveFile(
-					"Jtool Map File (*.jmap)\0*.jmap\0"
-					"RMJ Map File (*.map)\0*.map\0"
-					, "Open Map");
-				if (f.filename != "")
-				{
-					filesystem::path filename(f.filename);
-					auto ext = filename.extension();
-					string ename;
-					switch (f.index)
-					{
-					case 1:
-						ename = ".jmap";
-						if (ext != ename)
-							filename += ename;
-						MapMgr.saveJmap(filename.string());
-						break;
-					case 2:
-						ename = ".map";
-						if (ext != ename)
-							filename += ename;
-						MapMgr.saveRMJ(filename.string());
-						break;
-					}
-				}
+				saveMap();
 			}
 			ImGui::Separator();
 			if (ImGui::MenuItem("Exit", "ALT+F4"))
@@ -361,16 +391,16 @@ void Gui::update()
 		}
 		if (ImGui::BeginMenu("Edit", showGameWindow))
 		{
-			if (ImGui::MenuItem("Undo", "CTRL+Z", false, Gm.editor.undoPos > 0))
+			if (ImGui::MenuItem("Undo", "CTRL+Z", false, Gm.editor.undoPos > 0 && !RecMgr.tasPause))
 			{
 				Gm.editor.undo();
 			}
-			if (ImGui::MenuItem("Redo", "CTRL+Y", false, Gm.editor.undoPos < Gm.editor.undoEvents.size()))
+			if (ImGui::MenuItem("Redo", "CTRL+Y", false, Gm.editor.undoPos < Gm.editor.undoEvents.size() && !RecMgr.tasPause))
 			{
 				Gm.editor.redo();
 			}
 			ImGui::Separator();
-			if (ImGui::MenuItem("Snap"))
+			if (ImGui::MenuItem("Snap", "G"))
 			{
 				showSnap = true;
 			}
@@ -441,7 +471,7 @@ void Gui::update()
 					SkinMgr.apply(SkinMgr.skinNames[newIndex]);
 				}
 				ImGui::Separator();
-				if (ImGui::MenuItem("Choose"))
+				if (ImGui::MenuItem("Choose", "F8"))
 				{
 					showSkin = true;
 				}
@@ -555,6 +585,10 @@ void Gui::update()
 			{
 				showAnalysis = !showAnalysis;
 			}
+			if (ImGui::MenuItem("TAS", nullptr, showTAS))
+			{
+				showTAS = !showTAS;
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
@@ -585,7 +619,9 @@ void Gui::update()
 			auto cursorStartPos = ImGui::GetCursorStartPos();
 			auto windowPos = ImGui::GetWindowPos();
 			ImGui::Image(*Gm.gameTexture);
-			Gm.editor.update();
+
+			if (!RecMgr.tasPause)
+				Gm.editor.update();
 
 			if (showMouseCoord)
 			{
@@ -653,45 +689,45 @@ void Gui::update()
 			ImGui::SameLine();
 			addObject(GetIndex(SpikeRight), 1);
 
-			addObject(GetIndex(MiniSpikeUp), 1);
+			addObject(GetIndex(MiniSpikeUp), 2);
 			ImGui::SameLine();
-			addObject(GetIndex(MiniSpikeDown), 1);
+			addObject(GetIndex(MiniSpikeDown), 2);
 			ImGui::SameLine();
-			addObject(GetIndex(MiniSpikeLeft), 1);
+			addObject(GetIndex(MiniSpikeLeft), 2);
 			ImGui::SameLine();
-			addObject(GetIndex(MiniSpikeRight), 1);
+			addObject(GetIndex(MiniSpikeRight), 2);
 
-			addObject(GetIndex(Apple), 1);
+			addObject(GetIndex(Apple), 3);
 			ImGui::SameLine();
-			addObject(GetIndex(KillerBlock), 1);
+			addObject(GetIndex(KillerBlock), 3);
 		}
 		if (ImGui::CollapsingHeader("Block & Platform"))
 		{
-			addObject(GetIndex(Block), 2);
+			addObject(GetIndex(Block), 4);
 			ImGui::SameLine();
-			addObject(GetIndex(MiniBlock), 2);
+			addObject(GetIndex(MiniBlock), 4);
 			ImGui::SameLine();
-			addObject(GetIndex(Platform), 2);
+			addObject(GetIndex(Platform), 4);
 			ImGui::SameLine();
-			addObject(GetIndex(BulletBlocker), 2);
+			addObject(GetIndex(BulletBlocker), 4);
 		}
 		if (ImGui::CollapsingHeader("Vine & Water"))
 		{
-			addObject(GetIndex(WalljumpR), 3);
+			addObject(GetIndex(WalljumpR), 5);
 			ImGui::SameLine();
-			addObject(GetIndex(WalljumpL), 3);
+			addObject(GetIndex(WalljumpL), 5);
 
-			addObject(GetIndex(Water), 3, "Water 1 (Refresh Jump, High)");
+			addObject(GetIndex(Water), 6, "Water 1 (Refresh Jump, High)");
 			ImGui::SameLine();
-			addObject(GetIndex(Water2), 3, "Water 2 (No Refresh Jump)");
+			addObject(GetIndex(Water2), 6, "Water 2 (No Refresh Jump)");
 			ImGui::SameLine();
-			addObject(GetIndex(Water3), 3, "Water 3 (Refresh Jump)");
+			addObject(GetIndex(Water3), 6, "Water 3 (Refresh Jump)");
 		}
 		if (ImGui::CollapsingHeader("Misc"))
 		{
-			addObject(GetIndex(GravityArrowUp), 4);
+			addObject(GetIndex(GravityArrowUp), 7);
 			ImGui::SameLine();
-			addObject(GetIndex(GravityArrowDown), 4);
+			addObject(GetIndex(GravityArrowDown), 7);
 		}
 		ImGui::End();
 	}
@@ -1047,12 +1083,12 @@ void Gui::update()
 			s = to_string(abs(dt)) + " frame";
 			if (dt != 1)
 				s += "s";
-			if (dt < 0)
+			if (dt > 0)
 				s += " late";
 			else
 				s += " early";
 		}
-		
+
 		ImGui::Text((name + s).data());
 	};
 	if (showAnalysis)
@@ -1068,10 +1104,99 @@ void Gui::update()
 		textFrames("Djump", PlayerMgr.frameCountJump2);
 		textFrames("Pause", PlayerMgr.frameCountPause2);
 		ImGui::Separator();
-		if (PlayerMgr.jcShow) 
-			textDuration("Cancel", PlayerMgr.jcDuration);
+		if (PlayerMgr.jcShow)
+			textDuration("JC", PlayerMgr.jcDuration);
 		else
-			ImGui::Text("Cancel: Not");
+			ImGui::Text("JC: Not");
+		ImGui::Separator();
+		if (PlayerMgr.bhopShow)
+			textDuration("BH", PlayerMgr.bhopOffset);
+		else
+			ImGui::Text("BH: Not");
+
+		ImGui::End();
+	}
+
+	// TAS window
+	if (showTAS)
+	{
+		ImGui::SetNextWindowSize(ImVec2(350, 300), ImGuiCond_Once);
+		ImGui::Begin("TAS", &showAnalysis);
+		static int e = 0;
+		int eLast = e;
+		ImGui::RadioButton("1.0x", &e, 0);
+		ImGui::RadioButton("0.5x", &e, 1);
+		ImGui::RadioButton("0.2x", &e, 2);
+		ImGui::RadioButton("Pause (Editor will be disabled)", &e, 3);
+		if (eLast != e)
+		{
+			switch (e)
+			{
+			case 0: Gm.window->setFramerateLimit(50); break;
+			case 1: Gm.window->setFramerateLimit(25); break;
+			case 2: Gm.window->setFramerateLimit(10); break;
+			case 3: Gm.window->setFramerateLimit(50); break;
+			}
+			RecMgr.tasPause = e == 3;
+		}
+		ImGui::Separator();
+		static int stateIndex = 0;
+		if (ImGui::Button("Save State"))
+		{
+			RecMgr.saveState();
+			stateIndex = clamp(stateIndex + 1, 0, max(static_cast<int>(RecMgr.states.size()) - 1, 0));
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("delete State"))
+		{
+			if (!RecMgr.states.empty())
+			{
+				RecMgr.deleteState(stateIndex);
+				stateIndex = clamp(stateIndex - 1, 0, max(static_cast<int>(RecMgr.states.size()) - 1, 0));
+			}
+		}
+		if (ImGui::BeginListBox("##Player States"))
+		{
+			for (int i = RecMgr.states.size() - 1; i >= 0; i--)
+			{
+				if (ImGui::Selectable(to_string(i).c_str(), i == stateIndex))
+				{
+					stateIndex = i;
+				}
+			}
+			ImGui::EndListBox();
+		}
+		if (ImGui::Button("Load State"))
+		{
+			if (!RecMgr.states.empty())
+			{
+				RecMgr.loadState(stateIndex);
+			}
+		}
+		auto tasKey = [&](string name, sf::Keyboard::Key key)
+		{
+			ImGui::Checkbox((name + " Press").c_str(), &InputMgr.tasPress[key]);
+			ImGui::SameLine();
+			ImGui::Checkbox((name + " Hold").c_str(), &InputMgr.tasHold[key]);
+			ImGui::SameLine();
+			ImGui::Checkbox((name + " Release").c_str(), &InputMgr.tasRelease[key]);
+		};
+		if (RecMgr.tasPause)
+		{
+			ImGui::Separator();
+			ImGui::Checkbox("Auto Clear Press", &RecMgr.autoClearPress);
+			ImGui::Checkbox("Auto Clear Hold", &RecMgr.autoClearHold);
+			ImGui::Checkbox("Auto Clear Release", &RecMgr.autoClearRelease);
+			ImGui::Separator();
+			tasKey("Left", sf::Keyboard::Left);
+			tasKey("Right", sf::Keyboard::Right);
+			tasKey("Jump", sf::Keyboard::LShift);
+			ImGui::Separator();
+			if (ImGui::Button("Next Frame (Space)") || InputMgr.isKeyPress(sf::Keyboard::Space))
+			{
+				RecMgr.nextFrame();
+			}
+		}
 		ImGui::End();
 	}
 }

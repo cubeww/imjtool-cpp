@@ -58,14 +58,21 @@ shared_ptr<Object> ObjectManager::create(int index, float x, float y)
 	return obj;
 }
 
-
-void ObjectManager::update()
+void ObjectManager::sortDepth()
 {
-	// sort depth
 	sort(objects.begin(), objects.end(), [](const shared_ptr<Object>& obj1, const shared_ptr<Object>& obj2)
 		{
 			return (obj1->depth > obj2->depth);
 		});
+}
+
+
+void ObjectManager::update()
+{
+	// clear texture
+	Gm.gameTexture->clear(sf::Color::White);
+
+	sortDepth();
 
 	// update instances
 	for (auto i = 0; i < static_cast<int>(objects.size());)

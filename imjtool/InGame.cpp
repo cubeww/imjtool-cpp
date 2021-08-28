@@ -288,8 +288,8 @@ void Player::update()
 		}
 	}
 
-	auto L = InputMgr.isKeyHold(sf::Keyboard::Left);
-	auto R = InputMgr.isKeyHold(sf::Keyboard::Right);
+	auto L = InputMgr.isKeyHoldG(sf::Keyboard::Left);
+	auto R = InputMgr.isKeyHoldG(sf::Keyboard::Right);
 
 	float h = 0;
 	if (R) h = 1;
@@ -343,7 +343,7 @@ void Player::update()
 	}
 
 	// shoot
-	if (InputMgr.isKeyPress(sf::Keyboard::Z))
+	if (InputMgr.isKeyPressG(sf::Keyboard::Z))
 	{
 		if (ObjMgr.getCount(GetIndex(PlayerBullet)) < 4)
 		{
@@ -359,7 +359,7 @@ void Player::update()
 	}
 
 	// jump press
-	if (InputMgr.isKeyPress(sf::Keyboard::LShift) || InputMgr.isKeyPress(sf::Keyboard::RShift))
+	if (InputMgr.isKeyPressG(sf::Keyboard::LShift) || InputMgr.isKeyPressG(sf::Keyboard::RShift))
 	{
 		if (placeMeeting(x, y + 1 * PlayerMgr.grav, Index::Block) || placeMeeting(
 				x, y + 1 * PlayerMgr.grav, Index::Platform) || onPlatform ||
@@ -383,7 +383,7 @@ void Player::update()
 	}
 
 	// jump release
-	if (InputMgr.isKeyRelease(sf::Keyboard::LShift) || InputMgr.isKeyRelease(sf::Keyboard::RShift))
+	if (InputMgr.isKeyReleaseG(sf::Keyboard::LShift) || InputMgr.isKeyReleaseG(sf::Keyboard::RShift))
 	{
 		if (vspeed * PlayerMgr.grav < 0)
 		{
@@ -412,10 +412,10 @@ void Player::update()
 		setSprite("player_sliding", false);
 		imageSpeed = 0.5;
 
-		if ((onVineL && InputMgr.isKeyPress(sf::Keyboard::Right)) || (onVineR && InputMgr.
-			isKeyPress(sf::Keyboard::Left)))
+		if ((onVineL && InputMgr.isKeyPressG(sf::Keyboard::Right)) || (onVineR && InputMgr.
+			isKeyPressG(sf::Keyboard::Left)))
 		{
-			if (InputMgr.isKeyHold(sf::Keyboard::LShift) || InputMgr.isKeyHold(sf::Keyboard::RShift))
+			if (InputMgr.isKeyHoldG(sf::Keyboard::LShift) || InputMgr.isKeyHoldG(sf::Keyboard::RShift))
 			{
 				ResMgr.sounds["walljump"]->play();
 				if (onVineR) hspeed = -15;
@@ -435,18 +435,18 @@ void Player::update()
 	// A / D adjust
 	if (placeMeeting(x, y + PlayerMgr.grav, Index::Block))
 	{
-		if (InputMgr.isKeyPress(sf::Keyboard::A))
+		if (InputMgr.isKeyPressG(sf::Keyboard::A))
 		{
 			hspeed = -1;
 		}
-		if (InputMgr.isKeyPress(sf::Keyboard::D))
+		if (InputMgr.isKeyPressG(sf::Keyboard::D))
 		{
 			hspeed = 1;
 		}
 	}
 
 	// press S save
-	if (InputMgr.isKeyPress(sf::Keyboard::S))
+	if (InputMgr.isKeyPressG(sf::Keyboard::S))
 	{
 		ResMgr.sounds["shoot"]->play();
 		CreateInst(GetIndex(SaveEffect), x - 17, y - 23);
@@ -574,12 +574,17 @@ void Player::update()
 
 	updateSprite();
 
+	drawPlayer();
+}
+
+void Player::drawPlayer()
+{
 	if (!PlayerMgr.dotkid)
 	{
 		if (PlayerMgr.showMask == ShowMask::OnlyPlayer)
 		{
 			sprite->draw(FloorToInt(imageIndex), x, y, sprite->xOrigin, sprite->yOrigin, PlayerMgr.face, PlayerMgr.grav,
-			             rotation, color);
+				rotation, color);
 		}
 		else if (PlayerMgr.showMask == ShowMask::OnlyMask)
 		{
@@ -590,9 +595,9 @@ void Player::update()
 			auto col = sf::Color::White;
 			col.a = 120;
 			sprite->draw(FloorToInt(imageIndex), x, y, sprite->xOrigin, sprite->yOrigin, PlayerMgr.face, PlayerMgr.grav,
-			             rotation, col);
+				rotation, col);
 			maskSprite->draw(FloorToInt(imageIndex), x, y, maskSprite->xOrigin, maskSprite->yOrigin, 1, 1, rotation,
-			                 col);
+				col);
 		}
 	}
 	else
@@ -604,6 +609,7 @@ void Player::update()
 		}
 	}
 }
+
 
 void Player::kill()
 {
@@ -653,7 +659,7 @@ void Save::update()
 	if (--timer2 == 0)
 		imageIndex = 0;
 
-	auto press = InputMgr.isKeyPress(sf::Keyboard::Z);
+	auto press = InputMgr.isKeyPressG(sf::Keyboard::Z);
 	auto enter = placeMeeting(x, y, Index::Player);
 	if (PlayerMgr.saveType == SaveType::OnlyShoot)
 	{

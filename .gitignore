@@ -294,4 +294,4 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 
-bin/
+Debug/skins/

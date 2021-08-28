@@ -9,6 +9,7 @@
 #include "MapManager.h"
 #include "PlayerManager.h"
 #include "SkinManager.h"
+#include "RecordManager.h"
 
 // game manager shortcuts
 #define Gm Game::get() 
@@ -19,6 +20,7 @@
 #define SkinMgr Game::get().skinManager
 #define MapMgr Game::get().mapManager
 #define ConfigMgr Game::get().configManager
+#define RecMgr Game::get().recordManager
 
 class Game
 {
@@ -36,6 +38,7 @@ public:
 	SkinManager skinManager = SkinManager();
 	MapManager mapManager = MapManager();
 	ConfigManager configManager = ConfigManager();
+	RecordManager recordManager = RecordManager();
 
 	Gui gui = Gui();
 	Editor editor = Editor();

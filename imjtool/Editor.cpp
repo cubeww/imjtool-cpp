@@ -178,16 +178,6 @@ void Editor::update()
 		ImGui::SetCursorPos(ImVec2(snappedPos.x + cursorStartPos.x - spr->xOrigin, snappedPos.y + cursorStartPos.y - spr->yOrigin));
 		ImGui::Image(*spr->items[0]->sprite, sf::Color(255, 255, 255, 100));
 	}
-
-	// undo & redo
-	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && InputMgr.isKeyPress(sf::Keyboard::Z))
-	{
-		undo();
-	}
-	if (InputMgr.isKeyHold(sf::Keyboard::LControl) && InputMgr.isKeyPress(sf::Keyboard::Y))
-	{
-		redo();
-	}
 }
 
 void Editor::addCreateEvent(float x, float y, int objectIndex)

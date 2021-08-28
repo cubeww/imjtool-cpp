@@ -6,11 +6,9 @@ void InputManager::update(sf::Event& event)
 	if (event.type == sf::Event::KeyPressed) 
 	{
 		keyPress[event.key.code] = true;
-		keyHold[event.key.code] = true;
 	}
 	if (event.type == sf::Event::KeyReleased) 
 	{
-		keyHold[event.key.code] = false;
 		keyRelease[event.key.code] = true;
 	}
 	if (event.type == sf::Event::MouseWheelScrolled)
@@ -39,6 +37,7 @@ void InputManager::clearPressAndRelease()
 	mouseWheelDown = false;
 }
 
+// normal check (GUI)
 bool InputManager::isKeyPress(int key)
 {
 	return keyPress[key];
@@ -46,11 +45,27 @@ bool InputManager::isKeyPress(int key)
 
 bool InputManager::isKeyHold(int key)
 {
-	return keyHold[key];
+	return sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(key));
 }
 
 bool InputManager::isKeyRelease(int key)
 {
 	return keyRelease[key];
+}
+
+// in-game check (support TAS)
+bool InputManager::isKeyPressG(int key)
+{
+	return RecMgr.tasPause ? tasPress[key] : keyPress[key];
+}
+
+bool InputManager::isKeyHoldG(int key)
+{
+	return RecMgr.tasPause ? tasHold[key] : sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(key));
+}
+
+bool InputManager::isKeyReleaseG(int key)
+{
+	return RecMgr.tasPause ? tasRelease[key] : keyRelease[key];
 }
 

@@ -39,6 +39,8 @@ public:
 	bool showAbout = false;
 	bool showShift = false;
 
+	bool showTAS = false;
+
 	bool showSnap = false;
 	int snapW = 32;
 	int snapH = 32;

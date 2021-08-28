@@ -6,6 +6,21 @@ using namespace std;
 
 class Player;
 
+struct PlayerState
+{
+	float x = -1;
+	float y = -1;
+	float face = 1;
+	float grav = 1;
+	float hspeed = 0;
+	float vspeed = 0;
+	float gravity = 0;
+	bool djump = false;
+
+	float imageSpeed = -1;
+	float imageIndex = -1;
+};
+
 struct PlayerSave
 {
 	float x = -1;
@@ -84,9 +99,21 @@ public:
 	bool jcSuccessWaitingForRelease = false;
 	int jcSuccessDuration = 0;
 
+	bool bhopShow = false;
+	int bhopOffset = 0;
+	bool bhopWaitingLate = false;
+	int bhopCount = 0;
+	int bhopVspeedPrevious = 0;
+	int bhopHintCutOff = 3;
+
+
 	void update();
 	void doAnalysis();
 	void save();
 	void load();
+
+	shared_ptr<PlayerState> saveState();
+	void loadState(shared_ptr<PlayerState> state);
+	void updatePlayerImage();
 };
 

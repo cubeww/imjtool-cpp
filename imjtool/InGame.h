@@ -142,6 +142,7 @@ public:
 
     void create() override;
     void update() override;
+    void drawPlayer();
     void kill();
 };
 
